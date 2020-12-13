@@ -1,0 +1,16 @@
+ManifestFileVersion: 0
+CRC: 2412984852
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: c8be85f1c4408a8fca91e60b75260284
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 7859cd501ea75098bcf7e53f1b477c26
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+Assets:
+- Assets/NsnFramework/Examples/DataRes/Texture/example_tex_wood.png
+Dependencies: []

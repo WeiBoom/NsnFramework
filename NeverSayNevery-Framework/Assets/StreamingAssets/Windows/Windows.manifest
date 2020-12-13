@@ -1,0 +1,34 @@
+ManifestFileVersion: 0
+CRC: 3598134677
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: atlas_testatlas.u3d
+      Dependencies: {}
+    Info_1:
+      Name: audio_audio.u3d
+      Dependencies: {}
+    Info_2:
+      Name: prefab_commonprefab.u3d
+      Dependencies:
+        Dependency_0: atlas_testatlas.u3d
+    Info_3:
+      Name: prefab_gamemainpanel.u3d
+      Dependencies:
+        Dependency_0: atlas_testatlas.u3d
+        Dependency_1: fonts.u3d
+    Info_4:
+      Name: prefab_example_model_cube.u3d
+      Dependencies: {}
+    Info_5:
+      Name: prefab_example_effect_test1.u3d
+      Dependencies: {}
+    Info_6:
+      Name: tex_example_tex_wood.u3d
+      Dependencies: {}
+    Info_7:
+      Name: fonts.u3d
+      Dependencies: {}
+    Info_8:
+      Name: shaders.u3d
+      Dependencies: {}

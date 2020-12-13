@@ -1,0 +1,28 @@
+ManifestFileVersion: 0
+CRC: 2131259337
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: a12cfd52a2db876ca50b2a0a5f3ea346
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 67d640ceda89b45fd704e74f51bfa3f7
+HashAppended: 0
+ClassTypes:
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 128
+  Script: {instanceID: 0}
+Assets:
+- Assets/NsnFramework/Examples/DataRes/Common/Fonts/pixelfont2 Atlas Material-outlibe.mat
+- Assets/NsnFramework/Examples/DataRes/Common/Fonts/pixelfont SDF.asset
+- Assets/NsnFramework/Examples/DataRes/Common/Fonts/pixelfont2 SDF.asset
+Dependencies: []

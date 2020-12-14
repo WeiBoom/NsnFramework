@@ -1,9 +1,9 @@
-# NeverSayNever-Framework For Unity
+# NsnFramework For Unity
 
 Created: Jul 14, 2020 11:57 PM
 Tags: Framework, Unity
 
-NeverSayNever.Framework (NSN.Framework) 是一套提供给Unity开发者的开发框架，旨在做到开箱即用，提高开发效率。商业项目亦或是独立游戏，都可以做到开箱即用，让游戏开发变得更为简单。
+ NSN.Framework是一套提供给Unity开发者的开发框架，旨在做到开箱即用，提高开发效率。商业项目亦或是独立游戏，都可以做到开箱即用，让游戏开发变得更为简单。
 
 QQ：631450364
 

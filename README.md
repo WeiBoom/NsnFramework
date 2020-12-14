@@ -81,4 +81,4 @@ NsnFramework 启动场景，UI加载案例（AssetBundle模式）
 
 ## **最后**
 
-为什么叫NsnFramework? **Nsn = Nevery say never**。希望各位怀有梦想与希望的开发者，能坚守自己的理念，坚持自己的梦想，永不言弃。也希望小小的NsnFramework能在各位的道路上尽到一点绵薄之力！
+为什么叫NsnFramework? **Nsn = Nevery say never**。希望各位怀有梦想与希望的开发者，能坚持理念与理想，永不言弃，创作出更优秀的“第九艺术”。也希望小小的NsnFramework能在各位的道路上尽到一点绵薄之力！

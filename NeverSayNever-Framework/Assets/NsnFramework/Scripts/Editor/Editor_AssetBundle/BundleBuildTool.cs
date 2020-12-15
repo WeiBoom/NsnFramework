@@ -130,6 +130,11 @@ namespace NeverSayNever.Editors
         /// </summary>
         public bool IsForceRebuild = true;
 
+
+        // 临时缓存lua拷贝的txt文件路径，打包完成后删除
+        private Queue<string> temporyLuaTxtFileList = new Queue<string>();
+
+
         public BundlePackager(BuildTarget buildTarget, int bundleVersion)
         {
             BuildTarget = buildTarget;
@@ -180,6 +185,15 @@ namespace NeverSayNever.Editors
             foreach (var element in collectList)
             {
                 var directoryPath = NEditorTools.GetRegularPath(AssetDatabase.GetAssetPath(element.folder));
+                // 因为unity不能识别.lua文件，所以lua需要单独处理
+                // 这里按整个文件夹打包的形式处理，所有的lua文件都打包为一个bundle
+                if (element.buildType == EBundleBuildType.Lua)
+                {
+                    var bundleBuild = BuildLuaBundle(directoryPath);
+                    targetBuildInfoList.Add(bundleBuild.bundleName, bundleBuild);
+                    continue;
+                }
+
                 // 子文件夹单独一个包
                 if (element.labelType == EBundleLabelType.ByChildFolderName)
                 {
@@ -224,6 +238,13 @@ namespace NeverSayNever.Editors
             AssetBundleManifest manifest = BuildPipeline.BuildAssetBundles(PlatformOutputPath, buildList.ToArray(), BuildAssetBundleOptions.ChunkBasedCompression, BuildTarget);
             if (manifest == null)
                 Debug.LogError("BuildAssetBundles Failure");
+
+            while(temporyLuaTxtFileList.Count >0)
+            {
+                var str = temporyLuaTxtFileList.Dequeue();
+                File.Delete(str);
+                File.Delete(str + ".meta");
+            }
         }
 
         public void ClearAllAssetBundles()
@@ -276,6 +297,7 @@ namespace NeverSayNever.Editors
             }
             return bundleBuild;
         }
+
         // 打包整个文件夹
         private BundleBuild BuildDirectoryToPack(string path, EBundleBuildType buildType)
         {
@@ -286,6 +308,7 @@ namespace NeverSayNever.Editors
             var bundleBuild = CreateBundleBuildInfo(buildType, finalpath, files.ToArray());
             return bundleBuild;
         }
+
         // 打包图集
         private BundleBuild BuildSpriteAtlasToPack(string filePath,EBundleBuildType buildType)
         {
@@ -303,6 +326,26 @@ namespace NeverSayNever.Editors
             }
 
             var bundleBuild = CreateBundleBuildInfo(buildType, filePath, targetAssetsNames.ToArray());
+            return bundleBuild;
+        }
+
+
+        private BundleBuild BuildLuaBundle(string path)
+        {
+            var luaFiles = Directory.GetFiles(path, "*.lua", SearchOption.AllDirectories);
+            var temporyFiles = new List<string>();
+            foreach (var file in luaFiles)
+            {
+                var rootPath = Application.dataPath.Replace("Assets", "") + "/";
+                var txtFile = file.Replace(".lua", ".txt");
+                var finalPath = rootPath + file;
+                var txtFilePath = rootPath + txtFile;
+                NEditorTools.CopyFile(finalPath, txtFilePath);
+                temporyLuaTxtFileList.Enqueue(txtFilePath);
+                temporyFiles.Add(txtFile);
+            }
+
+            var bundleBuild = CreateBundleBuildInfo(EBundleBuildType.Lua, path, temporyFiles.ToArray());
             return bundleBuild;
         }
 

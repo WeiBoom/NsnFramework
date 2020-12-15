@@ -37,7 +37,8 @@ namespace NeverSayNever.Core.Asset
         Audio = 5,
         Shader = 6,
         Material = 7,
-        AllPack = 8,
+        Lua = 8,
+        AllPack = 9,
     }
 
     public class SOGlobalAssetConfig : SerializedScriptableObject

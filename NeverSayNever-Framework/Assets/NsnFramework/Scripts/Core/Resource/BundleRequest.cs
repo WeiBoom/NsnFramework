@@ -131,7 +131,7 @@ namespace NeverSayNever.Core.Asset
         {
             if (assetObj == null)
                 return;
-            if(!(assetObj is GameObject))
+            if((assetObj is GameObject))
                 Resources.UnloadAsset(assetObj);
             assetObj = null;
         }

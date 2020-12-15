@@ -3,7 +3,7 @@ CRC: 4070273808
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: dfbcdb904045a57586545464c84ff8c8
+    Hash: 8655b7f52d85783094e958695fafd38a
   TypeTreeHash:
     serializedVersion: 2
     Hash: 45e4dc48ed97d486194e7e78d2c7d7e4
@@ -38,5 +38,5 @@ ClassTypes:
 Assets:
 - Assets/NsnFramework/Examples/DataRes/Prefab/UIPanels/GameMainPanel/GameMainPanel.prefab
 Dependencies:
-- D:/WorkSpace/Unity_Projects/WEI_NsnFramework/NeverSayNevery-Framework/Assets/StreamingAssets/Windows/atlas_testatlas.u3d
-- D:/WorkSpace/Unity_Projects/WEI_NsnFramework/NeverSayNevery-Framework/Assets/StreamingAssets/Windows/fonts.u3d
+- D:/WorkSpace/Unity_Projects/WEI_NsnFramework/NeverSayNever-Framework/Assets/StreamingAssets/Windows/atlas_testatlas.u3d
+- D:/WorkSpace/Unity_Projects/WEI_NsnFramework/NeverSayNever-Framework/Assets/StreamingAssets/Windows/fonts.u3d

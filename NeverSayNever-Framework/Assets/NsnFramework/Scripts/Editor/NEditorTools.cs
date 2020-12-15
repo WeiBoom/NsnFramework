@@ -150,6 +150,30 @@ namespace NeverSayNever.Editors
         }
 
         /// <summary>
+        /// 拷贝文件
+        /// </summary>
+        /// <param name="path1">源文件全路径</param>
+        /// <param name="path2">目标文件全路径</param>
+        public static void CopyFile(string path1, string path2)
+        {
+            int bufferSize = 10240;
+
+            Stream source = new FileStream(path1, FileMode.Open, FileAccess.Read);
+            Stream target = new FileStream(path2, FileMode.Create, FileAccess.Write);
+
+            byte[] buffer = new byte[bufferSize];
+            int bytesRead;
+            do
+            {
+                bytesRead = source.Read(buffer, 0, bufferSize);
+                target.Write(buffer, 0, bytesRead);
+            } while (bytesRead > 0);
+
+            source.Dispose();
+            target.Dispose();
+        }
+
+        /// <summary>
         /// 清空指定目录下的所有文件
         /// </summary>
         /// <param name="directoryPath"></param>

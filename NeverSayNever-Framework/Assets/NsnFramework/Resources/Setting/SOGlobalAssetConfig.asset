@@ -24,6 +24,7 @@ MonoBehaviour:
     - {fileID: 102900000, guid: e1fd8c64332dae24892fc332c8de6a63, type: 3}
     - {fileID: 102900000, guid: 8df051340584ce843a66921b59fe3036, type: 3}
     - {fileID: 102900000, guid: ac3afd68642256b4d82c4fa0fa777f82, type: 3}
+    - {fileID: 102900000, guid: b324ff152db7e6646aa46884a76d7944, type: 3}
     - {fileID: 102900000, guid: ad15f5d0bcb50ef49adfd1fe3a4cf3c8, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
@@ -36,7 +37,7 @@ MonoBehaviour:
         Assembly-CSharp]], mscorlib
     - Name: 
       Entry: 12
-      Data: 8
+      Data: 9
     - Name: 
       Entry: 7
       Data: 1|NeverSayNever.Core.Asset.SOGlobalAssetConfig+AssetCollectionInfo, Assembly-CSharp
@@ -153,7 +154,7 @@ MonoBehaviour:
       Data: 6
     - Name: buildType
       Entry: 3
-      Data: 8
+      Data: 9
     - Name: labelType
       Entry: 3
       Data: 2
@@ -171,13 +172,31 @@ MonoBehaviour:
       Data: 7
     - Name: buildType
       Entry: 3
-      Data: 8
+      Data: 9
     - Name: labelType
       Entry: 3
       Data: 2
     - Name: fileFilter
       Entry: 1
       Data: '*'
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 9|NeverSayNever.Core.Asset.SOGlobalAssetConfig+AssetCollectionInfo, Assembly-CSharp
+    - Name: folder
+      Entry: 10
+      Data: 8
+    - Name: buildType
+      Entry: 3
+      Data: 8
+    - Name: labelType
+      Entry: 3
+      Data: 2
+    - Name: fileFilter
+      Entry: 1
+      Data: '*.txt'
     - Name: 
       Entry: 8
       Data: 
@@ -189,11 +208,11 @@ MonoBehaviour:
       Data: 
     - Name: VariesAssetFolderDic
       Entry: 7
-      Data: 9|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[NeverSayNever.Core.Asset.SOGlobalAssetConfig+AssetFolderInfo,
+      Data: 10|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[NeverSayNever.Core.Asset.SOGlobalAssetConfig+AssetFolderInfo,
         Assembly-CSharp]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 10|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+      Data: 11|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
         mscorlib]], mscorlib
     - Name: 
       Entry: 8
@@ -209,7 +228,7 @@ MonoBehaviour:
       Data: UI
     - Name: $v
       Entry: 7
-      Data: 11|NeverSayNever.Core.Asset.SOGlobalAssetConfig+AssetFolderInfo, Assembly-CSharp
+      Data: 12|NeverSayNever.Core.Asset.SOGlobalAssetConfig+AssetFolderInfo, Assembly-CSharp
     - Name: folder
       Entry: 10
       Data: 2
@@ -233,7 +252,7 @@ MonoBehaviour:
       Data: Model
     - Name: $v
       Entry: 7
-      Data: 12|NeverSayNever.Core.Asset.SOGlobalAssetConfig+AssetFolderInfo, Assembly-CSharp
+      Data: 13|NeverSayNever.Core.Asset.SOGlobalAssetConfig+AssetFolderInfo, Assembly-CSharp
     - Name: folder
       Entry: 10
       Data: 3
@@ -257,7 +276,7 @@ MonoBehaviour:
       Data: Effect
     - Name: $v
       Entry: 7
-      Data: 13|NeverSayNever.Core.Asset.SOGlobalAssetConfig+AssetFolderInfo, Assembly-CSharp
+      Data: 14|NeverSayNever.Core.Asset.SOGlobalAssetConfig+AssetFolderInfo, Assembly-CSharp
     - Name: folder
       Entry: 10
       Data: 4
@@ -281,7 +300,7 @@ MonoBehaviour:
       Data: Texture
     - Name: $v
       Entry: 7
-      Data: 14|NeverSayNever.Core.Asset.SOGlobalAssetConfig+AssetFolderInfo, Assembly-CSharp
+      Data: 15|NeverSayNever.Core.Asset.SOGlobalAssetConfig+AssetFolderInfo, Assembly-CSharp
     - Name: folder
       Entry: 10
       Data: 5
@@ -305,7 +324,7 @@ MonoBehaviour:
       Data: Audio
     - Name: $v
       Entry: 7
-      Data: 15|NeverSayNever.Core.Asset.SOGlobalAssetConfig+AssetFolderInfo, Assembly-CSharp
+      Data: 16|NeverSayNever.Core.Asset.SOGlobalAssetConfig+AssetFolderInfo, Assembly-CSharp
     - Name: folder
       Entry: 10
       Data: 1
@@ -329,7 +348,7 @@ MonoBehaviour:
       Data: Font
     - Name: $v
       Entry: 7
-      Data: 16|NeverSayNever.Core.Asset.SOGlobalAssetConfig+AssetFolderInfo, Assembly-CSharp
+      Data: 17|NeverSayNever.Core.Asset.SOGlobalAssetConfig+AssetFolderInfo, Assembly-CSharp
     - Name: folder
       Entry: 10
       Data: 6
@@ -353,7 +372,7 @@ MonoBehaviour:
       Data: Shader
     - Name: $v
       Entry: 7
-      Data: 17|NeverSayNever.Core.Asset.SOGlobalAssetConfig+AssetFolderInfo, Assembly-CSharp
+      Data: 18|NeverSayNever.Core.Asset.SOGlobalAssetConfig+AssetFolderInfo, Assembly-CSharp
     - Name: folder
       Entry: 10
       Data: 7
@@ -377,10 +396,10 @@ MonoBehaviour:
       Data: TextAsset
     - Name: $v
       Entry: 7
-      Data: 18|NeverSayNever.Core.Asset.SOGlobalAssetConfig+AssetFolderInfo, Assembly-CSharp
+      Data: 19|NeverSayNever.Core.Asset.SOGlobalAssetConfig+AssetFolderInfo, Assembly-CSharp
     - Name: folder
       Entry: 10
-      Data: 8
+      Data: 9
     - Name: path
       Entry: 1
       Data: Assets/NsnFramework/Examples/DataRes/Config

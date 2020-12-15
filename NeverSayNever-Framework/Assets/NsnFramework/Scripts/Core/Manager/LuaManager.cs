@@ -37,6 +37,8 @@ namespace NeverSayNever.Core
         private const float GCInterval = 1;
 
         private static string launchFileName = "Launcher";
+
+        private const string luaBundleName = "lualogic.u3d";
         
         public static LuaTable Global => _luaEnv?.Global;
 
@@ -50,10 +52,11 @@ namespace NeverSayNever.Core
             launchFileName = args[0] as string;
 
             // Bundle 模式下需要先加载Lua的bundle资源，命名为luaLogic
-#if !UNITY_EDITOR
-            AssetBundleHelper.Instance.LoadBundle("luaLogic");
+#if !UNITY_EDITOR  || BUNDLE_MODE
+            LoadScriptBundle(luaBundleName);
 #else
-            var luaFilePath = Framework.GlobalConfig.UIScriptRootForLua.Replace("UI/","");
+
+            var luaFilePath = Framework.GlobalConfig.UIScriptRootForLua.Replace("UI/", "");
             GetAllLuaFiles(luaFilePath);
 #endif
         }
@@ -112,7 +115,7 @@ namespace NeverSayNever.Core
         /// <param name="name"></param>
         public void LoadScriptBundle(string name)
         {
-            var luaBundleRequest = AssetBundleHelper.Instance.LoadBundle(name);  //AssetsManager.Load(name, typeof(UnityEngine.Object)) as BundleAssetData;
+            var luaBundleRequest = AssetBundleHelper.Instance.LoadBundle(name);
             if (luaBundleRequest == null) return;
 
             var luaBundle = luaBundleRequest.assetObj as AssetBundle;
@@ -133,14 +136,14 @@ namespace NeverSayNever.Core
         {
             var strs = fileName.ToLower().Split('/');
             fileName = strs[strs.Length - 1];
-            if (!fileName.Contains(LuaSuffix))
-                fileName += LuaSuffix;
             string str = null;
 #if BUNDLE_MODE || !UNITY_EDITOR
-           // _codeFileMap.TryGetValue(fileName, out str);
-           // if (str == null)
-            //    Debug.LogError("没有找到脚本:" + fileName);
+            CodeFileMap.TryGetValue(fileName, out str);
+            if (str == null)
+                Debug.LogError("没有找到脚本:" + fileName);
 #else
+            if (!fileName.Contains(LuaSuffix))
+                fileName += LuaSuffix;
             if (_editorScripsPathMap.ContainsKey(fileName))
                 str = File.ReadAllText(_editorScripsPathMap[fileName]);
 #endif

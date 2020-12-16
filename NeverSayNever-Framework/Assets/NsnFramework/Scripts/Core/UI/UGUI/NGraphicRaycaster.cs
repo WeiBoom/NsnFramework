@@ -12,14 +12,13 @@ public class NGraphicRaycaster : UnityEngine.UI.GraphicRaycaster
     // 优化GraphicRaycaster.get_eventCamera()
     private Camera targetCamera;
 
-    private Canvas m_canvas;
     // 源码中的 canvas 每次获取的时候都会有canvas != null 的判断，如果没有动态变化，常规下可以直接减少这个操作
-    private new Canvas canvas => m_canvas;
+    private Canvas Canvas { get; set; }
 
     protected override void Awake()
     {
         base.Awake();
-        m_canvas = GetComponent<Canvas>();
+        Canvas = GetComponent<Canvas>();
     }
 
 
@@ -27,8 +26,8 @@ public class NGraphicRaycaster : UnityEngine.UI.GraphicRaycaster
     {
         get
         {
+            // UGUI 源码，他并没有对camera进行缓存，而UI上的camera，一般来说是不会改变的。所以这里做一个缓存优化
             /* 
-                 // UGUI 源码，他并没有对camera进行缓存，而UI上的camera，一般来说是不会改变的。所以这里做一个缓存优化
                  if (canvas.renderMode == RenderMode.ScreenSpaceOverlay || (canvas.renderMode == RenderMode.ScreenSpaceCamera && canvas.worldCamera == null))
                     return null;
                  return canvas.worldCamera != null ? canvas.worldCamera : Camera.main;
@@ -46,17 +45,17 @@ public class NGraphicRaycaster : UnityEngine.UI.GraphicRaycaster
         // 拖动的时候，不会有其他点击事件发生，可以不再进行判定
         if (eventData.dragging) return;
 
-        if (canvas == null)
+        if (Canvas == null)
             return;
-        var canvasGraphics = GraphicRegistry.GetGraphicsForCanvas(canvas);
+        var canvasGraphics = GraphicRegistry.GetGraphicsForCanvas(Canvas);
         if (canvasGraphics == null || canvasGraphics.Count <= 0)
             return;
 
         int displayIndex;
         var currentEventCamera = eventCamera; // Propery can call Camera.main, so cache the reference
 
-        if (canvas.renderMode == RenderMode.ScreenSpaceOverlay || currentEventCamera == null)
-            displayIndex = canvas.targetDisplay;
+        if (Canvas.renderMode == RenderMode.ScreenSpaceOverlay || currentEventCamera == null)
+            displayIndex = Canvas.targetDisplay;
         else
             displayIndex = currentEventCamera.targetDisplay;
 
@@ -97,7 +96,7 @@ public class NGraphicRaycaster : UnityEngine.UI.GraphicRaycaster
         if (currentEventCamera != null)
             ray = currentEventCamera.ScreenPointToRay(eventPosition);
 
-        if (canvas.renderMode != RenderMode.ScreenSpaceOverlay && blockingObjects != BlockingObjects.None)
+        if (Canvas.renderMode != RenderMode.ScreenSpaceOverlay && blockingObjects != BlockingObjects.None)
         {
             float distanceToClipPlane = 100.0f;
 
@@ -109,14 +108,13 @@ public class NGraphicRaycaster : UnityEngine.UI.GraphicRaycaster
                     : Mathf.Abs((currentEventCamera.farClipPlane - currentEventCamera.nearClipPlane) / projectionDirection);
             }
 
-            // 相较于源码，剔除了这部分检测，
             /*
                 ReflectionMethodsCache 是一个internal 的单例，在UnityEngine.dll里，这里无法访问
                 ReflectionMethodsCache.Singleton.raycast3D 和 ReflectionMethodsCache.Singleton.raycast2D 都是获取的Physics和physics2D上的Raycast方法
                 一般我们在UI上不需要操作Physical层面的东西，所里这里也直接剔除掉
             */
             /*
-
+            // 相较于源码，剔除了这部分检测，
             if (blockingObjects == BlockingObjects.ThreeD || blockingObjects == BlockingObjects.All)
             {
                 // raycast3D 是Physics上的射线检测
@@ -153,7 +151,7 @@ public class NGraphicRaycaster : UnityEngine.UI.GraphicRaycaster
 
         m_RaycastResults.Clear();
         // Raycast函数内修改了源码的检测内容
-        Raycast(canvas, currentEventCamera, eventPosition, canvasGraphics, m_RaycastResults);
+        Raycast(Canvas, currentEventCamera, eventPosition, canvasGraphics, m_RaycastResults);
 
         int totalCount = m_RaycastResults.Count;
         for (var index = 0; index < totalCount; index++)
@@ -181,7 +179,7 @@ public class NGraphicRaycaster : UnityEngine.UI.GraphicRaycaster
                 Transform trans = go.transform;
                 Vector3 transForward = trans.forward;
 
-                if (currentEventCamera == null || canvas.renderMode == RenderMode.ScreenSpaceOverlay)
+                if (currentEventCamera == null || Canvas.renderMode == RenderMode.ScreenSpaceOverlay)
                     distance = 0;
                 else
                 {
@@ -200,8 +198,8 @@ public class NGraphicRaycaster : UnityEngine.UI.GraphicRaycaster
                     screenPosition = eventPosition,
                     index = resultAppendList.Count,
                     depth = m_RaycastResults[index].depth,
-                    sortingLayer = canvas.sortingLayerID,
-                    sortingOrder = canvas.sortingOrder,
+                    sortingLayer = Canvas.sortingLayerID,
+                    sortingOrder = Canvas.sortingOrder,
                     worldPosition = ray.origin + ray.direction * distance,
                     worldNormal = -transForward
                 };

@@ -10,7 +10,7 @@ namespace NeverSayNever.Core.HUD
     using NeverSayNever.Utilities;
 
     [RequireComponent(typeof(Canvas))]
-    [RequireComponent(typeof(GraphicRaycaster))]
+    [RequireComponent(typeof(NGraphicRaycaster))]
     public class UIPanelInfo : UIBaseBehaviour
     {
 

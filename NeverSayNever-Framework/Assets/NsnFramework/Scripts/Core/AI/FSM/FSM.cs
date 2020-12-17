@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System;
 
 
-namespace NeverSayNever.Core.FSM
+namespace NeverSayNever.Core.AI
 {
     /// <summary>
     /// 有限状态机

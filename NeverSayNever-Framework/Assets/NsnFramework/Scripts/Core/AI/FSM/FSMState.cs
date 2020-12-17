@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 
-namespace NeverSayNever.Core.FSM
+namespace NeverSayNever.Core.AI
 {
     public enum eFSMState
     {

@@ -1,0 +1,9 @@
+
+NeverSayNever-Framework/Assets/NsnFramework/Plugins/Sirenix
+NeverSayNever-Framework/Library
+NeverSayNever-Framework/Temp
+NeverSayNever-Framework/Log
+NeverSayNever-Framework/obj
+NeverSayNever-Framework/.vs
+NeverSayNever-Framework/Assets/NsnFramework/Plugins/Sirenix.meta
+*.csproj

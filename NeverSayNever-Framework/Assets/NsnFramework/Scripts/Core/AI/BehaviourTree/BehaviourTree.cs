@@ -38,7 +38,7 @@ namespace NeverSayNever.Core.AI
 
         public static Terminate Terminate() => Terminate();
 
-        public static Log Log(string msg) => Log(msg);
+        public static Log Log(string msg, params string[] args) => Log(msg, args);
     }
 
     // 节点抽象类

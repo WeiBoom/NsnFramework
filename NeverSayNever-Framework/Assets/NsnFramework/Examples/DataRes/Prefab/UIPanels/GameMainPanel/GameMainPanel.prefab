@@ -1228,7 +1228,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8717853960419771763}
   - component: {fileID: 1949909635346170422}
-  - component: {fileID: 1732927939531105412}
+  - component: {fileID: 3716371583591299677}
   - component: {fileID: 5672326673979380443}
   m_Layer: 5
   m_Name: GameMainPanel
@@ -1236,7 +1236,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &8717853960419771763
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1279,7 +1279,7 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 10
   m_TargetDisplay: 0
---- !u!114 &1732927939531105412
+--- !u!114 &3716371583591299677
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1288,7 +1288,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8717853960419771760}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Script: {fileID: 11500000, guid: 0501d48dbe5b8514bbab70e0df1d2b43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_IgnoreReversedGraphics: 1
@@ -1308,7 +1308,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b94bb59e9e3d7924f8a807b3254687bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uiScriptType: 0
+  uiScriptType: 1
   fixedElements: []
   dynamicElements:
   - key: tmp_title

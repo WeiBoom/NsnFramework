@@ -5,8 +5,6 @@ namespace NeverSayNever.Utilities
 {
     public static class ULog
     {
-        public static bool IsOpenLog = true;
-
         private static readonly StringBuilder LogInfos = new StringBuilder();
 
         private static void SetInfos(string content, params string[] args)

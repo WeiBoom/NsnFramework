@@ -22,7 +22,7 @@ end
 -- 声明一个全局的设置元表index的方法
 setmetatableindex = _setmetatableindex
 
--- 深拷贝对象
+--- 深拷贝对象
 function clone(object)
     local lookup_table = {}
     local function _copy(object)
@@ -41,7 +41,8 @@ function clone(object)
     return _copy(object)
 end
 
--- 类方法，模拟继承
+--- 实现类
+---@param classname string 所继承的类名
 function class(classname, ...)
     local cls = {__cname = classname}
 
@@ -116,34 +117,37 @@ function class(classname, ...)
     return cls
 end
 
--- 判断对象的数据类型
-local iskindof_
-iskindof_ = function(cls, name)
-    local __index = rawget(cls, "__index")
-    if type(__index) == "table" and rawget(__index, "__cname") == name then return true end
 
-    if rawget(cls, "__cname") == name then return true end
-    local __supers = rawget(cls, "__supers")
-    if not __supers then return false end
-    for _, super in ipairs(__supers) do
-        if iskindof_(super, name) then return true end
+--[[
+-- 使用示例 : 
+try ( 
+     function() ... end,
+    {   catch = function(errors) ... end ,
+        finally = function(ok,errors) ... end }
+)
+]]--
+--- 模拟实现try catch方法
+---@param block table
+function try(block)
+    -- get the try function
+    local try = block[1]
+    assert(try)
+     -- get catch and finally functions
+    local funcs = block[2]
+    -- try to call it
+    local ok, errors = xpcall(try, debug.traceback)
+    if not ok then
+        -- run the catch function
+        if funcs and funcs.catch then
+            funcs.catch(errors)
+        end
     end
-    return false
-end
-
-function iskindof(obj, classname)
-    local t = type(obj)
-    if t ~= "table" and t ~= "userdata" then return false end
-
-    local mt
-    if t == "userdata" then
-        if tolua.iskindof(obj, classname) then return true end
-        mt = tolua.getpeer(obj)
-    else
-        mt = getmetatable(obj)
+    -- run the finally function
+    if funcs and funcs.finally then
+        funcs.finally(ok, errors)
     end
-    if mt then
-        return iskindof_(mt, classname)
+    -- ok?
+    if ok then
+        return errors
     end
-    return false
 end

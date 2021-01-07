@@ -1,7 +1,7 @@
 ---@class M_ModuleName
 MessengerName = { Events = {} };
 local this = MessengerName;
----@type V_PanelName
+---@type V_ModuleName
 local PanelName = require("PanelName");
 
 function MessengerName.OnPreOpen()

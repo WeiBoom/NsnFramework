@@ -14,6 +14,8 @@ namespace NeverSayNever.Core.HUD
     public class UIPanelInfo : UIBaseBehaviour
     {
 
+        public AnimationCurve animationCurve;
+
         [NSNEnum("动画"), Tooltip("界面动画类型")]
         public EPanelTween tweenType = EPanelTween.None;
 
@@ -51,6 +53,8 @@ namespace NeverSayNever.Core.HUD
 
         private void OnPlayShowAnim()
         {
+            if (animationCurve != null)
+                tween.SetEase(animationCurve);
             switch (tweenType)
             {
                 case EPanelTween.None:

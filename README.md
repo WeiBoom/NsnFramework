@@ -3,9 +3,11 @@
 Created: Jul 14, 2020 11:57 PM
 Tags: Framework, Unity
 
- NSN.Framework是一套提供给Unity开发者的开发框架，旨在做到开箱即用，提高开发效率。商业项目亦或是独立游戏，都可以做到开箱即用，让游戏开发变得更为简单。
+[**NSN.Framework](https://github.com/WeiBoom/NsnFramework)** 是一套提供给Unity开发者的开发框架，旨在做到开箱即用，提高开发效率。商业项目亦或是独立游戏，都可以做到开箱即用，让游戏开发变得更为简单。
 
-QQ：631450364
+**QQ：631450364**
+
+**Unity 版本：2019.4.9f1**
 
 ## 辅助插件
 
@@ -31,13 +33,13 @@ QQ：631450364
 
 ## 启用框架：
 
-![README_Image/Untitled.png](README_Image/Untitled.png)
+![NsnFramework%20For%20Unity%20fab0a4b5cd604c689c66f60438b7fbbb/Untitled.png](NsnFramework%20For%20Unity%20fab0a4b5cd604c689c66f60438b7fbbb/Untitled.png)
 
 Initialize会自动生成框架所需的配置文件（存放在Assets/NsnFramework/Resources/Setting/ 目录下），通过MenuInspetor可以直接查看生成的配置文件内容。
 
 PS：框架内已经初始化好了配置文件，并且在Examples文件夹下，以及提供了一套使用规范示例。
 
-## 框架内容
+## 框架核心内容
 
 - **可配置的一键打包工具，支持jenkins。**
 
@@ -45,17 +47,45 @@ PS：框架内已经初始化好了配置文件，并且在Examples文件夹下�
 
 **注意：大部分项目都需要严格管理自己的资源，不仅是为了方便打包，也是为了更好的管理、优化项目。**
 
-![README_Image/Untitled%201.png](README_Image/Untitled%201.png)
+![NsnFramework%20For%20Unity%20fab0a4b5cd604c689c66f60438b7fbbb/Untitled%201.png](NsnFramework%20For%20Unity%20fab0a4b5cd604c689c66f60438b7fbbb/Untitled%201.png)
 
 - **简单易上手的UI管理框架**
 
 框架内提供了一套非常简单且易扩展的 UI管理架构，可以自动生成UI初始化代码，免去繁琐的transform.Find("ui").GetComponent<T>()的操作，支持C#与lua。自动生成的代码以及逻辑都放置在上面配置的文件夹中。
 
-![README_Image/Untitled%202.png](README_Image/Untitled%202.png)
+![NsnFramework%20For%20Unity%20fab0a4b5cd604c689c66f60438b7fbbb/Untitled%202.png](NsnFramework%20For%20Unity%20fab0a4b5cd604c689c66f60438b7fbbb/Untitled%202.png)
+
+**C#代码示例，利用C# partical特性，开发者无需关注各个组件的获取操作。**
+
+![NsnFramework%20For%20Unity%20fab0a4b5cd604c689c66f60438b7fbbb/Untitled%203.png](NsnFramework%20For%20Unity%20fab0a4b5cd604c689c66f60438b7fbbb/Untitled%203.png)
+
+该部分代码自动生成，无需开发者管理
+
+![NsnFramework%20For%20Unity%20fab0a4b5cd604c689c66f60438b7fbbb/Untitled%204.png](NsnFramework%20For%20Unity%20fab0a4b5cd604c689c66f60438b7fbbb/Untitled%204.png)
+
+UI逻辑的具体实现，开发者自己编写逻辑
+
+**Lua代码示例，Attribute 方法是用来获取组件，同C#一样，Panel是具体的逻辑实现，代码实现的功能和上面C#实现的功能是一样的。**
+
+![NsnFramework%20For%20Unity%20fab0a4b5cd604c689c66f60438b7fbbb/Untitled%205.png](NsnFramework%20For%20Unity%20fab0a4b5cd604c689c66f60438b7fbbb/Untitled%205.png)
+
+该代码自动生成，开发者无需关心内容，且仅有对应的Panel界面会require，其余不会也不应该来访问该部分代码。
+
+![NsnFramework%20For%20Unity%20fab0a4b5cd604c689c66f60438b7fbbb/Untitled%206.png](NsnFramework%20For%20Unity%20fab0a4b5cd604c689c66f60438b7fbbb/Untitled%206.png)
+
+包含自身组件的table，Ui逻辑由开发者自己实现。
 
 - **资源加载**
 
 框架内的AssetBunde的加载模式基于[**开源框架xasset**](https://github.com/xasset/xasset)而来，秉承xasset的理念，让开发者不再过多关心AssetBundle底层的东西，把更多的精力和事件用于游戏内容的创作中！
+
+- **计时器**
+
+提供延时，循环，自定义三种计时器处理方式。后续会更新的计时器算法。
+
+- **AI**
+
+框架内提供了简单的状态机和行为树解决方案。帮助梗快的构建自己的AI系统。
 
 ## 框架示例：
 
@@ -63,7 +93,7 @@ PS：框架内已经初始化好了配置文件，并且在Examples文件夹下�
 
 配置案例：Assets/NsnFramework/Resources/Setting/
 
-![README_Image/Untitled%203.png](README_Image/Untitled%203.png)
+![NsnFramework%20For%20Unity%20fab0a4b5cd604c689c66f60438b7fbbb/Untitled%207.png](NsnFramework%20For%20Unity%20fab0a4b5cd604c689c66f60438b7fbbb/Untitled%207.png)
 
 NsnFramework 启动场景，UI加载案例（AssetBundle模式）
 
@@ -71,14 +101,15 @@ NsnFramework 启动场景，UI加载案例（AssetBundle模式）
 
 曾有小伙伴这样提过：”大部分框架都提供了很多内容，然而我只想要其中部分，太多的内容让我根本看不过来，也用不上。“ Boom深以为然，所以在未来的开发中，NsnFramework会将大部分内容以扩展包的形式打包成unitypackage放在项目中，需要的同学们可以自行获取，刚接触的同学也可以只需要关注NsnFramework的核心内容。
 
-**未来的扩展内容：**
+**未来的扩展/开发内容：**
 
-- [ ]  Network
-- [ ]  UGUI Component Extend
-- [ ]  Tools
-- [ ]  Fix bugs
+- [ ]  游戏内辅助工具
+- [ ]  模型优化工具
+- [ ]  UGUI组件扩展
+- [ ]  Lua框架扩展
+- [ ]  网络信息处理
 - [ ]  And More ...
 
 ## **最后**
 
-为什么叫NsnFramework? **Nsn = Nevery say never**。希望各位怀有梦想与希望的开发者，能坚持理念与理想，永不言弃，创作出更优秀的“第九艺术”。也希望小小的NsnFramework能在各位的道路上尽到一点绵薄之力！
+为什么叫NsnFramework? **Nsn = Nevery say never**。希望各位怀有梦想与希望的开发者，能坚守自己的理念，坚持自己的梦想，永不言弃。也希望小小的NsnFramework能在各位的道路上尽到一点绵薄之力！

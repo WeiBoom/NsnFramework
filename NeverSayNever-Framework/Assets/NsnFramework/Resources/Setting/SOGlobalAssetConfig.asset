@@ -219,7 +219,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 8
+      Data: 9
     - Name: 
       Entry: 7
       Data: 
@@ -406,6 +406,30 @@ MonoBehaviour:
     - Name: extension
       Entry: 1
       Data: .txt
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Atlas
+    - Name: $v
+      Entry: 7
+      Data: 20|NeverSayNever.Core.Asset.SOGlobalAssetConfig+AssetFolderInfo, Assembly-CSharp
+    - Name: folder
+      Entry: 10
+      Data: 0
+    - Name: path
+      Entry: 1
+      Data: Assets/NsnFramework/Examples/DataRes/Atlas
+    - Name: extension
+      Entry: 1
+      Data: .spriteatals
     - Name: 
       Entry: 8
       Data: 

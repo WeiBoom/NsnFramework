@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 namespace NeverSayNever.Core.HUD
 {
-    public class NImage : UnityEngine.UI.Image
+    public class NsnUIImage : UnityEngine.UI.Image
     {
         [HideInInspector]
         public new CanvasRenderer canvasRenderer;

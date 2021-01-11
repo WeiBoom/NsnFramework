@@ -20,6 +20,7 @@ namespace NeverSayNever.Core.Asset
         Shader,
         TextAsset,
         Scene,
+        Atlas,
     }
 
     public enum EAssetFileType
@@ -170,13 +171,13 @@ namespace NeverSayNever.Core.Asset
         /// <param name="type"></param>
         /// <param name="name"></param>
         /// <param name="callback"></param>
-        private static void LoadAsset(EAssetType type, string name, Action<object> callback)
+        private static void LoadAsset<T>(EAssetType type, string name, Action<object> callback)
         {
             var assetName = GetAssetFinalPath(type, name);
             var assetNameSplit = assetName.Split('/');
             var bundleName = assetNameSplit[assetNameSplit.Length - 1];
             var bundlePath = GetBundleAssetFinalPath(type, name);
-            assetLoader.LoadAsset<GameObject>(bundlePath, assetName, callback);
+            assetLoader.LoadAsset<T>(bundlePath, assetName, callback);
         }
 
         /// <summary>
@@ -186,7 +187,7 @@ namespace NeverSayNever.Core.Asset
         /// <param name="callback"></param>
         public static void LoadUIPanel(string panelName, Action<object> callback)
         {
-            LoadAsset(EAssetType.UI, panelName, callback);
+            LoadAsset<GameObject>(EAssetType.UI, panelName, callback);
         }
 
         /// <summary>
@@ -196,7 +197,7 @@ namespace NeverSayNever.Core.Asset
         /// <param name="callback"></param>
         public static void LoadAudio(string audioName, Action<object> callback)
         {
-            LoadAsset(EAssetType.Audio, audioName, callback);
+            LoadAsset<AudioClip>(EAssetType.Audio, audioName, callback);
         }
 
         /// <summary>
@@ -206,7 +207,7 @@ namespace NeverSayNever.Core.Asset
         /// <param name="callback"></param>
         public static void LoadTextAsset(string textName, Action<object> callback)
         {
-            LoadAsset(EAssetType.TextAsset, textName, callback);
+            LoadAsset<TextAsset>(EAssetType.TextAsset, textName, callback);
         }
 
         /// <summary>
@@ -216,7 +217,7 @@ namespace NeverSayNever.Core.Asset
         /// <param name="callback"></param>
         public static void LoadModel(string modelName, Action<object> callback)
         {
-            LoadAsset(EAssetType.Model, modelName, callback);
+            LoadAsset<GameObject>(EAssetType.Model, modelName, callback);
         }
 
         /// <summary>
@@ -226,7 +227,7 @@ namespace NeverSayNever.Core.Asset
         /// <param name="callback"></param>
         public static void LoadTexture(string texName, Action<object> callback)
         {
-            LoadAsset(EAssetType.Texture, texName, callback);
+            LoadAsset<Texture>(EAssetType.Texture, texName, callback);
         }
 
         /// <summary>

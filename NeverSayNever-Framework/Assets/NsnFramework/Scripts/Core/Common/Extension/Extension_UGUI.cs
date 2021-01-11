@@ -26,6 +26,13 @@ public static class Extension_UGUI
     #region RawImage
     public static void LoadTexture(this RawImage rawImage, string textureName, bool isNativeSize = false)
     {
+        NeverSayNever.Core.Asset.ResourceManager.LoadTexture(textureName, (obj) =>
+         {
+             var texture = (Texture)obj;
+             rawImage.texture = texture;
+             if (isNativeSize)
+                 rawImage.SetNativeSize();
+         });
     }
 
     public static void LoadTexture(this RawImage rawImage, string textureName, float sizeX, float sizeY)

@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 
 //namespace NeverSayNever.Core.HUD
 //{
-public class NGraphicRaycaster : UnityEngine.UI.GraphicRaycaster
+public class NsnGraphicRaycaster : UnityEngine.UI.GraphicRaycaster
 {
     // 优化GraphicRaycaster.get_eventCamera()
     private Camera targetCamera;

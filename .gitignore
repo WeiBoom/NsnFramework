@@ -9,3 +9,4 @@ NeverSayNever-Framework/obj
 NeverSayNever-Framework/.vs
 NeverSayNever-Framework/Assets/NsnFramework/Plugins/Sirenix.meta
 *.csproj
+*.DS_Store

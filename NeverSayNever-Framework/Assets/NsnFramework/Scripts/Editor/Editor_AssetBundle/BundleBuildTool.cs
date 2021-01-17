@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEditor;
+using UnityEditor.Callbacks;
 
 namespace NeverSayNever.Editors
 {
@@ -132,7 +133,7 @@ namespace NeverSayNever.Editors
 
 
         // 临时缓存lua拷贝的txt文件路径，打包完成后删除
-        private Queue<string> temporyLuaTxtFileList = new Queue<string>();
+        private static Queue<string> temporyLuaTxtFileList = new Queue<string>();
 
 
         public BundlePackager(BuildTarget buildTarget, int bundleVersion)
@@ -235,15 +236,22 @@ namespace NeverSayNever.Editors
             {
                 buildList.Add(bundle.ToBuild());
             }
-            AssetBundleManifest manifest = BuildPipeline.BuildAssetBundles(PlatformOutputPath, buildList.ToArray(), BuildAssetBundleOptions.ChunkBasedCompression, BuildTarget);
+            var buildArray = buildList.ToArray();
+            AssetBundleManifest manifest = BuildPipeline.BuildAssetBundles(PlatformOutputPath, buildArray, BuildAssetBundleOptions.ChunkBasedCompression, BuildTarget);
             if (manifest == null)
                 Debug.LogError("BuildAssetBundles Failure");
+            else
+                Debug.Log("BuildAssetBundles Success");
 
-            while(temporyLuaTxtFileList.Count >0)
+            AssetDatabase.Refresh();
+            AssetDatabase.SaveAssets();
+
+            // 打包完成，删除临时创建的lua文件
+            while (temporyLuaTxtFileList.Count > 0)
             {
                 var str = temporyLuaTxtFileList.Dequeue();
-                File.Delete(str);
-                File.Delete(str + ".meta");
+                NEditorTools.DeleteFile(str);
+                NEditorTools.DeleteFile(str + ".meta");
             }
         }
 
@@ -340,11 +348,12 @@ namespace NeverSayNever.Editors
                 var txtFile = file.Replace(".lua", ".txt");
                 var finalPath = rootPath + file;
                 var txtFilePath = rootPath + txtFile;
+                NEditorTools.DeleteFile(txtFilePath);
                 NEditorTools.CopyFile(finalPath, txtFilePath);
                 temporyLuaTxtFileList.Enqueue(txtFilePath);
                 temporyFiles.Add(txtFile);
             }
-
+            AssetDatabase.Refresh();
             var bundleBuild = CreateBundleBuildInfo(EBundleBuildType.Lua, path, temporyFiles.ToArray());
             return bundleBuild;
         }

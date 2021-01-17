@@ -174,6 +174,17 @@ namespace NeverSayNever.Editors
         }
 
         /// <summary>
+        /// 删除文件
+        /// </summary>
+        /// <param name="filePath"></param>
+        public static void DeleteFile(string filePath)
+        {
+            var fileName = GetRegularPath(filePath);
+            if (File.Exists(fileName))
+                File.Delete(fileName);
+        }
+
+        /// <summary>
         /// 清空指定目录下的所有文件
         /// </summary>
         /// <param name="directoryPath"></param>

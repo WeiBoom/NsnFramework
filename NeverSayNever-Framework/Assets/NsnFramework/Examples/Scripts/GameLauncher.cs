@@ -17,8 +17,10 @@ namespace NeverSayNever.Example
         public GameObject UIRoot;
         [Title("音频 根节点")]
         public AudioSource AudioSourceRoot;
-        [InfoBox("是否启动lua模式")]
+        [InfoBox("是否加载Lua")]
         public bool luaMode;
+        [ShowIf("luaMode")][InfoBox("是否以AB模式加载lua（需要先打包）")]
+        public bool luaBundle;
         [InfoBox("是否启用AssetBundle模式")]
         public bool bundleMode;
 
@@ -26,6 +28,7 @@ namespace NeverSayNever.Example
         {
             loadType = bundleMode ? EAssetLoadType.AssetBundle : EAssetLoadType.AssetDataBase;
 
+            Framework.SetLuaMode(luaMode, luaBundle);
             Framework.SetAssetLoadType(loadType);
             Framework.SetUIRoot(UIRoot);
             Framework.SetAudioSourceRoot(AudioSourceRoot);

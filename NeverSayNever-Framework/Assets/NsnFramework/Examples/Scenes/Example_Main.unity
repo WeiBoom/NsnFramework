@@ -168,6 +168,7 @@ MonoBehaviour:
   UIRoot: {fileID: 866379630}
   AudioSourceRoot: {fileID: 558691553}
   luaMode: 1
+  luaBundle: 1
   bundleMode: 1
 --- !u!1 &558691549
 GameObject:
@@ -401,7 +402,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 866379630}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Script: {fileID: 11500000, guid: 0501d48dbe5b8514bbab70e0df1d2b43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_IgnoreReversedGraphics: 1

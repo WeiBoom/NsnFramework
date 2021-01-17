@@ -9,7 +9,7 @@ namespace NeverSayNever.Core
 
     public static class Framework
     {
-        private static SOUIElementsCollectRule collecitonRuleConfig;
+
         private static SOGlobalAssetConfig globalConfig;
         /// <summary>
         /// 框架默认的全局配置
@@ -23,6 +23,8 @@ namespace NeverSayNever.Core
                 return globalConfig;
             }
         }
+
+        private static SOUIElementsCollectRule collecitonRuleConfig;
         /// <summary>
         /// UI元素收集配置
         /// </summary>
@@ -45,6 +47,15 @@ namespace NeverSayNever.Core
         /// 是否开启热更
         /// </summary>
         public static bool IsActivateHotfix { get; set; } = false;
+
+        /// <summary>
+        /// 是否启用lua脚本
+        /// </summary>
+        private static bool IsUsingLuaScript = false;
+        /// <summary>
+        /// 是否以AssetBundle的方式加载lua脚本
+        /// </summary>
+        public static bool IsUsingLuaBundleMode { get; private set; } = false;
 
         /// <summary>
         /// 框架所采取的加载方式
@@ -81,7 +92,8 @@ namespace NeverSayNever.Core
             ResourceManager.OnInitialize(LoadType);
 
             // Step3. 初始化Lua模块管理器  如果不使用Lua,则跳过
-            LuaManager.Instance.OnInitialize("Launcher");
+            if(IsUsingLuaScript)
+                LuaManager.Instance.OnInitialize("Launcher");
 
             // Step4. 初始化UI模块管理器
             UIManager.Instance.OnInitialize(UIRoot);
@@ -110,11 +122,20 @@ namespace NeverSayNever.Core
         {
             LoadType = loadType;
         }
+
+        // 设置lua，是否启用，以及是否以assetbundle的模式加载lua脚本
+        public static void SetLuaMode(bool enable,bool bundleMode)
+        {
+            IsUsingLuaScript = enable;
+            IsUsingLuaBundleMode = enable && bundleMode;
+        }
+
         // 设置UI根节点
         public static void SetUIRoot(GameObject uiroot)
         {
             UIRoot = uiroot;
         }
+
         // 设置音频播放器节点
         public static void SetAudioSourceRoot(AudioSource audioRoot)
         {

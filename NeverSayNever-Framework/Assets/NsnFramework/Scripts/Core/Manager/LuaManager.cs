@@ -52,13 +52,13 @@ namespace NeverSayNever.Core
             launchFileName = args[0] as string;
 
             // Bundle 模式下需要先加载Lua的bundle资源，命名为luaLogic
-#if !UNITY_EDITOR  || BUNDLE_MODE
-            LoadScriptBundle(luaBundleName);
-#else
-
-            var luaFilePath = Framework.GlobalConfig.UIScriptRootForLua.Replace("UI/", "");
-            GetAllLuaFiles(luaFilePath);
-#endif
+            if (Framework.IsUsingLuaBundleMode)
+                LoadScriptBundle(luaBundleName);
+            else
+            {
+                var luaFilePath = Framework.GlobalConfig.UIScriptRootForLua.Replace("UI/", "");
+                GetAllLuaFiles(luaFilePath);
+            }
         }
 
         public override void OnUpdate()
@@ -137,16 +137,19 @@ namespace NeverSayNever.Core
             var strs = fileName.ToLower().Split('/');
             fileName = strs[strs.Length - 1];
             string str = null;
-#if BUNDLE_MODE || !UNITY_EDITOR
-            CodeFileMap.TryGetValue(fileName, out str);
-            if (str == null)
-                Debug.LogError("没有找到脚本:" + fileName);
-#else
-            if (!fileName.Contains(LuaSuffix))
-                fileName += LuaSuffix;
-            if (_editorScripsPathMap.ContainsKey(fileName))
-                str = File.ReadAllText(_editorScripsPathMap[fileName]);
-#endif
+            if (Framework.IsUsingLuaBundleMode)
+            {
+                CodeFileMap.TryGetValue(fileName, out str);
+                if (str == null)
+                    Debug.LogError("没有找到脚本:" + fileName);
+            }
+            else
+            {
+                if (!fileName.Contains(LuaSuffix))
+                    fileName += LuaSuffix;
+                if (_editorScripsPathMap.ContainsKey(fileName))
+                    str = File.ReadAllText(_editorScripsPathMap[fileName]);
+            }
             return str;
         }
 

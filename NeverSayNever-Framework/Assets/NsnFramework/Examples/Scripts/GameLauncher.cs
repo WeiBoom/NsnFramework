@@ -23,8 +23,8 @@ namespace NeverSayNever.Example
         public bool luaBundle;
         [InfoBox("是否启用AssetBundle模式")]
         public bool bundleMode;
-
-        private void Awake()
+        
+        private void InitFramework()
         {
             loadType = bundleMode ? EAssetLoadType.AssetBundle : EAssetLoadType.AssetDataBase;
 
@@ -38,6 +38,8 @@ namespace NeverSayNever.Example
 
         private void Start()
         {
+            InitFramework();
+
             Debug.Log("GameLauncher Start");
             if (loadType == Core.Asset.EAssetLoadType.AssetBundle)
             {

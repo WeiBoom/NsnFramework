@@ -1276,7 +1276,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
-  m_SortingLayerID: 0
+  m_SortingLayerID: -125471979
   m_SortingOrder: 10
   m_TargetDisplay: 0
 --- !u!114 &3716371583591299677
@@ -1321,5 +1321,29 @@ MonoBehaviour:
     element: {fileID: 5373513372940149954}
   isPanel: 1
   isLuaPanel: 1
-  tweenType: 0
+  animationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  tweenType: 1
   panelLayer: 1

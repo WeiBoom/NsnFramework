@@ -123,6 +123,20 @@ namespace NeverSayNever.Core
             RegisterPanel(panelName, false, panelMessenger);
         }
 
+        public T GetUIMessenger<T>(string moduleName) where T : UIBaseMessenger
+        {
+            _allPanelInfoDic.TryGetValue(moduleName, out var registerInfo);
+            if(registerInfo != null)
+            {
+                return registerInfo.Messenger as T;
+            }
+            else
+            {
+                Debug.LogError($"模块 {moduleName} 没有注册.");
+                return null;
+            }
+        }
+
         /// <summary>
         /// 通过反射生成messenger并实现类的注册
         /// </summary>
@@ -141,7 +155,7 @@ namespace NeverSayNever.Core
                 throw new System.Exception($"注册模块失败 : {moduleName}");
             }
             var panelMessenger = target as UIPanelMessenger;
-            RegisterCsPanel(panelName,panelMessenger);
+            RegisterCsPanel(moduleName, panelMessenger);
         }
 
         /// <summary>
@@ -158,22 +172,22 @@ namespace NeverSayNever.Core
         /// </summary>
         /// <param name="panelName">面板名</param>
         /// <param name="args">开启界面传递的参数</param>
-        public void OpenPanel(string panelName, params object[] args)
+        public void OpenPanel(string moduleName, params object[] args)
         {
-            _allPanelInfoDic.TryGetValue(panelName, out var panelInfo);
-            if (panelInfo == null)
+            _allPanelInfoDic.TryGetValue(moduleName, out var registerInfo);
+            if (registerInfo == null)
             {
-                Debug.LogError($"没找到界面信息，请先注册{panelName}");
+                Debug.LogError($"没找到界面信息，请先注册{ moduleName}");
                 return;
             }
 
-            if (panelInfo.IsLua)
+            if (registerInfo.IsLua)
             {
-                OpenLuaPanel(panelInfo, panelName, args);
+                OpenLuaPanel(registerInfo, args);
             }
             else
             {
-                OpenCsPanel(panelInfo, args);
+                OpenCsPanel(registerInfo, args);
             }
         }
 
@@ -181,11 +195,16 @@ namespace NeverSayNever.Core
         /// 隐藏界面
         /// </summary>
         /// <param name="panelName"></param>
-        public void HidePanel(string panelName)
+        public void HidePanel(string moduleName)
         {
-            _allPanelInfoDic.TryGetValue(panelName, out var info);
-            info?.Messenger.OnPreHide();
-            _shownPanelDic.TryGetValue(panelName, out var panel);
+            _allPanelInfoDic.TryGetValue(moduleName, out var info);
+            if (info == null)
+            {
+                Debug.LogError($"注册列表中没有界面 {moduleName}");
+                return;
+            }
+            info.Messenger.OnPreHide();
+            _shownPanelDic.TryGetValue(info.Messenger.PanelName, out var panel);
             if (panel != null && panel.IsShow)
             {
                 panel.gameObject.SetActive(false);
@@ -198,11 +217,16 @@ namespace NeverSayNever.Core
         /// <param name="panelName">界面名字</param>
         /// <param name="isPlayCloseAnim">是否播放关闭动画</param>
         /// <param name="putInPool">是否把对象缓存起来</param>
-        public void ClosePanel(string panelName, bool isPlayCloseAnim = false, bool putInPool = true)
+        public void ClosePanel(string moduleName, bool putInPool = true)
         {
-            _allPanelInfoDic.TryGetValue(panelName, out var info);
-            info?.Messenger.OnPreClose();
-            _shownPanelDic.TryGetValue(panelName, out var panel);
+            _allPanelInfoDic.TryGetValue(moduleName, out var info);
+            if(info == null)
+            {
+                Debug.LogError($"注册列表中没有界面 {moduleName}");
+                return;
+            }
+            info.Messenger.OnPreClose();
+            _shownPanelDic.TryGetValue(info.Messenger.PanelName, out var panel);
             if (panel != null)
             {
                 if (putInPool)
@@ -214,18 +238,37 @@ namespace NeverSayNever.Core
                 {
                     ResourceManager.ReleaseObject(panel.gameObject);
                 }
-                _shownPanelDic.Remove(panelName);
+                _shownPanelDic.Remove(info.Messenger.PanelName);
             }
+        }
+
+        /// <summary>
+        /// 打开窗口
+        /// </summary>
+        /// <param name="widgetName"></param>
+        /// <param name="args"></param>
+        public void OpenWidget(string widgetName, params object[] args)
+        { 
+            
+        }
+
+        /// <summary>
+        /// 关闭窗口
+        /// </summary>
+        /// <param name="widgerName"></param>
+        public void CloseWidget(string widgerName)
+        {
+
         }
 
         /// <summary>
         /// 打开界面 C#类型
         /// </summary>
-        /// <param name="panelInfo"></param>
+        /// <param name="registerInfo"></param>
         /// <param name="args"></param>
-        private void OpenCsPanel(UIRegisterInfo panelInfo, params object[] args)
+        private void OpenCsPanel(UIRegisterInfo registerInfo, params object[] args)
         {
-            var messenger = (UIPanelMessenger) panelInfo.Messenger;
+            var messenger = (UIPanelMessenger)registerInfo.Messenger;
             if (_shownPanelDic.ContainsKey(messenger.PanelName))
             {
                 messenger.OnReceiveMsg(args);
@@ -242,13 +285,13 @@ namespace NeverSayNever.Core
         /// <summary>
         /// 打开界面 lua类型
         /// </summary>
-        /// <param name="panelInfo"></param>
+        /// <param name="registerInfo"></param>
         /// <param name="panelName"></param>
         /// <param name="args"></param>
-        private void OpenLuaPanel(UIRegisterInfo panelInfo, string panelName, params object[] args)
+        private void OpenLuaPanel(UIRegisterInfo registerInfo, params object[] args)
         {
-            var luaMessenger = (UIPanelMessengerForLua) panelInfo.Messenger;
-            if (_shownPanelDic.ContainsKey(panelName))
+            var luaMessenger = (UIPanelMessengerForLua)registerInfo.Messenger;
+            if (_shownPanelDic.ContainsKey(luaMessenger.PanelName))
             {
                 luaMessenger.OnOpenPanel(luaMessenger.PanelObj);
             }
@@ -259,7 +302,7 @@ namespace NeverSayNever.Core
                 // 发送开启界面请求
                 if (luaMessenger.OnPreOpen(args))
                 {
-                    LoadLuaPanel(panelName);
+                    LoadLuaPanel(luaMessenger.PanelName);
                 }
             }
         }

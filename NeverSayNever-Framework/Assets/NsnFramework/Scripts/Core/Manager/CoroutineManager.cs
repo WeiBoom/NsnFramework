@@ -44,10 +44,8 @@ namespace NeverSayNever.Core
                             Running = false;
                         }
                     }
-
-                    Instance.RemoveCoroutine(Id);
                 }
-
+                Instance.RemoveCoroutine(Id);
                 yield return null;
             }
         }

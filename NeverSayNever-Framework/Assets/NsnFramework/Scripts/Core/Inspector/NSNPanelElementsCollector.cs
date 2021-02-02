@@ -153,6 +153,11 @@ namespace NeverSayNever.Utilities
             {
                 return typeof(Grid);
             }
+            // slider
+            if (nodeName.StartsWith("slider_"))
+            {
+                return typeof(Slider);
+            }
             return null;
         }
     }

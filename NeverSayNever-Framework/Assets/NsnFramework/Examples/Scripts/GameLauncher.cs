@@ -36,6 +36,11 @@ namespace NeverSayNever.Example
             Framework.StartUp();
         }
 
+        private void Awake()
+        {
+            DontDestroyOnLoad(gameObject);
+        }
+
         private void Start()
         {
             InitFramework();
@@ -55,9 +60,10 @@ namespace NeverSayNever.Example
             else
             {
                 //注册UI界面
-                UIManager.Instance.RegisterCsPanelByReflect("GameMain");
+                UIManager.Instance.RegisterCsPanelByReflect(UIModuleDefine.GameMain);
+                UIManager.Instance.RegisterCsPanelByReflect(UIModuleDefine.GameLoading);
                 //打开面板
-                UIManager.Instance.OpenPanel("GameMainPanel");
+                UIManager.Instance.OpenPanel(UIModuleDefine.GameMain);
             }
 
         }

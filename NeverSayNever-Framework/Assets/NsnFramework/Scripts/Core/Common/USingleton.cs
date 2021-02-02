@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace NeverSayNever.Core
 {
-    public class USingleton<T> : MonoBehaviour where T : MonoBehaviour
+    public class USingleton<T> : HUD.UIBaseBehaviour where T : MonoBehaviour
     {
         private bool _isInitialized = false;
         private static T _instance;
@@ -57,6 +57,12 @@ namespace NeverSayNever.Core
                 Destroy(_instance.gameObject);
                 _instance = null;
             }
+        }
+
+        protected override void OnAwake()
+        {
+            base.OnAwake();
+            OnInitialize();
         }
 
         // 初始化

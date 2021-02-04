@@ -231,6 +231,21 @@ namespace NeverSayNever.Core.Asset
         }
 
         /// <summary>
+        /// 加载场景
+        /// </summary>
+        /// <param name="sceneName"></param>
+        /// <param name="callback"></param>
+        public static void LoadScene(string sceneName,Action<object> callback)
+        {
+            var assetName = GetAssetFinalPath(EAssetType.Scene, sceneName);
+            var assetNameSplit = assetName.Split('/');
+            var bundleName = assetNameSplit[assetNameSplit.Length - 1];
+            var bundlePath = GetBundleAssetFinalPath(EAssetType.Scene, sceneName);
+
+            assetLoader.LoadScene(bundlePath, bundleName, false, callback);
+        }
+
+        /// <summary>
         /// 释放资源对象
         /// </summary>
         public static void ReleaseObject(UObject target)

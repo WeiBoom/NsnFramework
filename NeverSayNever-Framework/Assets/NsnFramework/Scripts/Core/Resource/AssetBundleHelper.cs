@@ -45,8 +45,12 @@ namespace NeverSayNever.Core.Asset
         // 准备加载的bundle资源
         private static readonly List<BundleRequest> m_ReadToLoadBundleList = new List<BundleRequest>();
 
+        private static readonly List<SceneAssetRequest> m_SceneBundleRequestList = new List<SceneAssetRequest>();
         // Bundle资源的存放目录
         private static string bundle_asset_path;
+
+        // 当前正在运行的场景
+        private static SceneAssetRequest m_RunningScene;
 
         #endregion
 
@@ -71,8 +75,11 @@ namespace NeverSayNever.Core.Asset
             OnUpdateLoadingAssets();
             // 更新正在使用的资源，没使用的移动到未使用列表中
             OnUpdateAllUsedAssets();
+            // 更新场景资源
+            OnUpdateSceneAssets();
             // 更新未使用的资源
             OnUpdateAllUnusedAssets();
+
         }
 
         /// <summary>
@@ -152,6 +159,24 @@ namespace NeverSayNever.Core.Asset
                 request.Unload();
             }
             m_UnusedAssetList.Clear();
+        }
+
+        /// <summary>
+        /// 检查当前的场景资源
+        /// </summary>
+        private void OnUpdateSceneAssets()
+        {
+            for (var i = 0; i < m_SceneBundleRequestList.Count; i++)
+            {
+                var sceneRequest = m_SceneBundleRequestList[i];
+                if (sceneRequest.Tick() || !sceneRequest.IsUnused)
+                    continue;
+                // 从列表中移除
+                m_SceneBundleRequestList.RemoveAt(i);
+                // 添加到未使用的资源列表中
+                m_UnusedAssetList.Add(sceneRequest);
+                i--;
+            }
         }
 
         /// <summary>
@@ -306,6 +331,39 @@ namespace NeverSayNever.Core.Asset
             bundle.Use();
 
             return bundle;
+        }
+
+        /// <summary>
+        /// 加载场景资源
+        /// </summary>
+        /// <param name="scenePath"></param>
+        /// <param name="addictive"></param>
+        /// <returns></returns>
+        public SceneAssetRequest LoadScene(string scenePath,string sceneName, bool addictive,System.Action<object> callback)
+        {
+            if(scenePath.IsNullOrEmpty())
+            {
+                Debug.LogError("scene path is invalid");
+                return null;
+            }
+            var pathSplit = scenePath.Split('/');
+            var bundleName = pathSplit[pathSplit.Length - 1];
+            var asset = new SceneAssetRequest(scenePath, bundleName, sceneName, addictive);
+            if(!addictive)
+            {
+                if(m_RunningScene != null)
+                {
+                    m_RunningScene.Release();
+                    m_RunningScene = null;
+                }
+                m_RunningScene = asset;
+            }
+            asset.loadComplete = callback;
+            asset.Load();
+            asset.Use();
+
+            m_SceneBundleRequestList.Add(asset);
+            return asset;
         }
 
         /// <summary>

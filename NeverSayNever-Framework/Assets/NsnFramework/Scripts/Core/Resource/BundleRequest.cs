@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace NeverSayNever.Core.Asset
 {
+    using UnityEngine.SceneManagement;
     using UObject = UnityEngine.Object;
 
     public enum EBundleLoadState
@@ -452,5 +453,51 @@ namespace NeverSayNever.Core.Asset
         }
 
 
+    }
+
+    public class SceneAssetRequest : BaseAsset
+    {
+        public string assetBundleName;
+        protected BundleRequest bundleRequest;
+
+        public readonly LoadSceneMode loadSceneMode;
+        protected readonly string sceneName;
+
+        public SceneAssetRequest(string path,string bundleName,string sceneName,bool addictive)
+        {
+            assetUrl = path;
+            assetBundleName = bundleName;
+            this.sceneName = System.IO.Path.GetFileNameWithoutExtension(sceneName);
+            loadSceneMode = addictive ? LoadSceneMode.Additive : LoadSceneMode.Single;
+        }
+
+        public override float progress => 1;
+
+        internal override void Load()
+        {
+            if(!assetBundleName.IsNullOrEmpty())
+            {
+                bundleRequest = AssetBundleHelper.Instance.LoadBundle(assetBundleName);
+                if (bundleRequest != null)
+                {
+                    // 场景加载交给外部回掉去完成
+                    //SceneManager.LoadScene(sceneName, loadSceneMode);
+                }
+            }
+            else
+            {
+                try
+                {
+                    SceneManager.LoadScene(sceneName, loadSceneMode);
+                    loadState = EBundleLoadState.LoadingAsset;
+                }
+                catch(System.Exception e)
+                {
+                    Debug.LogException(e);
+                    error = e.ToString();
+                    loadState = EBundleLoadState.Loaded;
+                }
+            }
+        }
     }
 }

@@ -30,7 +30,8 @@ namespace NeverSayNever.Example
 
             btn_start.AddClickListener(()=>{
                 ULog.Print("测试 ----- 点击开始按钮");
-                GameSceneManager.LoadSceneAsync("Example_Start");
+
+                GameSceneManager.LoadSceneAsync("example_scene");
                 NeverSayNever.Core.UIManager.Instance.ClosePanel(UIModuleDefine.GameMain);
             });
 

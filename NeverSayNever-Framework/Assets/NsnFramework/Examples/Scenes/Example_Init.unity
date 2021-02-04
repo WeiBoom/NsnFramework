@@ -169,7 +169,7 @@ MonoBehaviour:
   AudioSourceRoot: {fileID: 558691553}
   luaMode: 0
   luaBundle: 0
-  bundleMode: 0
+  bundleMode: 1
 --- !u!1 &558691549
 GameObject:
   m_ObjectHideFlags: 0

@@ -107,6 +107,14 @@ namespace NeverSayNever.Core.HUD
         }
 
 
+        /// <summary>
+        /// 打开窗口界面
+        /// </summary>
+        /// <param name="widgetName"></param>
+        protected void OpenWidget(string widgetName)
+        {
+        }
+
         #endregion
     }
 }

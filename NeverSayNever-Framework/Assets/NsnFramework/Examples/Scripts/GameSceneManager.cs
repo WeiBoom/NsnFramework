@@ -39,10 +39,23 @@ namespace NeverSayNever.Example
             //{
             //    loadingMessenger.loadingAction += loadingAction;
             //    loadingMessenger.loadCompleteAction += loadComplete;
-               
             //}
-            // 协程加载场景
-            CoroutineManager.Instance.AddCoroutine(Coroutine_LoadSceneAsync(sceneName, loadingAction,loadComplete));
+
+            if (Framework.LoadType == Core.Asset.EAssetLoadType.AssetBundle)
+            {
+                Core.Asset.ResourceManager.LoadScene(sceneName, obj => {
+                    Debug.Log("场景加载完成");
+                    // 协程加载场景
+                    CoroutineManager.Instance.AddCoroutine(Coroutine_LoadSceneAsync(sceneName, loadingAction, loadComplete));
+                });
+            }
+            else
+            {
+                // 协程加载场景
+                CoroutineManager.Instance.AddCoroutine(Coroutine_LoadSceneAsync(sceneName, loadingAction, loadComplete));
+            }
+
+          
         }
     }
 }

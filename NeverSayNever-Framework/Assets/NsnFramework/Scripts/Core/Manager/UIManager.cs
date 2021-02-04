@@ -123,6 +123,12 @@ namespace NeverSayNever.Core
             RegisterPanel(panelName, false, panelMessenger);
         }
 
+        /// <summary>
+        /// 获取UIMessenger
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="moduleName"></param>
+        /// <returns></returns>
         public T GetUIMessenger<T>(string moduleName) where T : UIBaseMessenger
         {
             _allPanelInfoDic.TryGetValue(moduleName, out var registerInfo);
@@ -256,7 +262,7 @@ namespace NeverSayNever.Core
         /// 关闭窗口
         /// </summary>
         /// <param name="widgerName"></param>
-        public void CloseWidget(string widgerName)
+        public void CloseWidget(string widgetName)
         {
 
         }

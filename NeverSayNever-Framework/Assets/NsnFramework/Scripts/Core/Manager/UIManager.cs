@@ -110,7 +110,7 @@ namespace NeverSayNever.Core
             info.Messenger = messenger;
 
             _allPanelInfoDic.Add(name, info);
-            ULog.Print(($"注册界面 : {name}"));
+            //ULog.Print(($"注册界面 : {name}"));
         }
 
         /// <summary>

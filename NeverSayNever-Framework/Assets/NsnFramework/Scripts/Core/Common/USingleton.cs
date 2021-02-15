@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace NeverSayNever.Core
 {
-    public class USingleton<T> : HUD.UIBaseBehaviour where T : MonoBehaviour
+    public class USingleton<T> : UGameBehaviour where T : MonoBehaviour
     {
         private bool _isInitialized = false;
         private static T _instance;

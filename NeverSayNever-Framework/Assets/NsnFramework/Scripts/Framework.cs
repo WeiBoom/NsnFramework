@@ -103,6 +103,8 @@ namespace NeverSayNever.Core
 
             // Step6. 添加协程管理的模块
             BridgeObject.AddComponent<CoroutineManager>();
+
+            PrintFrameworkInfo();
         }
 
         public static void OnUpdate()
@@ -140,6 +142,18 @@ namespace NeverSayNever.Core
         public static void SetAudioSourceRoot(AudioSource audioRoot)
         {
             AudioSource = audioRoot;
+        }
+
+
+        private static void PrintFrameworkInfo()
+        {
+            Debug.Log("NsnFramework初始化完成!");
+            Debug.Log("Nsn ---> 资源加载方式 : " + LoadType);
+            Debug.Log("Nsn ---> 是否加载lua脚本: " + IsUsingLuaScript);
+            if (IsUsingLuaScript)
+            {
+                Debug.Log("Nsn ---> 是否通过AssetBundle模式加载 lua 脚本: " + IsUsingLuaBundleMode);
+            }
         }
 
     }

@@ -24,9 +24,6 @@ namespace NeverSayNever.Example
         protected override void OnAwake()
         {
             base.OnAwake();
-            ULog.Print("初始化GamemainPanel");
-
-            
 
             btn_start.AddClickListener(()=>{
                 ULog.Print("测试 ----- 点击开始按钮");

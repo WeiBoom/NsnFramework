@@ -43,7 +43,7 @@ namespace NeverSayNever.Core.Asset
 
     public static class ResourceManager
     {
-        public static EAssetLoadType LoadMode { get; private set; } = EAssetLoadType.AssetDataBase;
+        public static EAssetLoadType LoadType { get; private set; } = EAssetLoadType.AssetDataBase;
 
         private static AssetBundleHelper assetLoader;
 
@@ -72,7 +72,7 @@ namespace NeverSayNever.Core.Asset
                 AssetBundleHelper.bundleMode = true;
             }
 
-            LoadMode = loadType;
+            LoadType = loadType;
 
 
             InitAssetRootPath();
@@ -103,7 +103,7 @@ namespace NeverSayNever.Core.Asset
         // 获取资源路径
         private static string GetAssetFinalPath(EAssetType assetType, string name)
         {
-            var extension = LoadMode == EAssetLoadType.Resources ? string.Empty : GetAssetExtension(assetType);
+            var extension = LoadType == EAssetLoadType.Resources ? string.Empty : GetAssetExtension(assetType);
             var folderInfo = Framework.GlobalConfig.VariesAssetFolderDic[assetType.ToString()];
             if (folderInfo != null)
             {

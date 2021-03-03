@@ -11,15 +11,15 @@ public static class Extension_UGUI
 
     #region Image
 
-    public static void SetSprite(this Image img, string atlasName, string spriteName)
-    {
-        // todo
-    }
+    //public static void SetSprite(this Image img, string atlasName, string spriteName)
+    //{
+    //    // todo
+    //}
 
-    public static void SetSprite(this Image img, string spriteName)
-    {
+    //public static void SetSprite(this Image img, string spriteName)
+    //{
        
-    }
+    //}
 
     #endregion
 
@@ -45,15 +45,15 @@ public static class Extension_UGUI
 
     #region Button
 
-    public static Button ChangeSprite(this Button btn, string spriteName)
-    {
-        var image = btn.GetComponent<Image>();
+    //public static Button ChangeSprite(this Button btn, string spriteName)
+    //{
+    //    var image = btn.GetComponent<Image>();
 
-        if (image != null)
-            image.SetSprite(spriteName);
+    //    if (image != null)
+    //        image.SetSprite(spriteName);
 
-        return btn;
-    }
+    //    return btn;
+    //}
 
     public static Button AddClickListener(this Button btn, UnityAction action)
     {

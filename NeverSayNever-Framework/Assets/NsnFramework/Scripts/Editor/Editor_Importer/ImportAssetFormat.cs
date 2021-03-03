@@ -100,7 +100,7 @@ namespace NeverSayNever.Editors
             var texturesPathList = new List<string>();
             GetDirs(Application.dataPath, ".png", ref texturesPathList);
             EditorUtility.DisplayProgressBar("转换格式", "0/" + texturesPathList.Count, 0);//创建进度条
-            ChangeSelectedTextureFormat(texturesPathList, FormatTexture);
+            ChangeSelectedTextureFormat(texturesPathList, FormatTextureProgress);
 
             // 转换所有的spriteAtlas的格式
             var atlasList = new List<string>();
@@ -149,7 +149,7 @@ namespace NeverSayNever.Editors
             }
         }
 
-        private static void FormatTexture(string path, int count, int total)
+        public static string FormatTexture(string path,TextureImporterFormat androidFormat)
         {
             var texImporter = AssetImporter.GetAtPath(path) as TextureImporter;
             if (texImporter != null)
@@ -165,18 +165,26 @@ namespace NeverSayNever.Editors
                 {
                     name = "Android",
                     overridden = true,
-                    format = TargetTexIpFormat,
+                    format = androidFormat,
                     androidETC2FallbackOverride = AndroidETC2FallbackOverride.UseBuildSettings,
                 };
                 texImporter.SetPlatformTextureSettings(defaultSetting);
                 texImporter.SetPlatformTextureSettings(androidSetting);
 
                 AssetDatabase.WriteImportSettingsIfDirty(path);
-                //texImporter.SaveAndReimport();
+                return texImporter.name;
+            }
 
-                var info = $"正在转换\" {texImporter.name} \" 当前进度 ：{count}/{total}";
+            return string.Empty;
+        }
+
+        private static void FormatTextureProgress(string path, int count, int total)
+        {
+            var texName = FormatTexture(path, TargetTexIpFormat);
+            if(!texName.IsNullOrEmpty())
+            {
+                var info = $"正在转换\" {texName} \" 当前进度 ：{count}/{total}";
                 EditorUtility.DisplayProgressBar("转换格式", info, (float)count / total);//创建进度条
-                                                                                     //  AssetDatabase.ImportAsset(path);
             }
             else
             {

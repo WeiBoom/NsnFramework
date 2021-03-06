@@ -221,9 +221,8 @@ namespace NeverSayNever.Core
         /// 关闭界面
         /// </summary>
         /// <param name="panelName">界面名字</param>
-        /// <param name="isPlayCloseAnim">是否播放关闭动画</param>
-        /// <param name="putInPool">是否把对象缓存起来</param>
-        public void ClosePanel(string moduleName, bool putInPool = true)
+        /// <param name="hide">只隐藏，不销毁</param>
+        public void ClosePanel(string moduleName, bool hide = true)
         {
             _allPanelInfoDic.TryGetValue(moduleName, out var info);
             if(info == null)
@@ -235,7 +234,7 @@ namespace NeverSayNever.Core
             _shownPanelDic.TryGetValue(info.Messenger.PanelName, out var panel);
             if (panel != null)
             {
-                if (putInPool)
+                if (hide)
                 {
                     panel.gameObject.SetActive(false);
                     panel.transform.SetParent(PoolRoot);

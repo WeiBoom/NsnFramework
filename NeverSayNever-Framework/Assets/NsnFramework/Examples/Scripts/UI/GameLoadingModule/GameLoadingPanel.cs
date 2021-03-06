@@ -25,7 +25,6 @@ namespace NeverSayNever.Example
 
         private float loadProgress = 0;
         private float showProgress = 0;
-        private bool isLoading = false;
 
         protected override void OnAwake()
         {
@@ -72,7 +71,6 @@ namespace NeverSayNever.Example
         {
             showProgress = 0;
             loadProgress = 0;
-            isLoading = true;
         }
     }
 }

@@ -31,13 +31,13 @@ namespace NeverSayNever.Core
         /// XLua运行环境
         /// </summary>
         private static LuaEnv _luaEnv;
-
+        // lua 上次gc的时间
         private static float LastGCTime = 0;
-
+        // lua gc间隔时间
         private const float GCInterval = 1;
-
+        // lua入口脚本
         private static string launchFileName = "Launcher";
-
+        // lua 打包成的bundle资源的名字
         private const string luaBundleName = "lualogic.u3d";
         
         public static LuaTable Global => _luaEnv?.Global;
@@ -160,7 +160,7 @@ namespace NeverSayNever.Core
         /// <returns></returns>
         public LuaTable CallNewLuaWindowFunc(string scriptName)
         {
-            // 这里是 调用UIHelper方法中的NewLuaWindow的方法，创建一个界面
+            // 这里是 调用Lua全局方法中的NewLuaWindow的方法，创建一个界面
             try
             {
                 if (_callLuaNewWindow == null)

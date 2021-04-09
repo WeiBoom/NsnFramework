@@ -7,6 +7,8 @@ NeverSayNever-Framework/Temp
 NeverSayNever-Framework/Log
 NeverSayNever-Framework/obj
 NeverSayNever-Framework/.vs
+NeverSayNever-Framework/.idea
+NeverSayNever-Framework/.vsconfig
 NeverSayNever-Framework/Assets/NsnFramework/Plugins/Sirenix.meta
 *.csproj
 *.DS_Store

@@ -45,13 +45,13 @@ namespace NeverSayNever.Core.Asset
     {
         public class AssetCollectionInfo
         {
-            [TableColumnWidth(20)]
+            [LabelText("文件夹"),TableColumnWidth(20)]
             public UnityEngine.Object folder;
-            [TableColumnWidth(20)]
+            [LabelText("构建类型"),TableColumnWidth(20)]
             public EBundleBuildType buildType = EBundleBuildType.Prefab;
-            [TableColumnWidth(40)]
+            [LabelText("检索"),TableColumnWidth(40)]
             public EBundleLabelType labelType = EBundleLabelType.ByFileName;
-            [TableColumnWidth(20)]
+            [LabelText("后缀"),TableColumnWidth(20)]
             public string fileFilter = "*.prefab";
 
             public AssetCollectionInfo() { }
@@ -59,8 +59,11 @@ namespace NeverSayNever.Core.Asset
 
         public class AssetFolderInfo
         {
+            [LabelText("文件夹")]
             public UnityEngine.Object folder;
+            [LabelText("路径")]
             public string path;
+            [LabelText("后缀")]
             public string extension;
 
             public AssetFolderInfo() 
@@ -68,24 +71,22 @@ namespace NeverSayNever.Core.Asset
             }
         }
 
-        [InfoBox("Lua模板目录")]
+        [LabelText("Lua模板目录")]
         public UnityEngine.Object LuaTempleteFolder;
 
-        [InfoBox("存放UI script目录（cs）")]
+        [LabelText("存放UI script目录（cs）")]
         public UnityEngine.Object CSharpScriptFolder;
 
-        [InfoBox("存放UI script目录(Lua)")]
+        [LabelText("存放UI script目录(Lua)")]
         public UnityEngine.Object LuaScriptFolder;
 
-        [InfoBox("自动生成的UI脚本所在命名空间，没有则不填写")]
+        [LabelText("自动生成的UI脚本所在命名空间，没有则不填写")]
         public string UIScriptNamespace = "NeverSayNever.Example";
 
-        [InfoBox("所需打包Bundle的资源文件目录")]
-        [TableList]
+        [InfoBox("所需打包Bundle的资源文件目录"),TableList]
         public List<AssetCollectionInfo> BuildAssetCollections = new List<AssetCollectionInfo>();
 
-        [InfoBox("不同类型资源文件的根目录")]
-        [DictionaryDrawerSettings(KeyLabel = "资源文件类型", ValueLabel = "文件及路径", DisplayMode = DictionaryDisplayOptions.Foldout)]
+        [InfoBox("指定资源文件存放的根目录"),DictionaryDrawerSettings(KeyLabel = "资源文件类型", ValueLabel = "文件及路径", DisplayMode = DictionaryDisplayOptions.Foldout)]
         public readonly Dictionary<string, AssetFolderInfo> VariesAssetFolderDic = new Dictionary<string, AssetFolderInfo>();
 
         public string UIScriptRootForCs

@@ -19,7 +19,7 @@ namespace NeverSayNever.Editors
 
     public static class BundleBuildTool
     {
-        [MenuItem("NeverSayNever/Tools/Build AssetBundle(Current Paltform)", false, 100)]
+        //[MenuItem("NeverSayNever/Tools/Build AssetBundle(Current Paltform)", false, 100)]
         public static void MenuItem_BuildAssetBundle()
         {
             var targetPlatform = EditorUserBuildSettings.activeBuildTarget.ToString();

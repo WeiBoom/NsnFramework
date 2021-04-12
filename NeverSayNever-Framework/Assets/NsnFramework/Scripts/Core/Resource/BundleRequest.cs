@@ -106,6 +106,8 @@ namespace NeverSayNever.Core.Asset
 
         public float LastUseTime { get; private set; }
 
+        public bool IsAsync { get; protected set; } = false;
+
         public System.Action<object> loadComplete;
 
         public BaseAsset()
@@ -315,6 +317,7 @@ namespace NeverSayNever.Core.Asset
         public AssetRequest(string bundle)
         {
             bundleName = bundle;//.ToLower();
+            IsAsync = false;
         }
 
         internal override void Load()
@@ -344,6 +347,11 @@ namespace NeverSayNever.Core.Asset
             bundleRequest = null;
             assetObj = null;
         }
+
+        internal void StopLoad()
+        {
+
+        }
     }
 
     // Asset 资源 异步
@@ -353,6 +361,7 @@ namespace NeverSayNever.Core.Asset
 
         public AssetRequestAsync(string bundleName) :base(bundleName)
         {
+            IsAsync = true;
         }
 
         public override bool isDone => IsAssetRequsetDone();

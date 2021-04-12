@@ -32,11 +32,11 @@ namespace NeverSayNever.Core.HUD
         public EUIScriptType uiScriptType;
 
         [FoldoutGroup("UI Elements Group", true)]
-        [TableList]
+        [TableList(MaxScrollViewHeight = 400,MinScrollViewHeight = 100)]
         public List<UIComponentItem> fixedElements = new List<UIComponentItem>();
 
         [FoldoutGroup("UI Elements Group")]
-        [TableList] [SceneObjectsOnly]
+        [TableList(MaxScrollViewHeight = 400,MinScrollViewHeight = 100)]
         public List<UIComponentItem> dynamicElements = new List<UIComponentItem>();
 
         [FoldoutGroup("UI Elements Group")]
@@ -81,6 +81,7 @@ namespace NeverSayNever.Core.HUD
             // 编辑器下可能需要在面板上继续观察按钮，所以这里不清除，不需要观察的环境下则直接清理掉
 #if !UNITY_EDITOR
             list.Clear();
+            list = null;
 #endif
         }
 

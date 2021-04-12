@@ -235,6 +235,11 @@ namespace NeverSayNever.Core.Asset
             if (m_AssetRequestDic.TryGetValue(path,out request))
             {
                 request.Use();
+                // 如果之前的资源是异步，而此时需要同步，则停掉异步加载的逻辑，执行同步的逻辑
+                if(request.IsAsync && !isAsync)
+                {
+                    // todo 停掉异步加载，回调合并到同步加载中，调用同步加载操作
+                }
                 if (!m_LoadingAssetRequestList.Contains(request))
                     m_LoadingAssetRequestList.Add(request);
                 return request;
@@ -364,6 +369,11 @@ namespace NeverSayNever.Core.Asset
 
             m_SceneBundleRequestList.Add(asset);
             return asset;
+        }
+
+        public void StopLoadAction(BaseAsset asset)
+        {
+            
         }
 
         /// <summary>

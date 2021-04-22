@@ -12,10 +12,11 @@ namespace NeverSayNever.Editors
     using Sirenix.Utilities.Editor;
     public class NsnMenuBuildWindow
     {
+        /*
         [LabelText("Welcome, Developer")]
         [DisableInEditorMode,ShowInInspector]
         private string Title = "NsnFramework";
-
+        */
         [LabelText("框架配置文件存放路径"),ShowInInspector]
         private string FrameworkConfigPath;
 

@@ -2,7 +2,7 @@
 
 namespace NeverSayNever.Core.ObjectPool
 {
-    public class UPoolObject : UGameBehaviour
+    public class PoolObject : GameBehaviour
     {
         public string poolName;
         

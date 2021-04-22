@@ -4,7 +4,7 @@ using System;
 
 namespace NeverSayNever.Core
 {
-    public class Singleton<T> where T : class, new()
+    public class Singleton<T> :ISingleton where T : class, new()
     {
         private static T _instance;
 
@@ -19,7 +19,6 @@ namespace NeverSayNever.Core
                 if (_instance == null)
                 {
                     _instance = Activator.CreateInstance<T>();
-                    //(_instance as Singleton<T>)?.OnInitialize();
                 }
                 else
                 {

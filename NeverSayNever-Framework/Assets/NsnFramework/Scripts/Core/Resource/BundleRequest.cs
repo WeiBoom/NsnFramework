@@ -348,10 +348,6 @@ namespace NeverSayNever.Core.Asset
             assetObj = null;
         }
 
-        internal void StopLoad()
-        {
-
-        }
     }
 
     // Asset 资源 异步

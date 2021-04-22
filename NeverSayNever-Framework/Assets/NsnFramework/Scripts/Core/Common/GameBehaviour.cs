@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace NeverSayNever.Core
 {
-    public class UGameBehaviour : MonoBehaviour
+    public class GameBehaviour : MonoBehaviour
     {
         private void Awake() => OnAwake();
 

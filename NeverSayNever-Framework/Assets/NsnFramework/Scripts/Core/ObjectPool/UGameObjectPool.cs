@@ -11,7 +11,7 @@ namespace NeverSayNever.Core.ObjectPool
         private readonly Transform _poolRoot;
         private readonly GameObject _poolObjectPrefab;
         private readonly bool _selfGrowing;
-        private readonly Stack<UPoolObject> _availableObjStack = new Stack<UPoolObject>();
+        private readonly Stack<PoolObject> _availableObjStack = new Stack<PoolObject>();
 
         public UGameObjectPool(string poolName, GameObject poolObjectPrefab, int initCount, int maxSize, Transform pool, bool selfGrowing = false)
         {
@@ -29,7 +29,7 @@ namespace NeverSayNever.Core.ObjectPool
         }
 
         //add to pool
-        private void AddObjectToPool(UPoolObject po)
+        private void AddObjectToPool(PoolObject po)
         {
             po.name = _poolName;
             po.gameObject.SetActive(false);
@@ -38,22 +38,22 @@ namespace NeverSayNever.Core.ObjectPool
             po.transform.SetParent(_poolRoot, false);
         }
 
-        private UPoolObject NewObjectInstance()
+        private PoolObject NewObjectInstance()
         {
             var go = Object.Instantiate(_poolObjectPrefab);
             go.name = _poolName;
-            var po = go.GetComponent<UPoolObject>();
+            var po = go.GetComponent<PoolObject>();
             if (po == null)
             {
-                po = go.AddComponent<UPoolObject>();
+                po = go.AddComponent<PoolObject>();
             }
             po.poolName = _poolName;
             return po;
         }
 
-        public UPoolObject NextAvailableObject()
+        public PoolObject NextAvailableObject()
         {
-            UPoolObject po = null;
+            PoolObject po = null;
             if (_availableObjStack.Count > 0)
             {
                 po = _availableObjStack.Pop();
@@ -78,7 +78,7 @@ namespace NeverSayNever.Core.ObjectPool
             return po;
         }
 
-        public void ReturnObjectToPool(UPoolObject obj)
+        public void ReturnObjectToPool(PoolObject obj)
         {
             if (_poolName.Equals(obj.poolName))
             {

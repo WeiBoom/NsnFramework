@@ -20,7 +20,7 @@ namespace NeverSayNever.Core.HUD
 
     [XLua.LuaCallCSharp]
     [SerializeField]
-    public class UIBaseBehaviour : UGameBehaviour
+    public class UIBaseBehaviour : GameBehaviour
     {
         public enum EUIScriptType
         {

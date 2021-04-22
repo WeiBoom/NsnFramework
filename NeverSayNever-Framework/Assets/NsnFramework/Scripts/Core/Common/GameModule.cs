@@ -2,9 +2,8 @@
 
 namespace NeverSayNever.Core
 {
-    public class GameModule : IGameModule
+    public abstract class GameModule : IGameModule
     {
-
         // 模块初始化
         public virtual void OnInitialize()
         {

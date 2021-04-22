@@ -6,7 +6,7 @@ namespace NeverSayNever.Core.HUD
 {
     using NeverSayNever.Core.Event;
 
-    public class UIBasePanel : UGameBehaviour
+    public class UIBasePanel : GameBehaviour
     {
         #region Property && Component
         // 缓存面板的 Transform 组件

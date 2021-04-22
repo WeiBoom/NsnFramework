@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 namespace NeverSayNever.Core.Event
 {
@@ -8,7 +9,6 @@ namespace NeverSayNever.Core.Event
         private static EventManager Inst => _inst ?? (_inst = new EventManager());
 
         protected virtual string ListenerName => "EventManager";
-
 
         public static void OnUpdate()
         {

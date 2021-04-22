@@ -371,11 +371,6 @@ namespace NeverSayNever.Core.Asset
             return asset;
         }
 
-        public void StopLoadAction(BaseAsset asset)
-        {
-            
-        }
-
         /// <summary>
         /// 获取资源路径
         /// </summary>

@@ -4,14 +4,14 @@ using UnityEngine;
 
 namespace NeverSayNever.Core
 {
-    public class USingleton<T> : UGameBehaviour where T : MonoBehaviour
+    public class SingletonMono<T> : GameBehaviour where T : MonoBehaviour
     {
-        private bool _isInitialized = false;
         private static T _instance;
         private static readonly object Lock = new object();
 
-        private static bool ClearMode;
-        private static bool ApplicationIsQuitting;
+        private bool _bInitialized;
+        private static bool _bClearMode;
+        private static bool _bApplicationQuitting;
 
         // 是否初始化的标记
 
@@ -23,7 +23,7 @@ namespace NeverSayNever.Core
                 {
                     lock (Lock)
                     {
-                        if (ApplicationIsQuitting) return null;
+                        if (_bApplicationQuitting) return null;
                         CreateInstance();
                         return _instance;
                     }
@@ -41,7 +41,7 @@ namespace NeverSayNever.Core
                 if (_instance == null)
                 {
                     var singleton = new GameObject($"[{typeof(T)}]");
-                    var inst = singleton.AddComponent<T>() as USingleton<T>;
+                    var inst = singleton.AddComponent<T>() as SingletonMono<T>;
                     inst.OnInitialize();
                 }
             }
@@ -53,7 +53,7 @@ namespace NeverSayNever.Core
             lock (Lock)
             {
                 if (_instance == null) return;
-                ClearMode = true;
+                _bClearMode = true;
                 Destroy(_instance.gameObject);
                 _instance = null;
             }
@@ -68,10 +68,10 @@ namespace NeverSayNever.Core
         // 初始化
         public virtual void OnInitialize()
         {
-            if (_isInitialized) return;
+            if (_bInitialized) return;
             GameObject o;
             _instance = (o = gameObject).GetComponent<T>();
-            _isInitialized = true;
+            _bInitialized = true;
             DontDestroyOnLoad(o);
         }
 
@@ -82,9 +82,9 @@ namespace NeverSayNever.Core
 
         protected virtual void OnApplicationQuit()
         {
-            if (ClearMode == false)
-                ApplicationIsQuitting = true;
-            ClearMode = false;
+            if (_bClearMode == false)
+                _bApplicationQuitting = true;
+            _bClearMode = false;
         }
     }
 }

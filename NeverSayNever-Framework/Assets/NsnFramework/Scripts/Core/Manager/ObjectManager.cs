@@ -76,7 +76,7 @@ namespace NeverSayNever.Core
             {
                 return;
             }
-            var poolObject = gameObj.GetComponent<UPoolObject>();
+            var poolObject = gameObj.GetComponent<PoolObject>();
             if (poolObject == null) return;
             var poolName = poolObject.poolName;
             if (_gameObjectPools.ContainsKey(poolName))

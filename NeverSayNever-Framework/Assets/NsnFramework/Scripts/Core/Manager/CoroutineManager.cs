@@ -6,7 +6,7 @@ using NeverSayNever;
 
 namespace NeverSayNever.Core
 {
-    public class CoroutineManager : USingleton<CoroutineManager>
+    public class CoroutineManager : SingletonMono<CoroutineManager>
     {
         private class CoroutineTask
         {

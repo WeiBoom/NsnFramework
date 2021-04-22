@@ -29,6 +29,12 @@ namespace NeverSayNever.Editors
             FrameworkConfigPath = AssetEditorDefine.ScriptableObjectAssetRootPath;
         }
 
+        [Button("构建AssetBundle")]
+        private void BuildAssetBundleByCurrentPlatform()
+        {
+            BundleBuildTool.MenuItem_BuildAssetBundle();
+        }
+        
         /// <summary>
         /// 生成资源路径配置
         /// </summary>

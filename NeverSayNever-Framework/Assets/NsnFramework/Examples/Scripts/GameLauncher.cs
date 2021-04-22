@@ -11,18 +11,19 @@ namespace NeverSayNever.Example
 
     public class GameLauncher : MonoBehaviour
     {
-        [Title("资源加载方案")] 
+        [LabelText("资源加载方案")] 
         private EAssetLoadType loadType = EAssetLoadType.AssetDataBase;
-        [Title("UI 根节点")]
+        [LabelText("UI 根节点")]
         public GameObject UIRoot;
-        [Title("音频 根节点")]
+        [LabelText("音频 根节点")]
         public AudioSource AudioSourceRoot;
-        [InfoBox("是否加载Lua")]
-        public bool luaMode;
-        [ShowIf("luaMode")][InfoBox("是否以AB模式加载lua（需要先打包）")]
-        public bool luaBundle;
-        [InfoBox("是否启用AssetBundle模式")]
+        [LabelText("是否启用AssetBundle模式")]
         public bool bundleMode;
+        [LabelText("是否加载Lua"),HorizontalGroup("Lua")]
+        public bool luaMode;
+        [ShowIf("luaMode")][HorizontalGroup("Lua"),LabelText("使用lua[AB](需要先打包)")]
+        public bool luaBundle;
+
         
         private void InitFramework()
         {

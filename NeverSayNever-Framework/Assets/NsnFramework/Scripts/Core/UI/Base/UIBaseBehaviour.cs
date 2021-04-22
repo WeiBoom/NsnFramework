@@ -32,25 +32,23 @@ namespace NeverSayNever.Core.HUD
         public EUIScriptType uiScriptType;
 
         [FoldoutGroup("UI Elements Group", true)]
-        [TableList(MaxScrollViewHeight = 400,MinScrollViewHeight = 100)]
+        [TableList(MaxScrollViewHeight = 400,MinScrollViewHeight = 100),Searchable]
         public List<UIComponentItem> fixedElements = new List<UIComponentItem>();
 
         [FoldoutGroup("UI Elements Group")]
-        [TableList(MaxScrollViewHeight = 400,MinScrollViewHeight = 100)]
+        [TableList(MaxScrollViewHeight = 400,MinScrollViewHeight = 100),Searchable]
         public List<UIComponentItem> dynamicElements = new List<UIComponentItem>();
 
-        [FoldoutGroup("UI Elements Group")]
-        [ShowIf("uiScriptType", EUIScriptType.CSharp)]
+        [FoldoutGroup("UI Elements Group"),ShowIf("uiScriptType", EUIScriptType.CSharp)]
         [InlineButton("GenerateUIScriptForCSharp", "生成UI模块代码(C#)")]
         public bool isPanel = true;
 
-        [FoldoutGroup("UI Elements Group")]
-        [ShowIf("uiScriptType", EUIScriptType.Lua)]
+        [FoldoutGroup("UI Elements Group"),ShowIf("uiScriptType", EUIScriptType.Lua)]
         [InlineButton("GenerateUIScriptForLua", "生成UI代码(Lua)")]
         public bool isLuaPanel = true;
 
         [InlineButton("SaveUIPrefab", "保存预制体")]
-
+        
         /// <summary>
         /// 界面包含的UI元素的缓存,界面初始化时自动添加
         /// </summary>

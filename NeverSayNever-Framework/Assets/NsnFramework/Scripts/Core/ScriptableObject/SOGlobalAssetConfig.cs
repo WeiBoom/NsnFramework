@@ -89,6 +89,9 @@ namespace NeverSayNever.Core.Asset
         [InfoBox("指定资源文件存放的根目录"),DictionaryDrawerSettings(KeyLabel = "资源文件类型", ValueLabel = "文件及路径", DisplayMode = DictionaryDisplayOptions.Foldout)]
         public readonly Dictionary<string, AssetFolderInfo> VariesAssetFolderDic = new Dictionary<string, AssetFolderInfo>();
 
+        /// <summary>
+        /// 自动生产的cs脚本导出路径
+        /// </summary>
         public string UIScriptRootForCs
         {
             get
@@ -106,6 +109,9 @@ namespace NeverSayNever.Core.Asset
             }
         }
 
+        /// <summary>
+        /// 自动生产的lua脚本导出的路径
+        /// </summary>
         public string UIScriptRootForLua
         {
             get

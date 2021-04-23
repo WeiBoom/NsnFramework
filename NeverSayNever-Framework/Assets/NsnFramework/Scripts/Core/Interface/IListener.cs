@@ -6,6 +6,6 @@ namespace NeverSayNever.Core
 {
     public interface IListener
     {
-        void UpdateListener();
+        void OnUpdate();
     }
 }

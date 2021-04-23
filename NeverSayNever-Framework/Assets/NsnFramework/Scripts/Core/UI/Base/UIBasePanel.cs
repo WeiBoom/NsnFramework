@@ -9,6 +9,7 @@ namespace NeverSayNever.Core.HUD
     public class UIBasePanel : GameBehaviour
     {
         #region Property && Component
+        
         // 缓存面板的 Transform 组件
         protected Transform m_Trans;
         // 缓存面板的 RectTransform 组件
@@ -23,10 +24,6 @@ namespace NeverSayNever.Core.HUD
         public UIPanelInfo Info { get; private set; }
 
         #endregion
-
-        // 缓存当前界面的监听事件，在界面关闭时移除
-        private readonly Dictionary<Enum, Delegate> _eventListenerDic = new Dictionary<Enum, Delegate>();
-
 
         #region Monobehaviour Function
 
@@ -57,7 +54,6 @@ namespace NeverSayNever.Core.HUD
 
         protected override void OnDestroyMe()
         {
-            RemoveListener();
             base.OnDestroyMe();
         }
 
@@ -74,37 +70,6 @@ namespace NeverSayNever.Core.HUD
 
         /// <summary> Awake 调用 初始化属性</summary>
         protected virtual void OnInitAttribute() { }
-
-        /// <summary>
-        /// 添加事件监听
-        /// </summary>
-        /// <param name="eventId"></param>
-        /// <param name="func"></param>
-        protected void AddListener(Enum eventId, Delegate func)
-        {
-            if (!EventManager.HasEvent(eventId, func)) return;
-            // UI事件的监听，应只关注与界面信息、状态的改变
-            EventManager.AddEvent(eventId, func);
-            // 添加事件的时候，同时添加到UI层的监听列表里，当UI关闭时全部移除
-            _eventListenerDic.Add(eventId, func);
-        }
-
-        /// <summary>
-        /// 移除事件监听
-        /// </summary>
-        protected void RemoveListener()
-        {
-            foreach (var eventId in _eventListenerDic.Keys)
-            {
-                if (!EventManager.HasEvent(eventId))
-                    continue;
-                foreach (var eventFunc in _eventListenerDic.Values)
-                {
-                    EventManager.RemoveEvent(eventId, eventFunc);
-                }
-            }
-            _eventListenerDic.Clear();
-        }
 
 
         /// <summary>

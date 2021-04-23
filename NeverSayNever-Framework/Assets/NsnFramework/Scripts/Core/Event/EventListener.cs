@@ -47,7 +47,7 @@ namespace NeverSayNever.Core.Event
         }
     }
 
-    public sealed  class EventListener : GameModule
+    public  class EventListener : Singleton<EventListener>
     {
         public class InternalEvent
         {
@@ -62,7 +62,7 @@ namespace NeverSayNever.Core.Event
 
         private int m_maxEventCount = 10;
             
-        public override void OnInitialize()
+        public override void OnInitialize(params object[] args)
         {
             base.OnInitialize();
             m_eventDic = new Dictionary<int, List<GameEventDeleglate>>();
@@ -74,9 +74,9 @@ namespace NeverSayNever.Core.Event
             }
         }
 
-        public override void OnUpdate(float deltaTime)
+        public override void OnUpdate()
         {
-            base.OnUpdate(deltaTime);
+            base.OnUpdate();
 
             if (m_eventQueue == null)
                 return;

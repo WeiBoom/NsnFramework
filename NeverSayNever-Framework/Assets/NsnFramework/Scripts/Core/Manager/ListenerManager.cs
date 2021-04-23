@@ -29,7 +29,7 @@ namespace NeverSayNever.Core
             // 更新每个监听者的事件
             foreach (var listener in _listeners)
             {
-                listener?.UpdateListener();
+                listener?.OnUpdate();
             }
         }
 

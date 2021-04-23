@@ -1,4 +1,5 @@
 using System;
+using System.Net.Configuration;
 using UnityEngine;
 
 namespace NeverSayNever.Core
@@ -84,24 +85,21 @@ namespace NeverSayNever.Core
         {
             BridgeObject = new GameObject("NsnFramework.Core");
             UObject.DontDestroyOnLoad(BridgeObject);
-
-            // Step1. 初始化脚本管理器
+            
+            // 初始化事件管理器
+            EventListener.Instance.OnInitialize();
+            // 初始化脚本管理器
             ScriptManager.Instance.OnInitialize();
-
-            // Step2. 初始化资源加载管理器
+            // 初始化资源加载管理器
             ResourceManager.OnInitialize(LoadType);
-
-            // Step3. 初始化Lua模块管理器  如果不使用Lua,则跳过
+            // 初始化Lua模块管理器  如果不使用Lua,则跳过
             if(IsUsingLuaScript)
                 LuaManager.Instance.OnInitialize("Launcher");
-
-            // Step4. 初始化UI模块管理器
+            // 初始化UI模块管理器
             UIManager.Instance.OnInitialize(UIRoot);
-
-            // Step5. 初始化音频模块管理器
+            // 初始化音频模块管理器
             SoundManager.Instance.OnInitialize(AudioSource);
-
-            // Step6. 添加协程管理的模块
+            // 添加协程管理的模块
             BridgeObject.AddComponent<CoroutineManager>();
 
             PrintFrameworkInfo();
@@ -109,14 +107,16 @@ namespace NeverSayNever.Core
 
         public static void OnUpdate()
         {
-            // 轮询更新事件  todo 这里其实没有任何内容，每个事件都是派发的时候直接执行，后续修改为轮询模式
-            EventManager.OnUpdate();
+            // 更新事件 
+            EventListener.Instance.OnUpdate(); // EventManager.OnUpdate();
             // 更新Lua，清理GC
             LuaManager.Instance.OnUpdate();
             // 更新计时器计时器
             TimerManager.Instance.OnUpdate();
             // 更新资源
             ResourceManager.OnUpdate();
+            // 更新模块系统
+            ModuleManager.Instance.OnUpdate();
         }
 
         // 设置资源加载模式

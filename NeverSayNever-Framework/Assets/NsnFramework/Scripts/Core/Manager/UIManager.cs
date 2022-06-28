@@ -149,9 +149,8 @@ namespace NeverSayNever.Core
         /// <param name="moduleName">模块名</param>
         public void RegisterCsPanelByReflect(string moduleName)
         {
-            var uiNamespace = Framework.GlobalConfig.UIScriptNamespace;
-
-            var messengerName = uiNamespace.IsNullOrEmpty()? $"{moduleName}Messenger" :$"{uiNamespace}.{moduleName}Messenger" ;
+           // var uiNamespace = FrameworkConfig.CommonConfig.UIScriptNamespace;
+            var messengerName = $"{moduleName}Messenger";//uiNamespace.IsNullOrEmpty()? $"{moduleName}Messenger" :$"{uiNamespace}.{moduleName}Messenger" ;
             var panelName = $"{moduleName}Panel";
             var parameters = new object[] {panelName};
 
@@ -339,9 +338,9 @@ namespace NeverSayNever.Core
                 // 接受需要的消息
                 messenger.OnReceiveMsg(args);
                 // 检查命名空间
-                var uiScriptNamespace = Framework.GlobalConfig.UIScriptNamespace;
+                // var uiScriptNamespace = FrameworkConfig.CommonConfig.UIScriptNamespace;
                 // 添加的脚本名字
-                var uiScript = uiScriptNamespace.IsNullOrEmpty()? panelName : $"{uiScriptNamespace}.{panelName}";
+                var uiScript = panelName;//uiScriptNamespace.IsNullOrEmpty()? panelName : $"{uiScriptNamespace}.{panelName}";
                 // 添加对应的脚本
                 var panelScript = ScriptManager.Instance.AddScript(panelObj, uiScript) as UIBasePanel;
                 // 显示UI对象

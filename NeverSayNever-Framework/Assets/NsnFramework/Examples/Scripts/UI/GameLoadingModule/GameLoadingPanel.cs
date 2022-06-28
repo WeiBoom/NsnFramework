@@ -29,7 +29,7 @@ namespace NeverSayNever.Example
         protected override void OnAwake()
         {
             base.OnAwake();
-            messenger = UIManager.Instance.GetUIMessenger<GameLoadingMessenger>(UIModuleDefine.GameLoading);
+            messenger = UIManager.Instance.GetUIMessenger<GameLoadingMessenger>(UIModuleGroup.GameLoading.ModuleName);
         }
         
         protected override void OnStart()

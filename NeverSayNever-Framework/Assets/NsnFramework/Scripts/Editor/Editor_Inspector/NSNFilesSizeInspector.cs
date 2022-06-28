@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-namespace NeverSayNever.Editors
+namespace NeverSayNever.EditorUtilitiy
 {
 
     public class NSNFilesSizeInspector

@@ -1,44 +1,53 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using NeverSayNever.Utilities;
 using UnityEngine;
 using UnityEditor;
+using UnityEditor.Graphs;
 
-namespace NeverSayNever.Editors
+namespace NeverSayNever.EditorUtilitiy
 {
     using NeverSayNever.Core.Asset;
     using Sirenix.OdinInspector.Editor;
     using Sirenix.OdinInspector;
-    using Sirenix.Utilities;
-    using Sirenix.Utilities.Editor;
     public class NsnMenuBuildWindow
     {
-        /*
-        [LabelText("Welcome, Developer")]
-        [DisableInEditorMode,ShowInInspector]
-        private string Title = "NsnFramework";
-        */
-        [LabelText("框架配置文件存放路径"),ShowInInspector]
-        private string FrameworkConfigPath;
-
-        [LabelText("UI脚本命名空间"),ShowInInspector]
+        [Title("NsnFramework", "keep it simple and stupid")]
+        //private const string FrameworkName = "NsnFramework";
+        
+        //[Title("Default Config", "default config of framework")] 
+        //[LabelText("Default Path of Framework Config "),ShowInInspector]
+        //[LabelText("框架配置文件默认存放路径"),ShowInInspector]
+        //private string FrameworkConfigPath;
+        //[LabelText("Script's Namespace of UI"),ShowInInspector]
+        [LabelText("自动生成的UIScript 的命名空间"),ShowInInspector]
         private string AutoUIScriptNamespace;
-
 
         public NsnMenuBuildWindow()
         {
-            FrameworkConfigPath = AssetEditorDefine.ScriptableObjectAssetRootPath;
+            //FrameworkConfigPath = FrameworkConfig.ScriptableObjectAssetRootPath; //AssetEditorDefine.ScriptableObjectAssetRootPath;
+            //ULog.Print($"框架配置文件默认存放路径 ： {FrameworkConfigPath}");
         }
 
-        [Button("构建AssetBundle")]
+        [TitleGroup("AssetBundle","build AssetBundle for project")]
+        [Button("Open AssetBundle Config of Framework",ButtonSizes.Small,ButtonStyle.CompactBox)]
+        //[Button("打开 AssetBundle 构建配置",ButtonSizes.Small,ButtonStyle.CompactBox)]
+        private void OpenAssetBundleBuildConfig()
+        {
+            // todo;
+        }
+        
+        [TitleGroup("AssetBundle","build AssetBundle for project")]
+        //[Button("Build AssetBundle By Config",ButtonSizes.Large,ButtonStyle.CompactBox)]
+        [Button("构建 AssetBundle 资源",ButtonSizes.Large,ButtonStyle.CompactBox)]
         private void BuildAssetBundleByCurrentPlatform()
         {
             BundleBuildTool.MenuItem_BuildAssetBundle();
         }
         
-        /// <summary>
-        /// 生成资源路径配置
-        /// </summary>
-        [Button("一键生成默认全局配置")]
+        [Title("Initialize","generate default scriptable config for framework")]
+        //[Button("Generate Default Config For Framework",ButtonSizes.Large)]
+        [Button("初始化项目配置全局配置",ButtonSizes.Large)]
         private static void GenerateAssetPathConfig()
         {
             // 生成UI自动收集的规则配置

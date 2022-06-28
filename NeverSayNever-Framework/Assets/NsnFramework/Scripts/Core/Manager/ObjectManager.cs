@@ -3,9 +3,6 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-using NeverSayNever.Utilities;
-using NeverSayNever.Core.ObjectPool;
-
 namespace NeverSayNever.Core
 {
     public class ObjectManager : Singleton<ObjectManager>
@@ -14,13 +11,13 @@ namespace NeverSayNever.Core
         private readonly Dictionary<string, object> _objectPools = new Dictionary<string, object>();
         private readonly Dictionary<string, UGameObjectPool> _gameObjectPools = new Dictionary<string, UGameObjectPool>();
 
-        Transform PoolRootObject
+        Transform PoolRoot
         {
             get
             {
                 if (_poolRootObject == null)
                 {
-                    var objectPool = new GameObject("ObjectPool");
+                    var objectPool = new GameObject("ObjectPoolRoot");
                     objectPool.transform.SetParent(Framework.BridgeObject.transform);
                     objectPool.transform.localScale = Vector3.one;
                     objectPool.transform.localPosition = Vector3.zero;
@@ -37,7 +34,7 @@ namespace NeverSayNever.Core
 
         public UGameObjectPool CreatePool(string poolName, int initSize, int maxSize, GameObject prefab, bool selfGrowing = false)
         {
-            var pool = new UGameObjectPool(poolName, prefab, initSize, maxSize, PoolRootObject, selfGrowing);
+            var pool = new UGameObjectPool(poolName, prefab, initSize, maxSize, PoolRoot, selfGrowing);
             _gameObjectPools[poolName] = pool;
             return pool;
         }

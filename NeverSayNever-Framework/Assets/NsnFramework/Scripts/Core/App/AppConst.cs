@@ -6,7 +6,6 @@ namespace NeverSayNever.Utilities
 {
     public static class AppConst
     {
-
         public const string AppName = "NeverSayNever";
         //Socket服务器端口
         public const ushort SocketPort = 8080;
@@ -22,22 +21,23 @@ namespace NeverSayNever.Utilities
         {
             get
             {
-                if(Application.isMobilePlatform) 
+                if (Application.isEditor)
+                {
+                    return Application.dataPath + "/StreamingAssets/";
+                }
+                else if(Application.isMobilePlatform) 
                 {
                     return Application.persistentDataPath + "/";
                 }
-#if UNITY_EDITOR
-
-                return Application.dataPath + "/StreamingAssets/";
-#else
-
-                if (Application.platform == RuntimePlatform.OSXEditor)
+                else if (Application.platform == RuntimePlatform.OSXEditor)
                 {
                     int i = Application.dataPath.LastIndexOf('/');
                     return Application.dataPath.Substring(0, i + 1) + "/";
                 }
-                return "c:/";
-#endif
+                else
+                {
+                    return "c:/";
+                }
             }
         }
 
@@ -46,35 +46,45 @@ namespace NeverSayNever.Utilities
             get
             {
 #if UNITY_EDITOR
-                switch (UnityEditor.EditorUserBuildSettings.activeBuildTarget)
-                {
-                    case UnityEditor.BuildTarget.Android:
-                        return "Android";
-                    case UnityEditor.BuildTarget.iOS:
-                        return "iOS";
-                    case UnityEditor.BuildTarget.StandaloneOSX:
-                        return "OSX";
-                    case UnityEditor.BuildTarget.StandaloneWindows:
-                    case UnityEditor.BuildTarget.StandaloneWindows64:
-                        return "Windows";
-                    default:
-                        return "Standalone";
-                }
+                return GetEditorBuildPlatform();
 #else
-                switch (Application.platform)
-                {
-                    case RuntimePlatform.Android:
-                        return "Android";
-                    case RuntimePlatform.IPhonePlayer:
-                        return "iOS";
-                    case RuntimePlatform.WindowsPlayer:
-                        return "Windows";
-                    case RuntimePlatform.OSXPlayer:
-                        return "OSX";
-                    default:
-                        return "Default";
-                }
+                return GetRuntimePlatform();
 #endif
+            }
+        }
+
+        private static string GetEditorBuildPlatform()
+        {
+            switch (UnityEditor.EditorUserBuildSettings.activeBuildTarget)
+            {
+                case UnityEditor.BuildTarget.Android:
+                    return "Android";
+                case UnityEditor.BuildTarget.iOS:
+                    return "iOS";
+                case UnityEditor.BuildTarget.StandaloneOSX:
+                    return "OSX";
+                case UnityEditor.BuildTarget.StandaloneWindows:
+                case UnityEditor.BuildTarget.StandaloneWindows64:
+                    return "Windows";
+                default:
+                    return "Standalone";
+            }
+        }
+
+        private static string GetRuntimePlatform()
+        {
+            switch (Application.platform)
+            {
+                case RuntimePlatform.Android:
+                    return "Android";
+                case RuntimePlatform.IPhonePlayer:
+                    return "iOS";
+                case RuntimePlatform.WindowsPlayer:
+                    return "Windows";
+                case RuntimePlatform.OSXPlayer:
+                    return "OSX";
+                default:
+                    return "Default";
             }
         }
 

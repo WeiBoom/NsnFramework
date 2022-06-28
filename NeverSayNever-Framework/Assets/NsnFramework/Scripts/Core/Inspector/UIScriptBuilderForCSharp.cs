@@ -5,7 +5,7 @@ using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace NeverSayNever.Utilities
+namespace NeverSayNever.EditorUtilitiy
 {
     using NeverSayNever.Core;
     using NeverSayNever.Core.HUD;
@@ -62,11 +62,11 @@ namespace NeverSayNever.Utilities
             myNamespace.Imports.Add(new CodeNamespaceImport("TMPro"));
             myNamespace.Imports.Add(new CodeNamespaceImport("NeverSayNever.Core.HUD"));
 
-            if (Framework.GlobalConfig != null && !Framework.GlobalConfig.UIScriptNamespace.IsNullOrEmpty())
-            {
-                //把这个类放在这个命名空间下
-                myNamespace.Name = Framework.GlobalConfig.UIScriptNamespace;
-            }
+            //if (Framework.GlobalConfig != null && !Framework.GlobalConfig.UIScriptNamespace.IsNullOrEmpty())
+            //{
+            //    //把这个类放在这个命名空间下
+            //    myNamespace.Name = Framework.GlobalConfig.UIScriptNamespace;
+            //}
 
             myNamespace.Types.Add(myClass);
             //把该命名空间加入到编译器单元的命名空间集合中
@@ -159,7 +159,7 @@ namespace NeverSayNever.Utilities
             var outPutFolder = moduleName + "Module";
             //是否在字段、属性、方法之间添加空白行
             //输出文件路径
-            var outputFolderPath = Framework.GlobalConfig.UIScriptRootForCs + outPutFolder;
+            var outputFolderPath = FrameworkConfig.GlobalConfig.UIScriptRootForCs + outPutFolder;
             var fileName = GetModuleFileName(moduleName, scriptModuleType);
             var outputFilePath = outputFolderPath + "/" + fileName + ".cs";
 

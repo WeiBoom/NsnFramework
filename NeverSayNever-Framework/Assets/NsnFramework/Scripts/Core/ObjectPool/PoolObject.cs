@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace NeverSayNever.Core.ObjectPool
+namespace NeverSayNever.Core
 {
     public class PoolObject : GameBehaviour
     {

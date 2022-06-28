@@ -29,7 +29,7 @@ namespace NeverSayNever.Example
                 ULog.Print("测试 ----- 点击开始按钮");
 
                 GameSceneManager.LoadSceneAsync("example_scene");
-                NeverSayNever.Core.UIManager.Instance.ClosePanel(UIModuleDefine.GameMain);
+                NeverSayNever.Core.UIManager.Instance.ClosePanel(UIModuleGroup.GameMain.ModuleName);
             });
 
             btn_quit.AddClickListener(() => {

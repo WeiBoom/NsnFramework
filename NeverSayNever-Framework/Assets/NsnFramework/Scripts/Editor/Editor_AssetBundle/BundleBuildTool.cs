@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEditor;
 using UnityEditor.Callbacks;
 
-namespace NeverSayNever.Editors
+namespace NeverSayNever.EditorUtilitiy
 {
     using NeverSayNever.Core;
     using NeverSayNever.Core.Asset;
@@ -181,7 +181,7 @@ namespace NeverSayNever.Editors
         {
             var targetBuildInfoList = new Dictionary<string, BundleBuild>();
 
-            var collectList = Framework.GlobalConfig.BuildAssetCollections;
+            var collectList = FrameworkConfig.GlobalConfig.BuildAssetCollections;
 
             foreach (var element in collectList)
             {
@@ -360,7 +360,7 @@ namespace NeverSayNever.Editors
 
         private string GetTargetSuffixByBuildType(EBundleBuildType type)
         {
-            var config = Framework.GlobalConfig.BuildAssetCollections;
+            var config = FrameworkConfig.GlobalConfig.BuildAssetCollections;
 
             for (int i = 0; i < config.Count; i++)
             {

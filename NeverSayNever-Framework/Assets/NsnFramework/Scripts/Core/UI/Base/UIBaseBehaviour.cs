@@ -91,7 +91,7 @@ namespace NeverSayNever.Core.HUD
         [FoldoutGroup("UI Elements Group", true)]
         private void CollectDynamicUIComponents()
         {
-            NeverSayNever.Utilities.NSNPanelElementsCollector.CollectPanelUIElements(this);
+            NeverSayNever.EditorUtilitiy.NSNPanelElementsCollector.CollectPanelUIElements(this);
         }
 
         [Button("清空UI组件"), GUIColor(253 / 255f, 74 / 255f, 73 / 255f)]
@@ -107,7 +107,7 @@ namespace NeverSayNever.Core.HUD
             if (UnityEditor.EditorUtility.DisplayDialog("Generate C# UI Module Scripts", $"确定创建/更新 {this.gameObject.name} 代码?", "ok", "cancel"))
             {
                 SaveUIPrefab();
-                NeverSayNever.Utilities.UIScriptBuilderForCSharp.BuildCSharpScriptForPanel(this, isPanel);
+                NeverSayNever.EditorUtilitiy.UIScriptBuilderForCSharp.BuildCSharpScriptForPanel(this, isPanel);
             }
         }
 
@@ -116,7 +116,7 @@ namespace NeverSayNever.Core.HUD
             if (UnityEditor.EditorUtility.DisplayDialog("Generate Lua UI Module Scripts", $"确定创建/更新 {this.gameObject.name} 代码?", "ok", "cancel"))
             {
                 SaveUIPrefab();
-                NeverSayNever.Utilities.UIScriptBuilderForLua.BuildLuaScriptForPanel(this, isPanel);
+                NeverSayNever.EditorUtilitiy.UIScriptBuilderForLua.BuildLuaScriptForPanel(this, isPanel);
             }
         }
 
@@ -129,7 +129,7 @@ namespace NeverSayNever.Core.HUD
                 return;
             }
 
-            Framework.GlobalConfig.VariesAssetFolderDic.TryGetValue("UI", out var prefabDirectory);
+            FrameworkConfig.GlobalConfig.VariesAssetFolderDic.TryGetValue("UI", out var prefabDirectory);
             if(prefabDirectory == null || prefabDirectory.folder == null)
             {
                 throw new Exception("无法找到UI保存路径，请检查配置");

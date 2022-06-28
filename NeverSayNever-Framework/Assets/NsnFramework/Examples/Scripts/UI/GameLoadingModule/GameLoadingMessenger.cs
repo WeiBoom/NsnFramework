@@ -76,7 +76,7 @@ namespace NeverSayNever.Example
             loadingActionList.Clear();
             CompleteActionList.Clear();
 
-            NeverSayNever.Core.UIManager.Instance.ClosePanel(UIModuleDefine.GameLoading);
+            NeverSayNever.Core.UIManager.Instance.ClosePanel(UIModuleGroup.GameLoading.ModuleName);
         }
 
 

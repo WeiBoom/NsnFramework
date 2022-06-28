@@ -17,7 +17,7 @@ namespace NeverSayNever.Example
             operation.allowSceneActivation = false;
 
             // 打开加载界面
-            UIMgr.Instance.OpenPanel(UIModuleDefine.GameLoading, operation,loadingAction, loadComplete);
+            UIMgr.Instance.OpenPanel(UIModuleGroup.GameLoading.ModuleName, operation,loadingAction, loadComplete);
 
             yield return null;
             IsLoadingScene = false;

@@ -13,19 +13,24 @@ public class NsnCanvasGroup : MonoBehaviour
         get => value;
         set
         {
-            if(rendererList.Length> 0)
-            {
-                foreach(var renderer in rendererList)
-                {
-                    renderer.SetAlpha(value);
-                }
-            }
+            SetCanvasGroupValue();
         }
     }
 
     private void Awake()
     {
         rendererList = GetComponentsInChildren<CanvasRenderer>();
+    }
+
+    private void SetCanvasGroupValue()
+    {
+        if (rendererList.Length > 0)
+        {
+            foreach (var renderer in rendererList)
+            {
+                renderer.SetAlpha(value);
+            }
+        }
     }
 
 }

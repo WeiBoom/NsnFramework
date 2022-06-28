@@ -1,10 +1,9 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
-namespace NeverSayNever.Editors
+namespace NeverSayNever.EditorUtilitiy
 {
     using NeverSayNever.Core.HUD;
-    using NeverSayNever.Utilities;
 
     public static class UIElementsCollector
     {

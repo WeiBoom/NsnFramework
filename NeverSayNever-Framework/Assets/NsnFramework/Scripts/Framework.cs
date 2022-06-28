@@ -1,5 +1,6 @@
 using System;
 using System.Net.Configuration;
+using NeverSayNever.Utilities;
 using UnityEngine;
 
 namespace NeverSayNever.Core
@@ -10,35 +11,6 @@ namespace NeverSayNever.Core
 
     public static class Framework
     {
-
-        private static SOGlobalAssetConfig globalConfig;
-        /// <summary>
-        /// 框架默认的全局配置
-        /// </summary>
-        public static SOGlobalAssetConfig GlobalConfig
-        {
-            get
-            {
-                if (globalConfig == null)
-                    globalConfig = ScriptableObjectManager.Instance.GetScriptableObject<SOGlobalAssetConfig>();
-                return globalConfig;
-            }
-        }
-
-        private static SOUIElementsCollectRule collecitonRuleConfig;
-        /// <summary>
-        /// UI元素收集配置
-        /// </summary>
-        public static SOUIElementsCollectRule UICollectionConfig
-        {
-            get
-            {
-                if (collecitonRuleConfig == null)
-                    collecitonRuleConfig = ScriptableObjectManager.Instance.GetScriptableObject<SOUIElementsCollectRule>();
-                return collecitonRuleConfig;
-            }
-        }
-
         /// <summary>
         /// 是否启动Lua
         /// </summary>
@@ -52,7 +24,9 @@ namespace NeverSayNever.Core
         /// <summary>
         /// 是否启用lua脚本
         /// </summary>
-        private static bool IsUsingLuaScript = false;
+        [HideInInspector]
+        public static bool IsUsingLuaScript = false;
+
         /// <summary>
         /// 是否以AssetBundle的方式加载lua脚本
         /// </summary>
@@ -98,7 +72,7 @@ namespace NeverSayNever.Core
             // 初始化UI模块管理器
             UIManager.Instance.OnInitialize(UIRoot);
             // 初始化音频模块管理器
-            SoundManager.Instance.OnInitialize(AudioSource);
+            SimpleAudioManager.Instance.OnInitialize(AudioSource);
             // 添加协程管理的模块
             BridgeObject.AddComponent<CoroutineManager>();
 
@@ -116,7 +90,7 @@ namespace NeverSayNever.Core
             // 更新资源
             ResourceManager.OnUpdate();
             // 更新模块系统
-            ModuleManager.Instance.OnUpdate();
+            //ModuleManager.Instance.OnUpdate();
         }
 
         // 设置资源加载模式
@@ -144,16 +118,13 @@ namespace NeverSayNever.Core
             AudioSource = audioRoot;
         }
 
-
         private static void PrintFrameworkInfo()
         {
-            Debug.Log("NsnFramework初始化完成!");
-            Debug.Log("Nsn ---> 资源加载方式 : " + LoadType);
-            Debug.Log("Nsn ---> 是否加载lua脚本: " + IsUsingLuaScript);
+            ULog.Print("NsnFramework初始化完成!");
+            ULog.Print("Nsn ---> 资源加载方式 : " + LoadType);
+            ULog.Print("Nsn ---> 是否加载lua脚本: " + IsUsingLuaScript);
             if (IsUsingLuaScript)
-            {
-                Debug.Log("Nsn ---> 是否通过AssetBundle模式加载 lua 脚本: " + IsUsingLuaBundleMode);
-            }
+                ULog.Print("Nsn ---> 是否通过AssetBundle模式加载 lua 脚本: " + IsUsingLuaBundleMode);
         }
 
     }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace NeverSayNever.Utilities
+namespace NeverSayNever.EditorUtilitiy
 {
     public class NSNLabelAttribute : PropertyAttribute
     {

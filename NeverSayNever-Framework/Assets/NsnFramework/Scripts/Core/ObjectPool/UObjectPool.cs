@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace NeverSayNever.Core.ObjectPool
+namespace NeverSayNever.Core
 {
     public class UObjectPool<T> where T : class
     {

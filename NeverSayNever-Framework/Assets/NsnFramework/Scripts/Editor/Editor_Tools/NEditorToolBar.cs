@@ -15,7 +15,7 @@ using UnityEngine.Experimental.UIElements;
 #endif
 
 
-namespace NeverSayNever.Editors
+namespace NeverSayNever.EditorUtilitiy
 {
 
 	[InitializeOnLoad]

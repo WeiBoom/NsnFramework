@@ -8,10 +8,9 @@ using UnityEngine.Events;
 
 using NeverSayNever;
 
-namespace NeverSayNever.Editors
+namespace NeverSayNever.EditorUtilitiy
 {
     using NeverSayNever.Core.HUD;
-    using NeverSayNever.Utilities;
 
     public class NSNElementsCollection
     {

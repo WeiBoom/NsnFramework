@@ -11,7 +11,7 @@ namespace NeverSayNever.Core.Event
         Fail = 2,
     }
 
-    public delegate EventDelegateState GameEventDeleglate(EventData e);
+    public delegate EventDelegateState GameEventDelegate(EventData e);
 
     public class EventData
     {
@@ -49,13 +49,13 @@ namespace NeverSayNever.Core.Event
 
     public  class EventListener : Singleton<EventListener>
     {
-        public class InternalEvent
+        private class InternalEvent
         {
             public WeakReference Data;
             public WeakReference List;
         }
         
-        private Dictionary<int, List<GameEventDeleglate>> m_eventDic;
+        private Dictionary<int, List<GameEventDelegate>> m_eventDic;
 
         private Queue<InternalEvent> m_eventQueue;
         private Queue<InternalEvent> m_eventPool;
@@ -65,7 +65,7 @@ namespace NeverSayNever.Core.Event
         public override void OnInitialize(params object[] args)
         {
             base.OnInitialize();
-            m_eventDic = new Dictionary<int, List<GameEventDeleglate>>();
+            m_eventDic = new Dictionary<int, List<GameEventDelegate>>();
             m_eventQueue = new Queue<InternalEvent>(m_maxEventCount);
             m_eventPool = new Queue<InternalEvent>(m_maxEventCount);
             for (int i = 0; i < m_maxEventCount; i++)
@@ -87,13 +87,13 @@ namespace NeverSayNever.Core.Event
                 if (e.Data == null || e.List == null || e.Data.IsAlive == false || e.List.IsAlive == false)
                     continue;
                 EventData data = e.Data.Target as EventData;
-                List<GameEventDeleglate> list = e.List.Target as List<GameEventDeleglate>;
-                for (int j = 0; j < list.Count; j++)
+                if (e.List.Target is List<GameEventDelegate> list && list.Count > 0)
                 {
-                    GameEventDeleglate gameEvent = list[j];
-                    gameEvent?.Invoke(data);
+                    foreach (var gameEvent in list)
+                    {
+                        gameEvent?.Invoke(data);
+                    }
                 }
-
                 e.Data = null;
                 e.List = null;
                 m_eventPool.Enqueue(e);
@@ -111,7 +111,7 @@ namespace NeverSayNever.Core.Event
             m_eventQueue = null;
         }
 
-        public void RegisterEvent(int eventId, GameEventDeleglate gameEvent)
+        public void RegisterEvent(int eventId, GameEventDelegate gameEvent)
         {
             m_eventDic.TryGetValue(eventId, out var eventList);
             if (eventList != null)
@@ -127,8 +127,7 @@ namespace NeverSayNever.Core.Event
             }
             else
             {
-                eventList = new List<GameEventDeleglate>();
-                eventList.Add(gameEvent);
+                eventList = new List<GameEventDelegate> {gameEvent};
                 m_eventDic.Add(eventId,eventList);
             }
         }
@@ -141,7 +140,7 @@ namespace NeverSayNever.Core.Event
             }
         }
 
-        public void RemoveEvent(int eventId, GameEventDeleglate gameEvent)
+        public void RemoveEvent(int eventId, GameEventDelegate gameEvent)
         {
             if (m_eventDic.TryGetValue(eventId, out var eventList))
             {
@@ -155,17 +154,13 @@ namespace NeverSayNever.Core.Event
         public void DispatchEvent(int eventId, EventData eventData)
         {
             m_eventDic.TryGetValue(eventId, out var eventList);
-            if(eventList != null && eventList.Count > 0)
-            {
-                InternalEvent e = m_eventPool.Dequeue();
-                if (e != null)
-                {
-                    e.Data = new WeakReference(eventData);
-                    e.List = new WeakReference(eventList);
+            if (eventList == null || eventList.Count <= 0) return;
+            InternalEvent e = m_eventPool.Dequeue();
+            if (e == null) return;
+            e.Data = new WeakReference(eventData);
+            e.List = new WeakReference(eventList);
                     
-                    m_eventQueue.Enqueue(e);
-                }
-            }
+            m_eventQueue.Enqueue(e);
         }
 
         public bool HasEvent(int eventId)

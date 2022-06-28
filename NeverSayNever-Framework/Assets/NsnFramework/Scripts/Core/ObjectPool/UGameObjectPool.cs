@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-namespace NeverSayNever.Core.ObjectPool
+namespace NeverSayNever.Core
 {
     public class UGameObjectPool
     {

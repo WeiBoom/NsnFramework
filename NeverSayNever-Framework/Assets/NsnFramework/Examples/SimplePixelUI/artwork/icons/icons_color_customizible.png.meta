@@ -128,6 +128,8 @@ TextureImporter:
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -137,8 +139,8 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: -1
-    mipBias: -100
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -159,9 +161,12 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
   applyGammaDecoding: 1
   platformSettings:
   - serializedVersion: 3
@@ -960,6 +965,42 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      isonswhite2_20: 21300040
+      isonswhite2_21: 21300042
+      isonswhite2_26: 21300052
+      isonswhite2_18: 21300036
+      isonswhite2_16: 21300032
+      isonswhite2_11: 21300022
+      isonswhite2_33: 21300066
+      isonswhite2_4: 21300008
+      isonswhite2_8: 21300016
+      isonswhite2_24: 21300048
+      isonswhite2_2: 21300004
+      isonswhite2_30: 21300060
+      isonswhite2_1: 21300002
+      isonswhite2_32: 21300064
+      isonswhite2_15: 21300030
+      isonswhite2_31: 21300062
+      isonswhite2_14: 21300028
+      isonswhite2_19: 21300038
+      isonswhite2_3: 21300006
+      isonswhite2_0: 21300000
+      isonswhite2_7: 21300014
+      isonswhite2_12: 21300024
+      isonswhite2_34: 21300068
+      isonswhite2_25: 21300050
+      isonswhite2_29: 21300058
+      isonswhite2_5: 21300010
+      isonswhite2_6: 21300012
+      isonswhite2_9: 21300018
+      isonswhite2_10: 21300020
+      isonswhite2_13: 21300026
+      isonswhite2_28: 21300056
+      isonswhite2_23: 21300046
+      isonswhite2_22: 21300044
+      isonswhite2_27: 21300054
+      isonswhite2_17: 21300034
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

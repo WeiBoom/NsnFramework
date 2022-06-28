@@ -12,7 +12,7 @@ using Object = UnityEngine.Object;
 
 
 
-namespace NeverSayNever.Editors
+namespace NeverSayNever.EditorUtilitiy
 {
 
     public enum EImportAssetType
@@ -82,7 +82,7 @@ namespace NeverSayNever.Editors
         public static void ChangeTextureFormatToASTC_RGBA_8x8()
         {
             if (!EditorUtility.DisplayDialog("Texture Format", "确定转换所有的图片(图集)格式 为 ASTC_RGBA_8x8 ？", "搞快", "算了")) return;
-            TargetTexIpFormat = TextureImporterFormat.ASTC_RGBA_8x8;
+            TargetTexIpFormat = TextureImporterFormat.ASTC_8x8;
             ChangeTexturesFormat();
         }
 
@@ -205,9 +205,9 @@ namespace NeverSayNever.Editors
 
             var name = template.name;
             var targetFormat = TargetTexIpFormat;
-            if (targetFormat == TextureImporterFormat.ASTC_RGBA_8x8 && name.StartsWith("Atlas") == false)
+            if (targetFormat == TextureImporterFormat.ASTC_8x8 && name.StartsWith("Atlas") == false)
             {
-                targetFormat = TextureImporterFormat.ASTC_RGBA_6x6;
+                targetFormat = TextureImporterFormat.ASTC_6x6;
             }
 
             var defaultSetting = new TextureImporterPlatformSettings

@@ -80,9 +80,6 @@ namespace NeverSayNever.Core.Asset
         [LabelText("存放UI script目录(Lua)")]
         public UnityEngine.Object LuaScriptFolder;
 
-        [LabelText("自动生成的UI脚本所在命名空间，没有则不填写")]
-        public string UIScriptNamespace = "NeverSayNever.Example";
-
         [InfoBox("所需打包Bundle的资源文件目录"),TableList]
         public List<AssetCollectionInfo> BuildAssetCollections = new List<AssetCollectionInfo>();
 

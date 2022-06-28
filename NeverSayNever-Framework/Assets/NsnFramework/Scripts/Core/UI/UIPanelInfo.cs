@@ -16,10 +16,10 @@ namespace NeverSayNever.Core.HUD
 
         public AnimationCurve animationCurve;
 
-        [NSNEnum("动画"), Tooltip("界面动画类型")]
+        [LabelText("动画"), Tooltip("界面动画类型")]
         public EPanelTween tweenType = EPanelTween.None;
 
-        [NSNEnum("层级"), Tooltip("界面层级")]
+        [LabelText("层级"), Tooltip("界面层级")]
         public EPanelLayer panelLayer = EPanelLayer.Main;
 
         [SceneObjectsOnly]

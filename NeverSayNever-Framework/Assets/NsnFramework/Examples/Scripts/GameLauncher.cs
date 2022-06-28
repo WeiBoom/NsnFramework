@@ -61,10 +61,10 @@ namespace NeverSayNever.Example
             else
             {
                 //注册UI界面
-                UIManager.Instance.RegisterCsPanelByReflect(UIModuleDefine.GameMain);
-                UIManager.Instance.RegisterCsPanelByReflect(UIModuleDefine.GameLoading);
+                //UIManager.Instance.RegisterCsPanelByReflect(UIModuleGroup.GameMain.GetModuleName());
+                //UIManager.Instance.RegisterCsPanelByReflect(UIModuleGroup.GameLoading.GetModuleName());
                 //打开面板
-                UIManager.Instance.OpenPanel(UIModuleDefine.GameMain);
+                //UIManager.Instance.OpenPanel(UIModuleGroup.GameMain.GetModuleName());
             }
 
         }

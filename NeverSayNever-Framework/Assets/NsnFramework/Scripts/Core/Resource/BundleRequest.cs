@@ -25,7 +25,7 @@ namespace NeverSayNever.Core.Asset
         /// <summary>
         /// 包含的所有资源
         /// </summary>
-        private List<UObject> requires = null;
+        private List<UObject> _requires = null;
 
         public bool IsUsed() => Count > 0;
 
@@ -42,12 +42,12 @@ namespace NeverSayNever.Core.Asset
         public void Require(UObject obj)
         {
             if (Count > 0) Release();
-            if (requires == null)
+            if (_requires == null)
             {
-                requires = new List<UObject>();
+                _requires = new List<UObject>();
                 Use();
             }
-            requires.Add(obj);
+            _requires.Add(obj);
         }
 
         /// <summary>
@@ -56,26 +56,26 @@ namespace NeverSayNever.Core.Asset
         /// <param name="obj"></param>
         public void UnRequire(UObject obj)
         {
-            if (requires != null)
-                requires.Remove(obj);
+            if (_requires != null)
+                _requires.Remove(obj);
         }
 
         public void UpdateRequires()
         {
-            if (requires == null) return;
+            if (_requires == null) return;
             // 检查是否还有依赖的资源
-            for (var i = 0; i < requires.Count; i++)
+            for (var i = 0; i < _requires.Count; i++)
             {
-                if (requires[i] != null)
+                if (_requires[i] != null)
                     break;
-                requires.RemoveAt(i);
+                _requires.RemoveAt(i);
                 i--;
             }
             // 如果当前已经没有依赖的资源了，则清空列表
-            if (requires.Count == 0)
+            if (_requires.Count == 0)
             {
                 Release();
-                requires = null;
+                _requires = null;
             }
         }
     }
@@ -245,9 +245,9 @@ namespace NeverSayNever.Core.Asset
             internal set => base.assetBundle = value;
         }
 
-        public override bool isDone => IsAssetRequsetDone();
+        public override bool isDone => IsAssetRequestDone();
 
-        public override float progress => unityBundleCreateRequest == null ? 0 : unityBundleCreateRequest.progress;
+        public override float progress => unityBundleCreateRequest?.progress ?? 0;
 
         internal override void Load()
         {
@@ -292,7 +292,7 @@ namespace NeverSayNever.Core.Asset
             loadState = EBundleLoadState.Loaded;
         }
 
-        private bool IsAssetRequsetDone()
+        private bool IsAssetRequestDone()
         {
             if (loadState == EBundleLoadState.None)
                 return false;
@@ -311,7 +311,7 @@ namespace NeverSayNever.Core.Asset
     // Asset 资源
     public class AssetRequest : BaseAsset
     {
-        protected string bundleName;
+        protected readonly string bundleName;
         protected BundleRequest bundleRequest;
 
         public AssetRequest(string bundle)
@@ -360,7 +360,7 @@ namespace NeverSayNever.Core.Asset
             IsAsync = true;
         }
 
-        public override bool isDone => IsAssetRequsetDone();
+        public override bool isDone => IsAssetRequestDone();
 
         public override float progress => GetLoadingProgress();
 
@@ -377,7 +377,7 @@ namespace NeverSayNever.Core.Asset
             base.Unload();
         }
 
-        private bool IsAssetRequsetDone()
+        private bool IsAssetRequestDone()
         {
             if (loadState == EBundleLoadState.Loaded || loadState == EBundleLoadState.Unload)
                 return true;
@@ -415,12 +415,12 @@ namespace NeverSayNever.Core.Asset
 
                     if (bundleRequest.assetBundle == null)
                     {
-                        error = "assetbundle is null !";
+                        error = "asset bundle is null !";
                         return true;
                     }
-                    var assetName = System.IO.Path.GetFileName(assetUrl);
+                    var filename = System.IO.Path.GetFileName(assetUrl);
                     // 所有包含的bundle资源已经加载完成，开始加载bundle包含的资源文件
-                    unityBundleRequset = bundleRequest.assetBundle.LoadAssetAsync(assetName, assetType);
+                    unityBundleRequset = bundleRequest.assetBundle.LoadAssetAsync(filename, assetType);
                     // 切换状态为loadingAsset的状态
                     loadState = EBundleLoadState.LoadingAsset;
                     break;

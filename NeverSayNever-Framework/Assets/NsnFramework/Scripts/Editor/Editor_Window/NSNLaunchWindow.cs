@@ -3,7 +3,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEditor;
 
-namespace NeverSayNever.Editors
+namespace NeverSayNever.EditorUtilitiy
 {
     using NeverSayNever.Core.Asset;
 
@@ -61,7 +61,7 @@ namespace NeverSayNever.Editors
         {
             GUILayout.Label("NSN Framework",_style);
             EditorGUILayout.BeginHorizontal(GUI.skin.box);
-            GUILayout.Label($"框架配置文件存放路径 ： {AssetEditorDefine.ScriptableObjectAssetRootPath}");
+            GUILayout.Label($"框架配置文件存放路径 ： {FrameworkConfig.ScriptableObjectAssetRootPath}");
             EditorGUILayout.EndHorizontal();
 
             // 在project视图显示文件大小

@@ -6,10 +6,8 @@ using UnityEditor;
 using UnityEngine;
 
 
-namespace NeverSayNever.Editors
+namespace NeverSayNever.EditorUtilitiy
 {
-    using NeverSayNever.Utilities;
-
 
     [CustomPropertyDrawer(typeof(NSNEnumAttribute))]
     public class NSNEnumAttributeDrawer : PropertyDrawer

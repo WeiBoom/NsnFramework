@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-namespace NeverSayNever.Utilities
+namespace NeverSayNever.EditorUtilitiy
 {
     using NeverSayNever.Core.HUD;
 

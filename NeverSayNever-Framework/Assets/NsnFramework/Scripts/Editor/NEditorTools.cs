@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-namespace NeverSayNever.Editors
+namespace NeverSayNever.EditorUtilitiy
 {
     public static class NEditorTools
     {
@@ -39,7 +39,7 @@ namespace NeverSayNever.Editors
         public static T GetScriptableObjectAsset<T>() where T : ScriptableObject
         {
             var name = typeof(T).Name;
-            var finalPath = $"{AssetEditorDefine.ScriptableObjectAssetRootPath}{name}.asset";
+            var finalPath = $"{FrameworkConfig.ScriptableObjectAssetRootPath}{name}.asset";
             var asset = AssetDatabase.LoadAssetAtPath<T>(finalPath);
             return asset;
         }
@@ -51,7 +51,7 @@ namespace NeverSayNever.Editors
         public static void GenerateScriptableObjectAsset<T>() where T : ScriptableObject
         {
             var name = typeof(T).Name;
-            var finalPath = $"{AssetEditorDefine.ScriptableObjectAssetRootPath}{name}.asset";
+            var finalPath = $"{FrameworkConfig.ScriptableObjectAssetRootPath}{name}.asset";
             var asset = AssetDatabase.LoadAssetAtPath<T>(finalPath);
             if (asset != null)
                 return;

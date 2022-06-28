@@ -3,13 +3,11 @@ using System.Text;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace NeverSayNever.Utilities
+namespace NeverSayNever.EditorUtilitiy
 {
     using NeverSayNever.Core.HUD;
     public class UIScriptBuilderForLua
     {
-        private const string templeteFilePath = "Assets/NeverSayNever/Scripts/Editor/Editor_UI";
-
         private const string templete_moduleName = "ModuleName";
         private const string templete_AttributeName = "AttributeName";
         private const string templete_PanelName = "PanelName";
@@ -30,7 +28,7 @@ namespace NeverSayNever.Utilities
             var objName = uiTarget.gameObject.name;
             var moduleName = isPanel ? objName.Substring(0, objName.Length - 5) : objName;
             var moduleFolder = moduleName + "Module";
-            var outputFolederPath = NeverSayNever.Core.Framework.GlobalConfig.UIScriptRootForLua + moduleFolder;
+            var outputFolederPath = FrameworkConfig.CommonConfig.LuaSciprtDirectory + "/UI/" + moduleFolder;
 
             if (!Directory.Exists(outputFolederPath))
             {
@@ -53,7 +51,7 @@ namespace NeverSayNever.Utilities
             targetAttributeName = moduleName + "Attribute";
             targetPanelName = moduleName + "Panel";
             targetMessengerName = moduleName + "Messenger";
-            var templetePath = Application.dataPath.Replace("Assets", "") + UnityEditor.AssetDatabase.GetAssetPath(Core.Framework.GlobalConfig.LuaTempleteFolder);
+            var templetePath = Application.dataPath.Replace("Assets", "") + UnityEditor.AssetDatabase.GetAssetPath(FrameworkConfig.GlobalConfig.LuaTempleteFolder);
 
             // Step.1 拷贝并写入UI初始化代码
             var attributeFile = outputPath + "/" + targetAttributeName + ".lua";

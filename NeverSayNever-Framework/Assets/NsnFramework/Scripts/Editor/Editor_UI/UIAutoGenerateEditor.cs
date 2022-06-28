@@ -8,7 +8,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace NeverSayNever.Editors
+namespace NeverSayNever.EditorUtilitiy
 {
     using NeverSayNever.Core;
     using NeverSayNever.Core.HUD;
@@ -82,7 +82,7 @@ namespace NeverSayNever.Editors
             // 构建UI属性类
             BuildScript(className, ref unit, true);
             // 若当前不存在Panel的脚本，则主动创建一个，并生成按钮事件
-            var scriptPath = Framework.GlobalConfig;
+            var scriptPath = FrameworkConfig.GlobalConfig;
             var panelOutputPath = scriptPath + className + "/" + className+".cs";
             // 构建UI类
             if (!System.IO.File.Exists(panelOutputPath))
@@ -355,7 +355,7 @@ namespace NeverSayNever.Editors
 
             //是否在字段、属性、方法之间添加空白行
             //输出文件路径
-            var scriptRoot = Framework.GlobalConfig.UIScriptRootForCs;
+            var scriptRoot = FrameworkConfig.GlobalConfig.UIScriptRootForCs;
             var outputPath = scriptRoot + className;
             var suffix = isAttribute ? ".Designer.cs" : ".cs";
             var outputAttributeFile = outputPath + "/" + className + suffix;

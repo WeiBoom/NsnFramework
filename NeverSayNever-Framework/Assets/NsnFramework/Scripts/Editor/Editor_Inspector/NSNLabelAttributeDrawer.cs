@@ -5,9 +5,8 @@ using UnityEditor;
 using UnityEngine;
 using System.Reflection;
 
-namespace NeverSayNever.Editors
+namespace NeverSayNever.EditorUtilitiy
 {
-    using NeverSayNever.Utilities;
 
     [CustomPropertyDrawer(typeof(NSNLabelAttribute))]
     public class NSNLabelAttributeDrawer : PropertyDrawer

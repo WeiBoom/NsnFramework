@@ -24,5 +24,15 @@ namespace NeverSayNever.Core
         {
             btn.RemoveClickListener(action);
         }
+
+        public static void RemoveButtonEvent(Button btn, UnityAction action)
+        {
+
+        }
+
+        public static void RemoveButtonAllEvent(Button btn)
+        {
+
+        }
     }
 }

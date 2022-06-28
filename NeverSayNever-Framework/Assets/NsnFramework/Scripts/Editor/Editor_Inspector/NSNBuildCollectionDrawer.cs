@@ -3,10 +3,8 @@ using UnityEditor.AnimatedValues;
 using UnityEditorInternal;
 using UnityEngine;
 
-namespace NeverSayNever.Editors
+namespace NeverSayNever.EditorUtilitiy
 {
-    using NeverSayNever.Core.Asset;
-
     //[CustomEditor(typeof(SOAssetCollectionConfig))]
     public class NSNBuildCollectionDrawer : Editor
     {

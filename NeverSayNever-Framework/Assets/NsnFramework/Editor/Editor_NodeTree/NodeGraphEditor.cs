@@ -3,11 +3,10 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEditor.UIElements;
 
-
 public class NodeGraphEditor : EditorWindow
 {
-    [MenuItem("Window/UI Toolkit/NodeGraphEditor")]
-    public static void ShowExample()
+    [MenuItem("NeverSayNever/UI Toolkit/NodeGraphEditor")]
+    public static void OpenWindow()
     {
         NodeGraphEditor wnd = GetWindow<NodeGraphEditor>();
         wnd.titleContent = new GUIContent("NodeGraphEditor");
@@ -19,19 +18,20 @@ public class NodeGraphEditor : EditorWindow
         VisualElement root = rootVisualElement;
 
         // VisualElements objects can contain other VisualElement following a tree hierarchy.
-        VisualElement label = new Label("Hello World! From C#");
-        root.Add(label);
+        //VisualElement label = new Label("Hello World! From C#");
+        //root.Add(label);
 
         // Import UXML
-        var visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Assets/NsnFramework/Editor/NodeGraphEditor.uxml");
-        VisualElement labelFromUXML = visualTree.Instantiate();
-        root.Add(labelFromUXML);
-
+        var visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Assets/NsnFramework/Editor/Editor_NodeTree/NodeGraphEditor.uxml");
+        //VisualElement labelFromUXML = visualTree.CloneTree();
+        //root.Add(labelFromUXML);
+        visualTree.CloneTree(root);
         // A stylesheet can be added to a VisualElement.
         // The style will be applied to the VisualElement and all of its children.
-        var styleSheet = AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/NsnFramework/Editor/NodeGraphEditor.uss");
-        VisualElement labelWithStyle = new Label("Hello World! With Style");
-        labelWithStyle.styleSheets.Add(styleSheet);
-        root.Add(labelWithStyle);
+        var styleSheet = AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/NsnFramework/Editor/Editor_NodeTree/NodeGraphEditor.uss");
+        //VisualElement labelWithStyle = new Label("Hello World! With Style");
+        //labelWithStyle.styleSheets.Add(styleSheet);
+        //root.Add(labelWithStyle);
+        root.styleSheets.Add(styleSheet);
     }
 }

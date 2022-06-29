@@ -13,8 +13,8 @@ namespace NeverSayNever.EditorUtilitiy
             Success,
         }
 
+        public string guid;
         public State state = State.Running;
-
         public bool IsStarted { get; private set; } = false;
 
         public State Update()

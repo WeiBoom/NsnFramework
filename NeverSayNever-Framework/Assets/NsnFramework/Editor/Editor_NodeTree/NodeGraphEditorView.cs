@@ -29,7 +29,11 @@ public class NodeGraphEditorView : GraphView
     internal void PolulateView(NodeGraphTree tree)
     {
         this.tree = tree;
+
+        graphViewChanged -= OnGraphViewChanged;
         DeleteElements(graphElements);
+        graphViewChanged += OnGraphViewChanged;
+
         tree.nodes.ForEach(n => CreateNodeView(n));
     }
 
@@ -59,6 +63,23 @@ public class NodeGraphEditorView : GraphView
     {
         TreeNodeView nodeView = new TreeNodeView(node);
         AddElement(nodeView);
+    }
+
+    private GraphViewChange OnGraphViewChanged(GraphViewChange graphViewChange)
+    {
+        if(graphViewChange.elementsToRemove != null)
+        {
+            graphViewChange.elementsToRemove.ForEach(elem =>
+            {
+                TreeNodeView nodeView = elem as TreeNodeView;
+                if(nodeView != null)
+                {
+                    tree.DeleteNode(nodeView.node);
+                }
+            });
+        }
+
+        return graphViewChange;
     }
 }
 

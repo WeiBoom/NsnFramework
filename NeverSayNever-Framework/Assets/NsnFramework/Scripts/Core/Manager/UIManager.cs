@@ -7,7 +7,7 @@ namespace NeverSayNever.Core
 {
     using NeverSayNever.Core.HUD;
     using NeverSayNever.Core.Asset;
-    using NeverSayNever.Utilities;
+    using NeverSayNever.Utilitiy;
 
     public class UIManager : Singleton<UIManager>
     {

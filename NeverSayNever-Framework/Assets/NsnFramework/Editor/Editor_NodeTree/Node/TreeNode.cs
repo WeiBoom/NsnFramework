@@ -15,6 +15,7 @@ namespace NeverSayNever.EditorUtilitiy
 
         public string guid;
         public State state = State.Running;
+        public Vector2 position;
         public bool IsStarted { get; private set; } = false;
 
         public State Update()
@@ -39,6 +40,8 @@ namespace NeverSayNever.EditorUtilitiy
         protected abstract void OnStart();
         protected abstract State OnUpdate();
         protected abstract void OnStop();
+
+        //protected abstract void InstantiatePort();
     }
 }
 

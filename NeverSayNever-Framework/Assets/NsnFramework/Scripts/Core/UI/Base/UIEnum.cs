@@ -1,5 +1,5 @@
 ﻿using Sirenix.OdinInspector;
-using NeverSayNever.Utilities;
+using NeverSayNever.Utilitiy;
 
 namespace NeverSayNever.Core.HUD
 {

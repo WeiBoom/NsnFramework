@@ -159,7 +159,7 @@ namespace NeverSayNever.Core.AI
 
         public override BTState Tick()
         {
-            NeverSayNever.Utilities.ULog.Print(msg, args);
+            NeverSayNever.Utilitiy.ULog.Print(msg, args);
             return BTState.Success;
         }
     }

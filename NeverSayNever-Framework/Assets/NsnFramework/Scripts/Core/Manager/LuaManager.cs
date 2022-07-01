@@ -5,7 +5,7 @@ using UnityEngine;
 using XLua;
 
 using NeverSayNever.Core.Asset;
-using NeverSayNever.Utilities;
+using NeverSayNever.Utilitiy;
 
 namespace NeverSayNever.Core
 {

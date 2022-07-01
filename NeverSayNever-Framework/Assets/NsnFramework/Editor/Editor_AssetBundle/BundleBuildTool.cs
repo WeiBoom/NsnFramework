@@ -141,7 +141,7 @@ namespace NeverSayNever.EditorUtilitiy
             BuildTarget = buildTarget;
             BundleVersion = bundleVersion;
             BuildOutputPath = Application.streamingAssetsPath; //NEditorTools.GetProjectPath();
-            PlatformOutputPath = $"{BuildOutputPath}/{Utilities.AppConst.Platform}";
+            PlatformOutputPath = $"{BuildOutputPath}/{Utilitiy.AppConst.Platform}";
         }
 
         /// <summary>

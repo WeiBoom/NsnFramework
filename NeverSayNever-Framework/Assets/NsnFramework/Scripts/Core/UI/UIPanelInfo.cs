@@ -7,7 +7,7 @@ using Sirenix.OdinInspector;
 
 namespace NeverSayNever.Core.HUD
 {
-    using NeverSayNever.Utilities;
+    using NeverSayNever.Utilitiy;
 
     [RequireComponent(typeof(Canvas))]
     [RequireComponent(typeof(NsnGraphicRaycaster))]

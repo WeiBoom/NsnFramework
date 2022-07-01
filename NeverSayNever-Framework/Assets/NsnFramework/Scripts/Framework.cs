@@ -1,6 +1,6 @@
 using System;
 using System.Net.Configuration;
-using NeverSayNever.Utilities;
+using NeverSayNever.Utilitiy;
 using UnityEngine;
 
 namespace NeverSayNever.Core

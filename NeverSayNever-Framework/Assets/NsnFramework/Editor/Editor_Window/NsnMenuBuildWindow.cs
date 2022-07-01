@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using NeverSayNever.Utilities;
+using NeverSayNever.Utilitiy;
 using UnityEngine;
 using UnityEditor;
 using UnityEditor.Graphs;

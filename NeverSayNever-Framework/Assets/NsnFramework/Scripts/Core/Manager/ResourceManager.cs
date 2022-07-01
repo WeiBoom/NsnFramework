@@ -8,7 +8,7 @@ using UObject = UnityEngine.Object;
 
 namespace NeverSayNever.Core.Asset
 {
-    using NeverSayNever.Utilities;
+    using NeverSayNever.Utilitiy;
     public enum EAssetType
     {
         UI,

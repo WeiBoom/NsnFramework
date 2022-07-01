@@ -16,7 +16,7 @@ namespace NeverSayNever.Example
     using UnityEngine.UI;
     using TMPro;
     using NeverSayNever.Core.HUD;
-    using NeverSayNever.Utilities;
+    using NeverSayNever.Utilitiy;
 
     public partial class GameMainPanel : NeverSayNever.Core.HUD.UIBasePanel
     {

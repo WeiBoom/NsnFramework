@@ -5,7 +5,7 @@ using XLua;
 
 namespace NeverSayNever.Core.HUD
 {
-    using NeverSayNever.Utilities;
+    using NeverSayNever.Utilitiy;
     using NeverSayNever.Core.Event;
 
     public class UIPanelMessengerForLua : UIBaseMessenger

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace NeverSayNever.Core
 {
-    using NeverSayNever.Utilities;
+    using NeverSayNever.Utilitiy;
     using NeverSayNever.Core.Asset;
     public class SoundManager : Singleton<SoundManager>
     {

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace NeverSayNever.Core
 {
-    using NeverSayNever.Utilities;
+    using NeverSayNever.Utilitiy;
 
     public class ListenerManager : Singleton<ListenerManager>
     {

@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace NeverSayNever.Utilities
+namespace NeverSayNever.Utilitiy
 {
     public static class UMath
     {

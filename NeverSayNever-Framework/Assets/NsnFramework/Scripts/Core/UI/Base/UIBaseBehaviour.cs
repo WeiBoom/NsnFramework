@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
-using NeverSayNever.Utilities;
+using NeverSayNever.Utilitiy;
 
 namespace NeverSayNever.Core.HUD
 {

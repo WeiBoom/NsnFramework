@@ -2,6 +2,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 using NeverSayNever.EditorUtilitiy;
+using NeverSayNever.Utilitiy;
 
 public class NodeGraphEditor : EditorWindow
 {
@@ -14,7 +15,6 @@ public class NodeGraphEditor : EditorWindow
         NodeGraphEditor wnd = GetWindow<NodeGraphEditor>();
         wnd.titleContent = new GUIContent("NodeGraphEditor");
     }
-
     public void CreateGUI()
     {
         // Each editor window contains a root VisualElement object
@@ -31,13 +31,14 @@ public class NodeGraphEditor : EditorWindow
 
         treeView = root.Q<NodeGraphEditorView>();
         inspectorView = root.Q<InspectorView>();
+
+
+        OnSelectionChange();
     }
 
     private void OnSelectionChange()
     {
-        Debug.Log("OnSelectionChange");
-
-
+        ULog.Print("[NodeGraphEditor] {0}", "OnSelectionChange");
         NodeGraphTree tree = Selection.activeObject as NodeGraphTree;
         if(tree != null)
         {

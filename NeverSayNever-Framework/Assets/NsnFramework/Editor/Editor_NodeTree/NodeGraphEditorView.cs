@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -10,6 +11,7 @@ public class NodeGraphEditorView : GraphView
 {
     public new class UxmlFactory : UxmlFactory<NodeGraphEditorView, GraphView.UxmlTraits>{}
 
+    public System.Action<TreeNodeView> OnNodeSelected;
     NodeGraphTree tree;
 
     public NodeGraphEditorView()
@@ -34,7 +36,34 @@ public class NodeGraphEditorView : GraphView
         DeleteElements(graphElements);
         graphViewChanged += OnGraphViewChanged;
 
+        // create node view
         tree.nodes.ForEach(n => CreateNodeView(n));
+
+        // create edges
+
+        tree.nodes.ForEach(n =>
+        {
+            var children = tree.GetChildren(n);
+            children.ForEach(c =>
+            {
+                TreeNodeView parentView = FindNodeView(n);
+                TreeNodeView childView = FindNodeView(c);
+
+                Edge edge = parentView.output.ConnectTo(childView.input);
+                AddElement(edge);
+            });
+        });
+
+    }
+
+    TreeNodeView FindNodeView(TreeNode node)
+    {
+        return GetNodeByGuid(node.guid) as TreeNodeView;
+    }
+
+    public override List<Port> GetCompatiblePorts(Port startPort, NodeAdapter nodeAdapter)
+    {
+        return ports.ToList().Where(endPort => endPort.direction != startPort.direction && endPort.node != startPort.node).ToList();
     }
 
     public override void BuildContextualMenu(ContextualMenuPopulateEvent evt)
@@ -42,6 +71,7 @@ public class NodeGraphEditorView : GraphView
         //base.BuildContextualMenu(evt);
         AppendActionByType<ActionNode>(evt);
         AppendActionByType<DecoratorNode>(evt);
+        AppendActionByType<CompositeNode>(evt);
     }
 
     private void AppendActionByType<T>(ContextualMenuPopulateEvent evt) where T: TreeNode
@@ -62,8 +92,10 @@ public class NodeGraphEditorView : GraphView
     void CreateNodeView(TreeNode node)
     {
         TreeNodeView nodeView = new TreeNodeView(node);
+        nodeView.OnNodeSelected = OnNodeSelected;
         AddElement(nodeView);
     }
+
 
     private GraphViewChange OnGraphViewChanged(GraphViewChange graphViewChange)
     {
@@ -76,6 +108,26 @@ public class NodeGraphEditorView : GraphView
                 {
                     tree.DeleteNode(nodeView.node);
                 }
+
+                Edge edge = elem as Edge;
+                if(edge != null)
+                {
+                    TreeNodeView parentView = edge.output.node as TreeNodeView;
+                    TreeNodeView childView = edge.input.node as TreeNodeView;
+
+                    tree.RemoveChild(parentView.node, childView.node);
+                }
+            });
+        }
+
+        if(graphViewChange.edgesToCreate != null)
+        {
+            graphViewChange.edgesToCreate.ForEach(edge =>
+            {
+                TreeNodeView parentView = edge.output.node as TreeNodeView;
+                TreeNodeView childView = edge.input.node as TreeNodeView;
+
+                tree.AddChild(parentView.node, childView.node);
             });
         }
 

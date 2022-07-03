@@ -5,12 +5,12 @@
     </uie:Toolbar>
     <SplitView>
         <ui:VisualElement name="left-panel">
+            <ui:Label text="Inspector" display-tooltip-when-elided="true" style="background-color: rgb(35, 35, 35);" />
             <InspectorView />
-            <ui:Label text="Inspector" display-tooltip-when-elided="true" style="background-color: rgba(35, 35, 35, 255);" />
         </ui:VisualElement>
         <ui:VisualElement name="right-panel" style="width: 250px;">
             <NodeGraphEditorView focusable="true" style="flex-grow: 1;">
-                <ui:Label text="TreeView" display-tooltip-when-elided="true" style="background-color: rgba(35, 35, 35, 255);" />
+                <ui:Label text="TreeView" display-tooltip-when-elided="true" style="background-color: rgb(35, 35, 35);" />
             </NodeGraphEditorView>
         </ui:VisualElement>
     </SplitView>

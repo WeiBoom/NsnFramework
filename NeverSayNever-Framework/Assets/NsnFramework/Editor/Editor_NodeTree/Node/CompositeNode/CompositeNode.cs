@@ -7,6 +7,6 @@ namespace NeverSayNever.EditorUtilitiy
 {
 	public abstract class CompositeNode : TreeNode
 	{
-		public List<TreeNode> children = new List<TreeNode>();	
+		[HideInInspector] public List<TreeNode> children = new List<TreeNode>();	
 	}
 }

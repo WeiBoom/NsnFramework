@@ -7,6 +7,8 @@ using NeverSayNever.EditorUtilitiy;
 
 public class TreeNodeView : UnityEditor.Experimental.GraphView.Node
 {
+
+    public System.Action<TreeNodeView> OnNodeSelected;
     public TreeNode node;
 
     public Port input;
@@ -34,7 +36,17 @@ public class TreeNodeView : UnityEditor.Experimental.GraphView.Node
         node.position.y = newPos.yMin;
     }
 
-    private void CreateOutputPorts()
+    public override void OnSelected()
+    {
+        base.OnSelected();
+
+        if (OnNodeSelected!= null)
+        {
+            OnNodeSelected(this);
+        }
+    }
+
+    private void CreateInputPorts()
     {
         if(node is ActionNode)
         {
@@ -56,15 +68,16 @@ public class TreeNodeView : UnityEditor.Experimental.GraphView.Node
         }
     }
 
-    private void CreateInputPorts()
+    private void CreateOutputPorts()
     {
+        // Action 一般是执行一个行为，没有输出的结果
         if (node is ActionNode)
         {
             //output = InstantiatePort(Orientation.Horizontal, Direction.Output, Port.Capacity.Single, typeof(bool));
         }
         else if (node is CompositeNode)
         {
-            output = InstantiatePort(Orientation.Horizontal, Direction.Output, Port.Capacity.Single, typeof(bool));
+            output = InstantiatePort(Orientation.Horizontal, Direction.Output, Port.Capacity.Multi, typeof(bool));
         }
         else if (node is DecoratorNode)
         {

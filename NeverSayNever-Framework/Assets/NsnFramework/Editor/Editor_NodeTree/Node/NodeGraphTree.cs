@@ -44,6 +44,58 @@ namespace NeverSayNever.EditorUtilitiy
 			AssetDatabase.RemoveObjectFromAsset(node);
 			AssetDatabase.SaveAssets();
         }
-	}
+
+
+		public void AddChild(TreeNode parent,TreeNode child)
+        {
+			DecoratorNode decorator = parent as DecoratorNode;
+			if(decorator)
+            {
+				decorator.child = child;
+            }
+
+            CompositeNode composite = parent as CompositeNode;
+            if (composite)
+            {
+				composite.children.Add(child);
+            }
+
+
+        }
+
+        public void RemoveChild(TreeNode parent, TreeNode child)
+        {
+            DecoratorNode decorator = parent as DecoratorNode;
+            if (decorator)
+            {
+                decorator.child = null;
+            }
+
+            CompositeNode composite = parent as CompositeNode;
+            if (composite)
+            {
+                composite.children.Remove(child);
+            }
+        }
+
+        public List<TreeNode> GetChildren(TreeNode parent)
+        {
+            List<TreeNode> children = new List<TreeNode>();
+            
+            DecoratorNode decorator = parent as DecoratorNode;
+            if (decorator && decorator.child != null)
+            {
+                children.Add(decorator.child);
+            }
+
+            CompositeNode composite = parent as CompositeNode;
+            if (composite)
+            {
+                return composite.children;
+            }
+
+            return children;
+        }
+    }
 }
 

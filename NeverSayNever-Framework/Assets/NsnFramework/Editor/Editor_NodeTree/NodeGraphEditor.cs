@@ -32,7 +32,7 @@ public class NodeGraphEditor : EditorWindow
         treeView = root.Q<NodeGraphEditorView>();
         inspectorView = root.Q<InspectorView>();
 
-
+        treeView.OnNodeSelected = OnNodeSelectionChanged;
         OnSelectionChange();
     }
 
@@ -44,5 +44,10 @@ public class NodeGraphEditor : EditorWindow
         {
             treeView.PolulateView(tree);
         }
+    }
+
+    void OnNodeSelectionChanged(TreeNodeView view)
+    {
+        inspectorView.UpdateSelection(view);
     }
 }

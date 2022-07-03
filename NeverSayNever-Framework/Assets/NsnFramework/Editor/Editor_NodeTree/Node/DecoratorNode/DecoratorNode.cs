@@ -6,7 +6,6 @@ namespace NeverSayNever.EditorUtilitiy
 {
     public abstract class DecoratorNode : TreeNode
     {
-        TreeNode child;
-        //List<TreeNode> child;
+        [HideInInspector] public TreeNode child;
     }
 }

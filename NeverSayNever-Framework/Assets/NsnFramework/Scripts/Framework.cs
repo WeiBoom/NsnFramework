@@ -59,7 +59,7 @@ namespace NeverSayNever
             // 初始化脚本管理器
             //NsnRuntime.OnInitialize();
             // 初始化资源加载管理器
-            ResourceMgr.OnInitialize(LoadType);
+            //sourceMgr.OnInitialize(LoadType);
             // 初始化Lua模块管理器  如果不使用Lua,则跳过
             //if(IsUsingLuaScript)
                 //LuaMgr.Instance.OnInitialize("Launcher");
@@ -82,7 +82,7 @@ namespace NeverSayNever
             // 更新计时器计时器
             TimerMgr.Instance.OnUpdate();
             // 更新资源
-            ResourceMgr.OnUpdate();
+           //esourceMgr.OnUpdate();
             // 更新模块系统
             //ModuleManager.Instance.OnUpdate();
         }

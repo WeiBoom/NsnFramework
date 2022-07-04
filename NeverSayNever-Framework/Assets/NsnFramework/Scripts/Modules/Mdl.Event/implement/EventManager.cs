@@ -55,7 +55,7 @@ namespace NeverSayNever
         private int m_maxEventCount = 10;
 
 
-        public void OnInitialize()
+        public void OnInitialize(params object[] args)
         {
             m_eventDic = new Dictionary<int, List<GameEventDelegate>>();
             m_eventQueue = new Queue<InternalEvent>(m_maxEventCount);
@@ -66,7 +66,7 @@ namespace NeverSayNever
             }
         }
 
-        public void OnUpdate()
+        public void OnUpdate(float deltaTime)
         {
             if (m_eventQueue == null)
                 return;

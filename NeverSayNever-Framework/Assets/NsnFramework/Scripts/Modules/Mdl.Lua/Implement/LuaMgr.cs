@@ -27,18 +27,18 @@ namespace NeverSayNever
         /// XLua运行环境
         /// </summary>
         private static LuaEnv _luaEnv;
-        // lua 上次gc的时间
+        // Lua 上次gc的时间
         private static float LastGCTime = 0;
-        // lua gc间隔时间
+        // Lua gc 间隔时间
         private const float GCInterval = 1;
-        // lua入口脚本
+        // Lua 入口脚本
         private static string launchFileName = "Launcher";
-        // lua 打包成的bundle资源的名字
+        // Lua 打包成的bundle资源的名字
         private const string luaBundleName = "lualogic.u3d";
         
         public LuaTable Global => _luaEnv?.Global;
 
-        public  void OnInitialize()
+        public  void OnInitialize(params object[] args)
         {
             //ULog.Print("加载Lua脚本");
             _luaEnv = new LuaEnv();
@@ -56,7 +56,7 @@ namespace NeverSayNever
             }
         }
 
-        public void OnUpdate()
+        public void OnUpdate(float deltaTime)
         {
             if (Time.time - LastGCTime > GCInterval)
             {
@@ -81,7 +81,7 @@ namespace NeverSayNever
         /// <param name="name"></param>
         public void LoadScriptBundle(string name)
         {
-            ResourceMgr.LoadTextAsset(name, (obj) =>
+            GameCore.Instance.GetManager<IResourceMgr>().LoadTextAsset(name, (obj) =>
             {
                 TextAsset[] luaFiles = obj as TextAsset[];
                 foreach (var t in luaFiles)

@@ -1,0 +1,14 @@
+---@class UI_ModuleName
+local AttributeName = {gameObject = nil, transfrom = nil};
+local this = AttributeName;
+
+function AttributeName.OnInitializePanel(obj)
+    this.gameObject = obj;
+    this.transfrom = obj.transform;
+    this.UIInfos = obj:GetComponent("UIPanelInfo");
+
+--Content
+
+end
+
+return this;

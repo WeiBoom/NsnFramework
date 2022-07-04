@@ -13,11 +13,15 @@ namespace NeverSayNever
         // 缓存所有的音频
         private readonly Hashtable _sounds = new Hashtable();
 
+        private IResourceMgr _resourceMgr;
+
         public override void OnInitialize(params object[] args)
         {
             base.OnInitialize(args);
             var audioSource = args[0] as AudioSource;
             _mBGMSource = audioSource;
+
+            _resourceMgr = GameCore.Instance.GetManager<IResourceMgr>();
         }
 
 
@@ -49,7 +53,7 @@ namespace NeverSayNever
             }
             
             var name = System.IO.Path.GetFileNameWithoutExtension(path);
-            ResourceMgr.LoadAudio(name, (asset) =>
+            _resourceMgr.LoadAudio(name, (asset) =>
             {
                 var clip = asset as AudioClip;
                 if (clip == null)

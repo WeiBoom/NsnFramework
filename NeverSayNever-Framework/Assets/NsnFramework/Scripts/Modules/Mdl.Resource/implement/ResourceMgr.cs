@@ -1,6 +1,4 @@
 ﻿using System;
-using System.IO;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,52 +6,21 @@ using UObject = UnityEngine.Object;
 
 namespace NeverSayNever
 {
-    public enum EAssetType
+    public class ResourceMgr : IResourceMgr
     {
-        UI,
-        Model,
-        Effect,
-        Texture,
-        Audio,
-        Font,
-        Shader,
-        TextAsset,
-        Scene,
-        Atlas,
-    }
+        public EAssetLoadType LoadType { get; private set; } = EAssetLoadType.AssetDataBase;
 
-    public enum EAssetFileType
-    {
-        Prefab,
-        Texture,
-        Atlas,
-        Scene,
-        Audio,
-        Animation,
-        TextAsset,
-    }
-
-    public enum EAssetLoadType
-    {
-        AssetDataBase,
-        Resources,
-        AssetBundle,
-    }
-
-    public static class ResourceMgr
-    {
-        public static EAssetLoadType LoadType { get; private set; } = EAssetLoadType.AssetDataBase;
-
-        private static AssetBundleHelper assetLoader;
+        private AssetBundleHelper assetLoader;
 
         private const string asset_bundle_extension = ".u3d";
 
-        private static string bundle_platform_root;
+        private string bundle_platform_root;
 
-        private static List<Dictionary<string, string>> m_AllAssetCacheList = new List<Dictionary<string, string>>();
+        private List<Dictionary<string, string>> m_AllAssetCacheList = new List<Dictionary<string, string>>();
 
-        public static void OnInitialize(EAssetLoadType loadType)
+        public void OnInitialize(params object[] args)
         {
+            var loadType = (EAssetLoadType)args[0];// as EAssetLoadType;
             if (loadType == EAssetLoadType.AssetDataBase)
             {
 #if UNITY_EDITOR
@@ -70,28 +37,35 @@ namespace NeverSayNever
             {
                 AssetBundleHelper.bundleMode = true;
             }
-
             LoadType = loadType;
-
 
             InitAssetRootPath();
 
             assetLoader = AssetBundleHelper.Instance;
             assetLoader.OnInitialize(bundle_platform_root);
 
-
-
         }
 
-        public static void OnUpdate()
+        public void OnUpdate(float deltaTime)
         {
-            assetLoader.OnUpdate();
+            if(assetLoader != null)
+            {
+                assetLoader.OnUpdate();
+            }
+        }
+
+        public void OnDispose()
+        {
+            if(assetLoader != null)
+            {
+                assetLoader.OnDispose();
+            }
         }
 
         #region 资源路径
 
         // 初始化资源根目录
-        private static void InitAssetRootPath()
+        private void InitAssetRootPath()
         {
             var cfg = FrameworkConfig.GlobalConfig.VariesAssetFolderDic;
 
@@ -100,7 +74,7 @@ namespace NeverSayNever
         }
 
         // 获取资源路径
-        private static string GetAssetFinalPath(EAssetType assetType, string name)
+        private string GetAssetFinalPath(EAssetType assetType, string name)
         {
             var extension = LoadType == EAssetLoadType.Resources ? string.Empty : GetAssetExtension(assetType);
             var folderInfo = FrameworkConfig.GlobalConfig.VariesAssetFolderDic[assetType.ToString()];
@@ -115,7 +89,7 @@ namespace NeverSayNever
         }
 
         // 获取bundle资源的路径
-        private static string GetBundleAssetFinalPath(EAssetType assetType,string name)
+        private string GetBundleAssetFinalPath(EAssetType assetType,string name)
         {
             switch (assetType)
             {
@@ -138,7 +112,7 @@ namespace NeverSayNever
         }
 
         // 获取所有的资源路径
-        private static void GetAllAssetPath()
+        private void GetAllAssetPath()
         {
             foreach (var dic in m_AllAssetCacheList)
                 dic.Clear();
@@ -170,7 +144,7 @@ namespace NeverSayNever
         /// <param name="type"></param>
         /// <param name="name"></param>
         /// <param name="callback"></param>
-        private static void LoadAsset<T>(EAssetType type, string name, Action<object> callback)
+        private void LoadAsset<T>(EAssetType type, string name, Action<object> callback)
         {
             var assetName = GetAssetFinalPath(type, name);
             var assetNameSplit = assetName.Split('/');
@@ -184,7 +158,7 @@ namespace NeverSayNever
         /// </summary>
         /// <param name="panelName"></param>
         /// <param name="callback"></param>
-        public static void LoadUIPanel(string panelName, Action<object> callback)
+        public void LoadUIPanel(string panelName, Action<object> callback)
         {
             LoadAsset<GameObject>(EAssetType.UI, panelName, callback);
         }
@@ -194,7 +168,7 @@ namespace NeverSayNever
         /// </summary>
         /// <param name="audioName"></param>
         /// <param name="callback"></param>
-        public static void LoadAudio(string audioName, Action<object> callback)
+        public void LoadAudio(string audioName, Action<object> callback)
         {
             LoadAsset<AudioClip>(EAssetType.Audio, audioName, callback);
         }
@@ -204,7 +178,7 @@ namespace NeverSayNever
         /// </summary>
         /// <param name="textName"></param>
         /// <param name="callback"></param>
-        public static void LoadTextAsset(string textName, Action<object> callback)
+        public void LoadTextAsset(string textName, Action<object> callback)
         {
             LoadAsset<TextAsset>(EAssetType.TextAsset, textName, callback);
         }
@@ -214,7 +188,7 @@ namespace NeverSayNever
         /// </summary>
         /// <param name="modelName"></param>
         /// <param name="callback"></param>
-        public static void LoadModel(string modelName, Action<object> callback)
+        public void LoadModel(string modelName, Action<object> callback)
         {
             LoadAsset<GameObject>(EAssetType.Model, modelName, callback);
         }
@@ -224,7 +198,7 @@ namespace NeverSayNever
         /// </summary>
         /// <param name="texName"></param>
         /// <param name="callback"></param>
-        public static void LoadTexture(string texName, Action<object> callback)
+        public void LoadTexture(string texName, Action<object> callback)
         {
             LoadAsset<Texture>(EAssetType.Texture, texName, callback);
         }
@@ -234,7 +208,7 @@ namespace NeverSayNever
         /// </summary>
         /// <param name="sceneName"></param>
         /// <param name="callback"></param>
-        public static void LoadScene(string sceneName,Action<object> callback)
+        public void LoadScene(string sceneName,Action<object> callback)
         {
             var assetName = GetAssetFinalPath(EAssetType.Scene, sceneName);
             var assetNameSplit = assetName.Split('/');
@@ -247,7 +221,7 @@ namespace NeverSayNever
         /// <summary>
         /// 释放资源对象
         /// </summary>
-        public static void ReleaseObject(UObject target)
+        public void ReleaseObject(UObject target)
         {
             if(target != null)
             {

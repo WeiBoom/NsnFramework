@@ -17,7 +17,7 @@ namespace NeverSayNever
 
     public class UIMgr : IUIMgr
     {
-
+        #region cache
         /// <summary>
         /// 保存所有的界面的信息
         /// </summary>
@@ -33,6 +33,8 @@ namespace NeverSayNever
         /// </summary>
         private readonly Dictionary<string, UIBasePanel> _shownPanelDic = new Dictionary<string, UIBasePanel>();
 
+        #endregion
+
         #region UI 节点属性
 
         // 界面根节点
@@ -43,14 +45,21 @@ namespace NeverSayNever
 
         #endregion
 
+        private IResourceMgr mResourceMgr;
+
         /// <summary>
         /// 初始化UI各节点
         /// </summary>
         public void OnInitialize(params object[] args)
         {
+            var uiRoot = args[0] as GameObject;
+            InitUIRoot(uiRoot);
+        }
+
+        private void InitUIRoot(GameObject uiRoot)
+        {
             try
             {
-                var uiRoot = args[0] as GameObject;
                 var uiPool = new GameObject("UIPool");
                 Root = uiRoot.transform;
                 PoolRoot = uiPool.transform;
@@ -61,6 +70,11 @@ namespace NeverSayNever
                 Debug.LogError($"UIManager initialized failed, Error : {e}");
                 throw;
             }
+        }
+
+        private void InitModule()
+        {
+            mResourceMgr = GameCore.Instance.GetManager<IResourceMgr>();
         }
 
         /// <summary>
@@ -228,7 +242,7 @@ namespace NeverSayNever
             _shownPanelDic.TryGetValue(info.Messenger.PanelName, out var panel);
             if (panel != null)
             {
-                ResourceMgr.ReleaseObject(panel.gameObject);
+                mResourceMgr.ReleaseObject(panel.gameObject);
                 _shownPanelDic.Remove(info.Messenger.PanelName);
             }
         }
@@ -255,7 +269,7 @@ namespace NeverSayNever
         }
 
         /// <summary>
-        /// 打开界面 lua类型
+        /// 打开界面 (Lua 类型)
         /// </summary>
         /// <param name="registerInfo"></param>
         /// <param name="panelName"></param>
@@ -280,7 +294,7 @@ namespace NeverSayNever
         }
 
         /// <summary>
-        /// 加载 C#类型 Panel的预制体
+        /// 加载 C#类型 Panel 的预制体
         /// </summary>
         /// <param name="messenger"></param>
         /// <param name="args"></param>
@@ -321,7 +335,7 @@ namespace NeverSayNever
             }
 
             // 加载UI界面
-            ResourceMgr.LoadUIPanel(panelName, LoadPanelComplete);
+            mResourceMgr.LoadUIPanel(panelName, LoadPanelComplete);
         }
 
         /// <summary>
@@ -362,7 +376,7 @@ namespace NeverSayNever
             }
 
             // 加载UI界面
-            ResourceMgr.LoadUIPanel(panelName, LoadPanelComplete);
+            mResourceMgr.LoadUIPanel(panelName, LoadPanelComplete);
         }
 
         public void OnInitialize()
@@ -383,14 +397,12 @@ namespace NeverSayNever
             }
         }
 
-        public void OnUpdate()
+        public void OnUpdate(float deltaTime)
         {
-            throw new NotImplementedException();
         }
 
         public void OnDispose()
         {
-            throw new NotImplementedException();
         }
     }
 }

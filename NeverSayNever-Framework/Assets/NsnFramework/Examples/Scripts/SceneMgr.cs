@@ -10,6 +10,8 @@ namespace NeverSayNever.Example
     {
         public static bool IsLoadingScene { get; private set; } = false;
 
+
+
         private static IEnumerator Coroutine_LoadSceneAsync(string sceneName, System.Action<AsyncOperation> loadingAction, System.Action loadComplete)
         {
             var operation = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(sceneName);
@@ -44,7 +46,8 @@ namespace NeverSayNever.Example
 
             if (Framework.LoadType == EAssetLoadType.AssetBundle)
             {
-                ResourceMgr.LoadScene(sceneName, obj => {
+                IResourceMgr resMgr = GameCore.Instance.GetManager<IResourceMgr>();
+                resMgr.LoadScene(sceneName, obj => {
                     Debug.Log("场景加载完成");
                     // 协程加载场景
                     CoroutineMgr.Instance.AddCoroutine(Coroutine_LoadSceneAsync(sceneName, loadingAction, loadComplete));

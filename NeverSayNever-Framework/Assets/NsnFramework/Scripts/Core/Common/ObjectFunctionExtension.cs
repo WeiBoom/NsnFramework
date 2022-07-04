@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 
+using NeverSayNever;
 
 public static class ObjectFunctionExtension
 {
@@ -284,7 +279,8 @@ public static class ObjectFunctionExtension
 
     public static void LoadTexture(this RawImage rawImage, string textureName, bool isNativeSize = false)
     {
-        NeverSayNever.ResourceMgr.LoadTexture(textureName, (obj) =>
+        IResourceMgr resMgr = GameCore.Instance.GetManager<IResourceMgr>();
+        resMgr.LoadTexture(textureName, (obj) =>
         {
             var texture = (Texture)obj;
             rawImage.texture = texture;
@@ -295,9 +291,14 @@ public static class ObjectFunctionExtension
 
     public static void LoadTexture(this RawImage rawImage, string textureName, float sizeX, float sizeY)
     {
-        rawImage.LoadTexture(textureName);
-        var newSize = new Vector2(sizeX, sizeY);
-        rawImage.rectTransform.sizeDelta = newSize;
+        IResourceMgr resMgr = GameCore.Instance.GetManager<IResourceMgr>();
+        resMgr.LoadTexture(textureName, (obj) =>
+        {
+            var texture = (Texture)obj;
+            rawImage.texture = texture;
+            var newSize = new Vector2(sizeX, sizeY);
+            rawImage.rectTransform.sizeDelta = newSize;
+        });
     }
 
     #endregion

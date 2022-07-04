@@ -1,0 +1,25 @@
+---@class M_ModuleName
+MessengerName = { Events = {} };
+local this = MessengerName;
+---@type V_ModuleName
+local PanelName = require("PanelName");
+
+function MessengerName.OnPreOpen()
+	return true;
+end
+
+function MessengerName.OnShown()
+
+end
+
+function MessengerName.OnHide()
+
+end
+
+function MessengerName.OnClose()
+
+end
+
+function MessengerName.HandleMessage()
+	-- todo
+end

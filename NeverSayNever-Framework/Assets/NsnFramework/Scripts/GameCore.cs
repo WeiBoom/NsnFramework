@@ -43,15 +43,15 @@ namespace NeverSayNever
         /// </summary>
         public void UpdateLogic()
         {
-            UpdateMgr();
+            UpdateMgr(UnityEngine.Time.deltaTime);
         }
 
-        private void UpdateMgr()
+        private void UpdateMgr(float deltaTime)
         {
             var e = mManagerDic.GetEnumerator();
             while (e.MoveNext())
             {
-                e.Current.Value.OnUpdate();
+                e.Current.Value.OnUpdate(deltaTime);
             }
             e.Dispose();
         }

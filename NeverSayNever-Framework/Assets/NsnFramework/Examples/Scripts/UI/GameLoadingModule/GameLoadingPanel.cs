@@ -11,7 +11,6 @@
 namespace NeverSayNever.Example
 {
     using NeverSayNever;
-    using NeverSayNever;
     using System.Collections;
 
     public partial class GameLoadingPanel : NeverSayNever.UIBasePanel

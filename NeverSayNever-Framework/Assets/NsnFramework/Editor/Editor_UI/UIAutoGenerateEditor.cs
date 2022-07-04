@@ -10,9 +10,6 @@ using UnityEngine.UI;
 
 namespace NeverSayNever.EditorUtilitiy
 {
-    using NeverSayNever;
-    using NeverSayNever;
-
     [Obsolete("本来是用于自动生成界面元素的代码，但是这种方式不提倡，所以废弃了，留作学习参考")]
     public class UIAutoGenerateEditor
     {

@@ -1,10 +1,13 @@
-﻿using System.Collections;
+﻿/*
+ * using from unity package Gamekit2D
+ */
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace NeverSayNever
 {
-    // 脱胎于 unity package Gamekit2D
     public enum BTState
     {
         Failure,
@@ -13,41 +16,47 @@ namespace NeverSayNever
         Abort,
     }
 
-    // 行为树
-    public static class BehaviourTree
+    /// <summary>
+    /// 行为树 BehaviourTree
+    /// </summary>
+    public static class BT
     {
         public static BTRoot Root() => new BTRoot();
 
-        public static Sequence Sequence() => new Sequence();
+        public static BTSequence Sequence() => new BTSequence();
 
-        public static Selector Selector(bool shuffle = false) => new Selector(shuffle);
+        public static BTSelector Selector(bool shuffle = false) => new BTSelector(shuffle);
 
-        public static ActionNode RunCoroutine(System.Func<IEnumerator<BTState>> coroutine) => new ActionNode(coroutine);
+        public static BTAction RunCoroutine(System.Func<IEnumerator<BTState>> coroutine) => new BTAction(coroutine);
 
-        public static ActionNode Call(System.Action fn) => new ActionNode(fn);
+        public static BTAction Call(System.Action fn) => new BTAction(fn);
 
-        public static ConditionalBranch If(System.Func<bool> fn) => new ConditionalBranch(fn);
+        public static BTConditionalBranch If(System.Func<bool> fn) => new BTConditionalBranch(fn);
 
-        public static While While(System.Func<bool> fn) => new While(fn);
+        public static BTWhile While(System.Func<bool> fn) => new BTWhile(fn);
 
-        public static Condition Condition(System.Func<bool> fn) => Condition(fn);
+        public static BTCondition Condition(System.Func<bool> fn) => Condition(fn);
 
-        public static Repeat Repeat(int count) => Repeat(count);
+        public static BTRepeat Repeat(int count) => Repeat(count);
 
-        public static Wait Wait(float seconds) => Wait(seconds);
+        public static BTWait Wait(float seconds) => Wait(seconds);
 
-        public static Terminate Terminate() => Terminate();
+        public static BTTerminate Terminate() => Terminate();
 
-        public static Log Log(string msg, params string[] args) => Log(msg, args);
+        public static BTLog Log(string msg, params string[] args) => Log(msg, args);
     }
 
-    // 节点抽象类
+    /// <summary>
+    /// 节点抽象类
+    /// </summary>
     public abstract class BTNode
     {
         public abstract BTState Tick();
     }
 
-    // 行为树分支基类
+    /// <summary>
+    /// 行为树分支 base
+    /// </summary>
     public abstract class BTBranch : BTNode
     {
         // 已经检查过的节点数
@@ -78,7 +87,9 @@ namespace NeverSayNever
         }
     }
 
-    // 行为块基类，默认会执行所有的子节点内容。
+    /// <summary>
+    /// 行为块基类，默认会执行所有的子节点内容。 
+    /// </summary>
     public abstract class BTBlock : BTBranch
     {
         public override BTState Tick()
@@ -99,7 +110,9 @@ namespace NeverSayNever
         }
     }
 
-    // 行为树根节点
+    /// <summary>
+    /// 行为树根节点
+    /// </summary>
     public class BTRoot : BTBlock
     {
         public bool IsTerminated = false;
@@ -132,11 +145,10 @@ namespace NeverSayNever
     }
 
 
-
-    /*
-     * 终端节点，不再执行后续内容
-     */
-    public class Terminate : BTNode
+    /// <summary>
+    /// 终端节点，不再执行后续内容
+    /// </summary>
+    public class BTTerminate : BTNode
     {
         public override BTState Tick()
         {
@@ -144,14 +156,14 @@ namespace NeverSayNever
         }
     }
 
-    /*
-     * 日志节点，输出log日志信息
-     */
-    public class Log : BTNode
+    /// <summary>
+    /// 日志节点，输出log日志信息
+    /// </summary>
+    public class BTLog : BTNode
     {
         string msg;
         string[] args;
-        public Log(string msg, params string[] args)
+        public BTLog(string msg, params string[] args)
         {
             this.msg = msg;
             this.args = args;
@@ -164,24 +176,23 @@ namespace NeverSayNever
         }
     }
 
-    /*
-     * 装饰节点 仅有一个子节点，作为辅助判断的一个节点，执行时间，执行条件，最大次数，最大时间，运行状态等。
-     */
-    public abstract class Decorator : BTNode
+    /// <summary>
+    /// 装饰节点 仅有一个子节点，作为辅助判断的一个节点，执行时间，执行条件，最大次数，最大时间，运行状态等。
+    /// </summary>
+    public abstract class BTDecorator : BTNode
     {
         protected BTNode child;
-        public Decorator Do(BTNode child)
+        public BTDecorator Do(BTNode child)
         {
             this.child = child;
             return this;
         }
     }
-
-
-    /*
-     * 行为节点 ，执行具体内容
-     */
-    public class ActionNode : BTNode
+   
+    /// <summary>
+    /// 执行行为 节点
+    /// </summary>
+    public class BTAction : BTNode
     {
         // 执行一个方法
         System.Action func;
@@ -189,12 +200,12 @@ namespace NeverSayNever
         System.Func<IEnumerator<BTState>> coroutineFactory;
         IEnumerator<BTState> coroutine;
 
-        public ActionNode(System.Action func)
+        public BTAction(System.Action func)
         {
             this.func = func;
         }
 
-        public ActionNode(System.Func<IEnumerator<BTState>> coroutineFactory)
+        public BTAction(System.Func<IEnumerator<BTState>> coroutineFactory)
         {
             this.coroutineFactory = coroutineFactory;
         }
@@ -224,14 +235,14 @@ namespace NeverSayNever
         }
     }
 
-    /*
-     * 条件节点
-     */
-    public class Condition : BTNode
+    /// <summary>
+    /// 条件节点
+    /// </summary>
+    public class BTCondition : BTNode
     {
         public System.Func<bool> func;
 
-        public Condition(System.Func<bool> func)
+        public BTCondition(System.Func<bool> func)
         {
             this.func = func;
         }
@@ -242,10 +253,10 @@ namespace NeverSayNever
         }
     }
 
-    /*
-     * 顺序节点，从左到右依次执行所有节点，只有当一个节点返回success时，才会执行下一个
-     */
-    public class Sequence : BTBranch
+    /// <summary>
+    /// 顺序节点
+    /// </summary>
+    public class BTSequence : BTBranch
     {
         public override BTState Tick()
         {
@@ -274,12 +285,12 @@ namespace NeverSayNever
         }
     }
 
-    /*
-     * 选择节点，只要子节点中一个success，那么就返回success，否则返回 failure
-     */
-    public class Selector : BTBranch
+    /// <summary>
+    /// 选择节点 ; 只要子节点中一个success，那么就返回success，否则返回 failure
+    /// </summary>
+    public class BTSelector : BTBranch
     {
-        public Selector(bool shuffle)
+        public BTSelector(bool shuffle)
         {
             if (!shuffle) return;
 
@@ -322,13 +333,14 @@ namespace NeverSayNever
         }
     }
 
-    /*
-     */
-    public class ConditionalBranch : BTBlock
+    /// <summary>
+    /// 条件分支节点
+    /// </summary>
+    public class BTConditionalBranch : BTBlock
     {
         public System.Func<bool> func;
         bool tested = false;
-        public ConditionalBranch(System.Func<bool> func)
+        public BTConditionalBranch(System.Func<bool> func)
         {
             this.func = func;
         }
@@ -356,15 +368,14 @@ namespace NeverSayNever
         }
     }
 
-
-    /*
-     * while节点，如果条件为true，会执行所有的子节点
-     */
-    public class While : BTBlock
+    /// <summary>
+    /// while节点，如果条件为true，会执行所有的子节点
+    /// </summary>
+    public class BTWhile : BTBlock
     {
         public System.Func<bool> fn;
 
-        public While(System.Func<bool> fn)
+        public BTWhile(System.Func<bool> fn)
         {
             this.fn = fn;
         }
@@ -382,15 +393,15 @@ namespace NeverSayNever
         }
     }
 
-    /*
-     * 重复节点，会重复执行一定次数
-     */
-    public class Repeat : BTBlock
+    /// <summary>
+    /// Repeat 节点，会重复执行 子节点
+    /// </summary>
+    public class BTRepeat : BTBlock
     {
         private int currentCount = 0;
         public int count { get; private set; } = 1;
 
-        public Repeat(int count)
+        public BTRepeat(int count)
         {
             this.count = count;
         }
@@ -417,16 +428,17 @@ namespace NeverSayNever
         }
     }
 
-    /*
-     * 等待节点，一段时间过后返回 success
-     */
-    public class Wait : BTBlock
+   
+    /// <summary>
+    /// Wait 节点， 等待一定时间
+    /// </summary>
+    public class BTWait : BTBlock
     {
         public float seconds { get; private set; } = 0;
 
         float future = -1;
 
-        public Wait(float seconds)
+        public BTWait(float seconds)
         {
             this.seconds = seconds;
         }

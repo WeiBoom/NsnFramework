@@ -13,9 +13,6 @@ namespace NeverSayNever.Example
     using System;
     using System.Collections.Generic;
     using UnityEngine;
-    using UnityEngine.UI;
-    using TMPro;
-    using NeverSayNever;
     using NeverSayNever;
 
     public class GameLoadingMessenger : NeverSayNever.UIPanelMessenger

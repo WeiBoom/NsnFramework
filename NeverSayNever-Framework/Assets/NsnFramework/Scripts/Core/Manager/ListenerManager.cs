@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace NeverSayNever.Core
+namespace NeverSayNever
 {
-    using NeverSayNever.Utilitiy;
-
     public class ListenerManager : Singleton<ListenerManager>
     {
         private readonly List<IListener> _listeners = new List<IListener>();

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace NeverSayNever.Core.HUD
+namespace NeverSayNever
 {
     public enum EUIAnchorPresets
     {

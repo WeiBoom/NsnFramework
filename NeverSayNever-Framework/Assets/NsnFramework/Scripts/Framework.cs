@@ -1,12 +1,11 @@
 using System;
 using System.Net.Configuration;
-using NeverSayNever.Utilitiy;
 using UnityEngine;
 
-namespace NeverSayNever.Core
+namespace NeverSayNever
 {
-    using NeverSayNever.Core.Asset;
-    using NeverSayNever.Core.Event;
+    using NeverSayNever;
+    
     using UObject = UnityEngine.Object;
 
     public static class Framework

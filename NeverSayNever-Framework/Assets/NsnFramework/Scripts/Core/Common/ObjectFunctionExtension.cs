@@ -284,7 +284,7 @@ public static class ObjectFunctionExtension
 
     public static void LoadTexture(this RawImage rawImage, string textureName, bool isNativeSize = false)
     {
-        NeverSayNever.Core.Asset.ResourceManager.LoadTexture(textureName, (obj) =>
+        NeverSayNever.ResourceManager.LoadTexture(textureName, (obj) =>
         {
             var texture = (Texture)obj;
             rawImage.texture = texture;

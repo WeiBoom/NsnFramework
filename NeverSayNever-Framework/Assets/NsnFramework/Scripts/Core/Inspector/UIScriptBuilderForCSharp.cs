@@ -7,9 +7,6 @@ using UnityEngine;
 
 namespace NeverSayNever.EditorUtilitiy
 {
-    using NeverSayNever.Core;
-    using NeverSayNever.Core.HUD;
-
     public static class UIScriptBuilderForCSharp
     {
         enum EScriptLanguageType
@@ -60,7 +57,7 @@ namespace NeverSayNever.EditorUtilitiy
             myNamespace.Imports.Add(new CodeNamespaceImport("UnityEngine"));
             myNamespace.Imports.Add(new CodeNamespaceImport("UnityEngine.UI"));
             myNamespace.Imports.Add(new CodeNamespaceImport("TMPro"));
-            myNamespace.Imports.Add(new CodeNamespaceImport("NeverSayNever.Core.HUD"));
+            myNamespace.Imports.Add(new CodeNamespaceImport("NeverSayNever"));
 
             //if (Framework.GlobalConfig != null && !Framework.GlobalConfig.UIScriptNamespace.IsNullOrEmpty())
             //{

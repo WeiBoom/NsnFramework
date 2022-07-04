@@ -23,6 +23,6 @@ public class NsnUIButton : Button
         if (buttonLabel != null)
             buttonLabel.text = text;
         else
-            NeverSayNever.Utilitiy.ULog.Warning($"{this.gameObject.name}'s buttonlabel is null, please check component");
+            NeverSayNever.ULog.Warning($"{this.gameObject.name}'s buttonlabel is null, please check component");
     }
 }

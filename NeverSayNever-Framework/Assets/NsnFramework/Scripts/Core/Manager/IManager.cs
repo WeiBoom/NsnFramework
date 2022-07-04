@@ -1,5 +1,5 @@
 ﻿
-namespace NeverSayNever.Core
+namespace NeverSayNever
 {
     public interface IManager
     {

@@ -1,8 +1,9 @@
 ﻿using System;
+using UnityEngine;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 
-namespace NeverSayNever.Core.Asset
+namespace NeverSayNever
 {
     /// <summary>
     /// AB资源构建标签类型
@@ -70,6 +71,8 @@ namespace NeverSayNever.Core.Asset
             {
             }
         }
+
+        public string LuaSciprtDirectory { get { return Application.dataPath.Replace("Assets", "LuaScripts"); ; } }
 
         [LabelText("Lua模板目录")]
         public UnityEngine.Object LuaTempleteFolder;

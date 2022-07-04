@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace NeverSayNever.Core.AI
+namespace NeverSayNever
 {
     public class FSMManager
     {

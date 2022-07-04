@@ -1,4 +1,4 @@
-namespace NeverSayNever.Core.HUD
+namespace NeverSayNever
 {
     public class UIPanelMessenger : UIBaseMessenger
     {

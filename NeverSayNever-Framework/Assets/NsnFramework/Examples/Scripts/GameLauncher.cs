@@ -6,8 +6,7 @@ using UnityEngine;
 
 namespace NeverSayNever.Example
 {
-    using NeverSayNever.Core;
-    using NeverSayNever.Core.Asset;
+    using NeverSayNever;
 
     public class GameLauncher : MonoBehaviour
     {
@@ -47,7 +46,7 @@ namespace NeverSayNever.Example
             InitFramework();
 
             Debug.Log("GameLauncher Start");
-            if (loadType == Core.Asset.EAssetLoadType.AssetBundle)
+            if (loadType == EAssetLoadType.AssetBundle)
             {
                 // 预先加载shader，material，font等资源
                 AssetBundleHelper.Instance.LoadBundle("shaders.u3d");

@@ -5,7 +5,7 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 using XLua;
 
-namespace NeverSayNever.Core
+namespace NeverSayNever
 {
         [LuaCallCSharp]
     public static class UIListener

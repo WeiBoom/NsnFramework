@@ -50,7 +50,7 @@ namespace NeverSayNever.EditorUtilitiy
 		/// <summary>
 		/// Callback for toolbar OnGUI method.
 		/// </summary>
-		public static Action OnToolbarGUI;
+		public static System.Action OnToolbarGUI;
 
 		static ToolbarCallback()
 		{
@@ -75,7 +75,7 @@ namespace NeverSayNever.EditorUtilitiy
 					var container = (IMGUIContainer)visualTree[0];
 
 					// (Re)attach handler
-					var handler = (Action)m_imguiContainerOnGui.GetValue(container);
+					var handler = (System.Action)m_imguiContainerOnGui.GetValue(container);
 					handler -= OnGUI;
 					handler += OnGUI;
 					m_imguiContainerOnGui.SetValue(container, handler);
@@ -95,8 +95,8 @@ namespace NeverSayNever.EditorUtilitiy
 		static int m_toolCount;
 		static GUIStyle m_commandStyle = null;
 
-		public static readonly List<Action> LeftToolbarGUI = new List<Action>();
-		public static readonly List<Action> RightToolbarGUI = new List<Action>();
+		public static readonly List<System.Action> LeftToolbarGUI = new List<System.Action>();
+		public static readonly List<System.Action> RightToolbarGUI = new List<System.Action>();
 
 		static ToolbarExtender()
 		{

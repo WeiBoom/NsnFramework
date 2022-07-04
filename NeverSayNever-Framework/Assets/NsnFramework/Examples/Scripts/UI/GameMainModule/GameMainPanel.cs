@@ -15,10 +15,9 @@ namespace NeverSayNever.Example
     using UnityEngine;
     using UnityEngine.UI;
     using TMPro;
-    using NeverSayNever.Core.HUD;
-    using NeverSayNever.Utilitiy;
+    using NeverSayNever;
 
-    public partial class GameMainPanel : NeverSayNever.Core.HUD.UIBasePanel
+    public partial class GameMainPanel : NeverSayNever.UIBasePanel
     {
         
         protected override void OnAwake()
@@ -26,18 +25,18 @@ namespace NeverSayNever.Example
             base.OnAwake();
 
             btn_start.AddClickListener(()=>{
-                ULog.Print("²âÊÔ ----- µã»÷¿ªÊ¼°´Å¥");
+                ULog.Print("ï¿½ï¿½ï¿½ï¿½ ----- ï¿½ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½Å¥");
 
                 GameSceneManager.LoadSceneAsync("example_scene");
-                NeverSayNever.Core.UIManager.Instance.ClosePanel(UIModuleGroup.GameMain.ModuleName);
+                UIManager.Instance.ClosePanel(UIModuleGroup.GameMain.ModuleName);
             });
 
             btn_quit.AddClickListener(() => {
-                ULog.Print("²âÊÔ ----- µã»÷ÍË³ö°´Å¥");
+                ULog.Print("ï¿½ï¿½ï¿½ï¿½ ----- ï¿½ï¿½ï¿½ï¿½Ë³ï¿½ï¿½ï¿½Å¥");
             });
 
             btn_option.AddClickListener(() => {
-                ULog.Print("²âÊÔ ----- µã»÷ÉèÖÃ°´Å¥");
+                ULog.Print("ï¿½ï¿½ï¿½ï¿½ ----- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã°ï¿½Å¥");
             });
         }
         

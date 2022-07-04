@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System;
 
 
-namespace NeverSayNever.Core.AI
+namespace NeverSayNever
 {
     /// <summary>
     /// 有限状态机
@@ -34,7 +34,7 @@ namespace NeverSayNever.Core.AI
         // 更新当前状态的行为
         public void Update()
         {
-            if (CurrentState != null && CurrentState.State == eFSMState.Update)
+            if (CurrentState != null && CurrentState.State == FSMState.ActionState.Update)
                 CurrentState.OnUpdate();
         }
 

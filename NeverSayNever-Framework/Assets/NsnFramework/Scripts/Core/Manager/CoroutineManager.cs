@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using NeverSayNever;
 
-namespace NeverSayNever.Core
+namespace NeverSayNever
 {
     public class CoroutineManager : SingletonMono<CoroutineManager>
     {

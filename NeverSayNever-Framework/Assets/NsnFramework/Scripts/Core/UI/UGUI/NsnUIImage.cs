@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-namespace NeverSayNever.Core.HUD
+namespace NeverSayNever
 {
     public class NsnUIImage : UnityEngine.UI.Image
     {

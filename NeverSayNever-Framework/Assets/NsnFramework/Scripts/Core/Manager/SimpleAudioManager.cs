@@ -2,10 +2,8 @@
 using System.Collections;
 using UnityEngine;
 
-namespace NeverSayNever.Core
+namespace NeverSayNever
 {
-    using NeverSayNever.Utilitiy;
-    using NeverSayNever.Core.Asset;
     public class SimpleAudioManager : Singleton<SimpleAudioManager>
     {
         // 背景音源

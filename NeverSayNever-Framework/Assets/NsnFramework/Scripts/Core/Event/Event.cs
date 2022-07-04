@@ -1,4 +1,4 @@
-﻿namespace NeverSayNever.Core.Event
+﻿namespace NeverSayNever
 {
     public class EventParameters
     {

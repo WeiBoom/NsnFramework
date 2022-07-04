@@ -15,10 +15,10 @@ namespace NeverSayNever.Example
     using UnityEngine;
     using UnityEngine.UI;
     using TMPro;
-    using NeverSayNever.Core.HUD;
+    using NeverSayNever;
     
     
-    public partial class GameMainPanel : NeverSayNever.Core.HUD.UIBasePanel
+    public partial class GameMainPanel : NeverSayNever.UIBasePanel
     {
         
         private TextMeshProUGUI tmp_title;

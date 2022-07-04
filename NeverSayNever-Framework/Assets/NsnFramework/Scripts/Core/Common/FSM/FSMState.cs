@@ -1,17 +1,19 @@
 ﻿using System.Collections;
 
-namespace NeverSayNever.Core.AI
+namespace NeverSayNever
 {
-    public enum eFSMState
-    {
-        None,
-        Enter,
-        Update,
-        Exit,
-    }
+
 
     public class FSMState : IState
     {
+        public enum ActionState
+        {
+            None,
+            Enter,
+            Update,
+            Exit,
+        }
+
         protected readonly float _timer;
         protected readonly string _name;
         protected readonly string _tag;
@@ -26,25 +28,25 @@ namespace NeverSayNever.Core.AI
             _tag = tag;
         }
 
-        public eFSMState State { get; private set; } = eFSMState.None;
+        public ActionState State { get; private set; } = ActionState.None;
 
 
         // 初始化行为，执行完成后需要设置状态为 Update
         public virtual void OnEnter()
         {
-            State = eFSMState.Enter;
+            State = ActionState.Enter;
         }
 
         // 退出行为
         public virtual void OnExit()
         {
-            State = eFSMState.Exit;
+            State = ActionState.Exit;
         }
 
         // 更新行为
         public virtual void OnUpdate()
         {
-            State = eFSMState.Update;
+            State = ActionState.Update;
         }
 
     }

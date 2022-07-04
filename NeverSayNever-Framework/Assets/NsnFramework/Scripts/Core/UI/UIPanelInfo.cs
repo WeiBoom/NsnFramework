@@ -5,9 +5,9 @@ using UnityEngine.UI;
 using DG.Tweening;
 using Sirenix.OdinInspector;
 
-namespace NeverSayNever.Core.HUD
+namespace NeverSayNever
 {
-    using NeverSayNever.Utilitiy;
+    
 
     [RequireComponent(typeof(Canvas))]
     [RequireComponent(typeof(NsnGraphicRaycaster))]

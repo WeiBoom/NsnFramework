@@ -1,7 +1,7 @@
 ﻿using Sirenix.OdinInspector;
-using NeverSayNever.Utilitiy;
 
-namespace NeverSayNever.Core.HUD
+
+namespace NeverSayNever
 {
     /// <summary>
     /// UI事件

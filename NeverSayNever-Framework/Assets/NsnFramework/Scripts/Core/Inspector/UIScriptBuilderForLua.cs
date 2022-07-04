@@ -5,7 +5,6 @@ using UnityEngine;
 
 namespace NeverSayNever.EditorUtilitiy
 {
-    using NeverSayNever.Core.HUD;
     public class UIScriptBuilderForLua
     {
         private const string templete_moduleName = "ModuleName";
@@ -28,7 +27,7 @@ namespace NeverSayNever.EditorUtilitiy
             var objName = uiTarget.gameObject.name;
             var moduleName = isPanel ? objName.Substring(0, objName.Length - 5) : objName;
             var moduleFolder = moduleName + "Module";
-            var outputFolederPath = FrameworkConfig.CommonConfig.LuaSciprtDirectory + "/UI/" + moduleFolder;
+            var outputFolederPath = FrameworkConfig.GlobalConfig.LuaSciprtDirectory + "/UI/" + moduleFolder;
 
             if (!Directory.Exists(outputFolederPath))
             {

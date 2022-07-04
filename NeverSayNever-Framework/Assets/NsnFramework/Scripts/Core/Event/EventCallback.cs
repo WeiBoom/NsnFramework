@@ -1,4 +1,4 @@
-﻿namespace NeverSayNever.Core.Event
+﻿namespace NeverSayNever
 {
     public delegate void EventCallback();
     public delegate void EventCallback<in T>(T t);

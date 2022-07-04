@@ -10,16 +10,11 @@
 
 namespace NeverSayNever.Example
 {
-    using System;
-    using System.Collections.Generic;
-    using UnityEngine;
-    using UnityEngine.UI;
-    using TMPro;
-    using NeverSayNever.Core;
-    using NeverSayNever.Core.HUD;
+    using NeverSayNever;
+    using NeverSayNever;
     using System.Collections;
 
-    public partial class GameLoadingPanel : NeverSayNever.Core.HUD.UIBasePanel
+    public partial class GameLoadingPanel : NeverSayNever.UIBasePanel
     {
         private GameLoadingMessenger messenger;
 

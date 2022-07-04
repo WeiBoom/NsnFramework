@@ -15,16 +15,16 @@ namespace NeverSayNever.Example
     using UnityEngine;
     using UnityEngine.UI;
     using TMPro;
-    using NeverSayNever.Core.HUD;
-    
-    
-    public class GameLoadingMessenger : NeverSayNever.Core.HUD.UIPanelMessenger
+    using NeverSayNever;
+    using NeverSayNever;
+
+    public class GameLoadingMessenger : NeverSayNever.UIPanelMessenger
     {
-        // ³¡¾°¼ÓÔØ½ø¶È
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø½ï¿½ï¿½ï¿½
         public AsyncOperation operation;
-        // ¼ÓÔØÍê³ÉºóµÄÐÐÎª
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Éºï¿½ï¿½ï¿½ï¿½Îª
         public event System.Action loadCompleteAction;
-        // ¼ÓÔØÖÐµÄÐÐÎª
+        // ï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½ï¿½ï¿½Îª
         public event System.Action<AsyncOperation> loadingAction;
 
         private List<System.Action<AsyncOperation>> loadingActionList = new List<Action<AsyncOperation>>();
@@ -76,7 +76,7 @@ namespace NeverSayNever.Example
             loadingActionList.Clear();
             CompleteActionList.Clear();
 
-            NeverSayNever.Core.UIManager.Instance.ClosePanel(UIModuleGroup.GameLoading.ModuleName);
+            UIManager.Instance.ClosePanel(UIModuleGroup.GameLoading.ModuleName);
         }
 
 

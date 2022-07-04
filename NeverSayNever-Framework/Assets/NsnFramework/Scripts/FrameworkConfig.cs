@@ -4,9 +4,7 @@ using UnityEngine;
 
 namespace NeverSayNever
 {
-    using NeverSayNever.Core;
-    using NeverSayNever.Core.Asset;
-
+    using NeverSayNever;
     public static class FrameworkConfig
     {
 
@@ -22,20 +20,6 @@ namespace NeverSayNever
 
         #endregion
 
-        private static SOCommonConfig commonConfig;
-
-        /// <summary>
-        /// 框架通用配置
-        /// </summary>
-        public static SOCommonConfig CommonConfig
-        {
-            get
-            {
-                if (commonConfig == null)
-                    commonConfig = ScriptableObjectManager.Instance.GetScriptableObject<SOCommonConfig>();
-                return commonConfig;
-            }
-        }
 
         private static SOGlobalAssetConfig globalConfig;
 

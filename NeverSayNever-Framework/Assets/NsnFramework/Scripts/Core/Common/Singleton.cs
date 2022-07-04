@@ -2,7 +2,7 @@
 using System.Collections;
 using System;
 
-namespace NeverSayNever.Core
+namespace NeverSayNever
 {
     public class Singleton<T> :ISingleton where T : class, new()
     {

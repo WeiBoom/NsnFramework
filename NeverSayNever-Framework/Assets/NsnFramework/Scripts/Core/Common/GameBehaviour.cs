@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace NeverSayNever.Core
+namespace NeverSayNever
 {
     public class GameBehaviour : MonoBehaviour
     {

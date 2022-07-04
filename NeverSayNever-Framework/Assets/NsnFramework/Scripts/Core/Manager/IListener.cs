@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace NeverSayNever.Core
+namespace NeverSayNever
 {
     public interface IListener
     {

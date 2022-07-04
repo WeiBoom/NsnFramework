@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace NeverSayNever.Core.HUD
+namespace NeverSayNever
 {
-    using NeverSayNever.Core.Event;
+    
 
     public class UIBasePanel : GameBehaviour
     {

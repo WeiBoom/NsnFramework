@@ -3,6 +3,7 @@ using System.Collections;
 using XLua;
 using System.Collections.Generic;
 using System;
+using NeverSayNever;
 
 [LuaCallCSharp]
 public static class LuaCallCsList
@@ -97,8 +98,8 @@ public static class LuaCallCsList
         typeof(WaitForSeconds),
         typeof(List<string>),
         // 自定义类型
-        typeof(NeverSayNever.Core.UIManager),
-        typeof(NeverSayNever.Core.Asset.ResourceManager),
+        typeof(UIManager),
+        typeof(ResourceManager),
     };
 
     //C#静态调用Lua的配置（包括事件的原型），仅可以配delegate，interface
@@ -126,7 +127,7 @@ public static class LuaCallCsList
         typeof(Action<LuaTable,object>),
         typeof(Action<LuaTable,float>),
         typeof(Action<LuaTable,int,object>),
-        typeof(Action<LuaTable,NeverSayNever.Core.HUD.UIPanelMessengerForLua>),
+        typeof(Action<LuaTable,NeverSayNever.UIPanelMessengerForLua>),
         typeof(Action<uint,byte[]>),
         typeof(Action<LuaTable>),
         typeof(Action<object>),

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace NeverSayNever.Core
+namespace NeverSayNever
 {
 // 计时器管理器
     public class TimerManager : Singleton<TimerManager>

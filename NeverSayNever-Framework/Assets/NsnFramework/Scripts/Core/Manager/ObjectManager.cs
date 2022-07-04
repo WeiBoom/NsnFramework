@@ -3,7 +3,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace NeverSayNever.Core
+namespace NeverSayNever
 {
     public class ObjectManager : Singleton<ObjectManager>
     {

@@ -4,8 +4,8 @@ using UnityEngine;
 
 namespace NeverSayNever.Example
 {
-    using NeverSayNever.Core;
-    using UIMgr = NeverSayNever.Core.UIManager;
+    using NeverSayNever;
+    using UIMgr = UIManager;
 
     public static class GameSceneManager
     {
@@ -41,9 +41,9 @@ namespace NeverSayNever.Example
             //    loadingMessenger.loadCompleteAction += loadComplete;
             //}
 
-            if (Framework.LoadType == Core.Asset.EAssetLoadType.AssetBundle)
+            if (Framework.LoadType == EAssetLoadType.AssetBundle)
             {
-                Core.Asset.ResourceManager.LoadScene(sceneName, obj => {
+                ResourceManager.LoadScene(sceneName, obj => {
                     Debug.Log("场景加载完成");
                     // 协程加载场景
                     CoroutineManager.Instance.AddCoroutine(Coroutine_LoadSceneAsync(sceneName, loadingAction, loadComplete));

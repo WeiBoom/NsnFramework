@@ -15,10 +15,10 @@ namespace NeverSayNever.Example
     using UnityEngine;
     using UnityEngine.UI;
     using TMPro;
-    using NeverSayNever.Core.HUD;
+    using NeverSayNever;
     
     
-    public class GameMainMessenger : NeverSayNever.Core.HUD.UIPanelMessenger
+    public class GameMainMessenger : NeverSayNever.UIPanelMessenger
     {
         
         public GameMainMessenger(string name) : 

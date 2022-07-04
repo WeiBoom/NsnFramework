@@ -1,11 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-
-namespace NeverSayNever.Core.Asset
+using UnityEngine.SceneManagement;
+using UObject = UnityEngine.Object;
+namespace NeverSayNever
 {
-    using UnityEngine.SceneManagement;
-    using UObject = UnityEngine.Object;
+
 
     public enum EBundleLoadState
     {
@@ -134,7 +133,7 @@ namespace NeverSayNever.Core.Asset
         {
             if (assetObj == null)
                 return;
-            if((assetObj is GameObject))
+            if (assetObj is GameObject)
                 Resources.UnloadAsset(assetObj);
             assetObj = null;
         }
@@ -153,9 +152,9 @@ namespace NeverSayNever.Core.Asset
             {
                 loadComplete(assetObj);
             }
-            catch(System.Exception e)
+            catch (System.Exception e)
             {
-                throw (e);
+                throw e;
             }
 
             loadComplete = null;
@@ -187,7 +186,7 @@ namespace NeverSayNever.Core.Asset
         {
             base.Unload();
             dependencies.Clear();
-            if(assetBundle != null)
+            if (assetBundle != null)
             {
                 assetBundle.Unload(true);
                 assetBundle = null;
@@ -197,7 +196,7 @@ namespace NeverSayNever.Core.Asset
         public override void Release()
         {
             base.Release();
-            foreach(var depend in dependencies)
+            foreach (var depend in dependencies)
             {
                 ReleaseFromBundle(depend);
             }
@@ -207,7 +206,7 @@ namespace NeverSayNever.Core.Asset
         private void ReleaseFromBundle(BundleRequest request)
         {
             // 释放本身的资源
-            if(request.assetName.Equals(this.assetName))
+            if (request.assetName.Equals(assetName))
             {
                 base.Release();
             }
@@ -219,7 +218,7 @@ namespace NeverSayNever.Core.Asset
                 // 添加到释放资源列表
                 releaseTargets.Add(request);
                 // 释放依赖资源的依赖资源
-                foreach(var dep in request.dependencies)
+                foreach (var dep in request.dependencies)
                 {
                     ReleaseFromBundle(dep);
                 }
@@ -251,10 +250,10 @@ namespace NeverSayNever.Core.Asset
 
         internal override void Load()
         {
-            if(unityBundleCreateRequest == null)
+            if (unityBundleCreateRequest == null)
             {
                 unityBundleCreateRequest = AssetBundle.LoadFromFileAsync(assetUrl);
-                if(unityBundleCreateRequest == null)
+                if (unityBundleCreateRequest == null)
                 {
                     error = $"{assetUrl} LoadFromFile failed.";
                     return;
@@ -274,7 +273,7 @@ namespace NeverSayNever.Core.Asset
         {
             base.LoadImmediate();
             Load();
-            if(assetBundle != null)
+            if (assetBundle != null)
             {
                 Debug.LogWarning($"LoadImmediate : {assetBundle.name}");
             }
@@ -355,7 +354,7 @@ namespace NeverSayNever.Core.Asset
     {
         private AssetBundleRequest unityBundleRequset;
 
-        public AssetRequestAsync(string bundleName) :base(bundleName)
+        public AssetRequestAsync(string bundleName) : base(bundleName)
         {
             IsAsync = true;
         }
@@ -468,7 +467,7 @@ namespace NeverSayNever.Core.Asset
         public readonly LoadSceneMode loadSceneMode;
         protected readonly string sceneName;
 
-        public SceneAssetRequest(string path,string bundleName,string sceneName,bool addictive)
+        public SceneAssetRequest(string path, string bundleName, string sceneName, bool addictive)
         {
             assetUrl = path;
             assetBundleName = bundleName;
@@ -480,7 +479,7 @@ namespace NeverSayNever.Core.Asset
 
         internal override void Load()
         {
-            if(!assetBundleName.IsNullOrEmpty())
+            if (!assetBundleName.IsNullOrEmpty())
             {
                 bundleRequest = AssetBundleHelper.Instance.LoadBundle(assetBundleName);
                 if (bundleRequest != null)
@@ -496,7 +495,7 @@ namespace NeverSayNever.Core.Asset
                     SceneManager.LoadScene(sceneName, loadSceneMode);
                     loadState = EBundleLoadState.LoadingAsset;
                 }
-                catch(System.Exception e)
+                catch (System.Exception e)
                 {
                     Debug.LogException(e);
                     error = e.ToString();

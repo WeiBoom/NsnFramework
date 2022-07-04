@@ -1,9 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-namespace NeverSayNever.Core
+namespace NeverSayNever
 {
-    using NeverSayNever.Core.Asset;
-
     public class ScriptableObjectManager : Singleton<ScriptableObjectManager>
     {
         private Dictionary<System.Type, ScriptableObject> SOCacheDic = new Dictionary<System.Type, ScriptableObject>();

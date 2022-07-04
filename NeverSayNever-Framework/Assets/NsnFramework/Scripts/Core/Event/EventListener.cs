@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace NeverSayNever.Core.Event
+namespace NeverSayNever
 {
 
     public enum EventDelegateState

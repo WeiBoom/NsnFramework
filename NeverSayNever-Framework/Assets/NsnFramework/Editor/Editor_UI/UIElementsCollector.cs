@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace NeverSayNever.EditorUtilitiy
 {
-    using NeverSayNever.Core.HUD;
+    using NeverSayNever;
 
     public static class UIElementsCollector
     {

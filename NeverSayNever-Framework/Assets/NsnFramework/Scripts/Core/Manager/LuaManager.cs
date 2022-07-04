@@ -4,13 +4,9 @@ using System.IO;
 using UnityEngine;
 using XLua;
 
-using NeverSayNever.Core.Asset;
-using NeverSayNever.Utilitiy;
 
-namespace NeverSayNever.Core
+namespace NeverSayNever
 {
-    using NeverSayNever.Core.Asset;
-
     public class LuaManager :Singleton<LuaManager>
     {
         private const string LuaSuffix = ".lua";
@@ -56,7 +52,7 @@ namespace NeverSayNever.Core
                 LoadScriptBundle(luaBundleName);
             else
             {
-                var luaFilePath = FrameworkConfig.CommonConfig.LuaSciprtDirectory;
+                var luaFilePath = FrameworkConfig.GlobalConfig.LuaSciprtDirectory;
                 GetAllLuaFiles(luaFilePath);
             }
         }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace NeverSayNever.Core.AI
+namespace NeverSayNever
 {
     // 脱胎于 unity package Gamekit2D
     public enum BTState
@@ -22,9 +22,9 @@ namespace NeverSayNever.Core.AI
 
         public static Selector Selector(bool shuffle = false) => new Selector(shuffle);
 
-        public static Action RunCoroutine(System.Func<IEnumerator<BTState>> coroutine) => new Action(coroutine);
+        public static ActionNode RunCoroutine(System.Func<IEnumerator<BTState>> coroutine) => new ActionNode(coroutine);
 
-        public static Action Call(System.Action fn) => new Action(fn);
+        public static ActionNode Call(System.Action fn) => new ActionNode(fn);
 
         public static ConditionalBranch If(System.Func<bool> fn) => new ConditionalBranch(fn);
 
@@ -159,7 +159,7 @@ namespace NeverSayNever.Core.AI
 
         public override BTState Tick()
         {
-            NeverSayNever.Utilitiy.ULog.Print(msg, args);
+            NeverSayNever.ULog.Print(msg, args);
             return BTState.Success;
         }
     }
@@ -181,7 +181,7 @@ namespace NeverSayNever.Core.AI
     /*
      * 行为节点 ，执行具体内容
      */
-    public class Action : BTNode
+    public class ActionNode : BTNode
     {
         // 执行一个方法
         System.Action func;
@@ -189,12 +189,12 @@ namespace NeverSayNever.Core.AI
         System.Func<IEnumerator<BTState>> coroutineFactory;
         IEnumerator<BTState> coroutine;
 
-        public Action(System.Action func)
+        public ActionNode(System.Action func)
         {
             this.func = func;
         }
 
-        public Action(System.Func<IEnumerator<BTState>> coroutineFactory)
+        public ActionNode(System.Func<IEnumerator<BTState>> coroutineFactory)
         {
             this.coroutineFactory = coroutineFactory;
         }

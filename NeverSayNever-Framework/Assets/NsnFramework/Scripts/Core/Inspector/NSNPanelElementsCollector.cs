@@ -5,7 +5,6 @@ using TMPro;
 
 namespace NeverSayNever.EditorUtilitiy
 {
-    using NeverSayNever.Core.HUD;
 
     public static class NSNPanelElementsCollector
     {

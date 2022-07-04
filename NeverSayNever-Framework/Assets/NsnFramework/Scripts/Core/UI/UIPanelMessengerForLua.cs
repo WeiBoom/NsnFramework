@@ -3,10 +3,10 @@ using System;
 using UnityEngine;
 using XLua;
 
-namespace NeverSayNever.Core.HUD
+namespace NeverSayNever
 {
-    using NeverSayNever.Utilitiy;
-    using NeverSayNever.Core.Event;
+    
+    
 
     public class UIPanelMessengerForLua : UIBaseMessenger
     {

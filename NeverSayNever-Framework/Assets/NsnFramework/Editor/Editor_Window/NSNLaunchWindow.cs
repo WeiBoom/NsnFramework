@@ -5,8 +5,7 @@ using UnityEditor;
 
 namespace NeverSayNever.EditorUtilitiy
 {
-    using NeverSayNever.Core.Asset;
-
+    using NeverSayNever;
     public class NSNLaunchWindow : OdinEditorWindow
     {
         private static NSNLaunchWindow _window;

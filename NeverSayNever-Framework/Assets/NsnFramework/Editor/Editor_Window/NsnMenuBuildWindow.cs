@@ -1,14 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using NeverSayNever.Utilitiy;
-using UnityEngine;
-using UnityEditor;
-using UnityEditor.Graphs;
+﻿using UnityEditor;
 
 namespace NeverSayNever.EditorUtilitiy
 {
-    using NeverSayNever.Core.Asset;
-    using Sirenix.OdinInspector.Editor;
+    using NeverSayNever;
     using Sirenix.OdinInspector;
     public class NsnMenuBuildWindow
     {

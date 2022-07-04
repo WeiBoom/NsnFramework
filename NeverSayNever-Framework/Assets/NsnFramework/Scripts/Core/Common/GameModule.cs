@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NeverSayNever.Core
+namespace NeverSayNever
 {
     public abstract class GameModule : IGameModule
     {

@@ -14,7 +14,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-using NeverSayNever.Core.HUD;
+using NeverSayNever;
 
 public partial class CommonItem : UIBasePanel
 {

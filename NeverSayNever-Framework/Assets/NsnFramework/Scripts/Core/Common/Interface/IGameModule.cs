@@ -1,5 +1,5 @@
 ﻿using System;
-namespace NeverSayNever.Core
+namespace NeverSayNever
 {
     public interface IGameModule
     {

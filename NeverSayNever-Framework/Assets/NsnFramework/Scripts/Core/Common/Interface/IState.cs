@@ -1,4 +1,4 @@
-﻿namespace NeverSayNever.Core.AI
+﻿namespace NeverSayNever
 {
     public interface IState
     {

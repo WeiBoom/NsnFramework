@@ -1,14 +1,9 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using NeverSayNever;
 using System;
 
-namespace NeverSayNever.Core
+namespace NeverSayNever
 {
-    using NeverSayNever.Core.HUD;
-    using NeverSayNever.Core.Asset;
-    using NeverSayNever.Utilitiy;
-
     public class UIManager : Singleton<UIManager>
     {
         /// <summary>
@@ -63,7 +58,7 @@ namespace NeverSayNever.Core
             }
             catch (Exception e)
             {
-                Debug.LogError($"UIManager initialized failed, Error : {e}" );
+                Debug.LogError($"UIManager initialized failed, Error : {e}");
                 throw;
             }
         }
@@ -97,12 +92,12 @@ namespace NeverSayNever.Core
         /// <param name="messenger"></param>
         private void RegisterPanel(string name, bool isLua, UIBaseMessenger messenger)
         {
-            if(_allPanelInfoDic.ContainsKey(name))
+            if (_allPanelInfoDic.ContainsKey(name))
             {
                 Debug.LogError($"{name} 已经注册过");
                 return;
             }
-          
+
             var info = new UIRegisterInfo();
             info.IsLua = isLua;
             info.ScriptName = name;
@@ -132,7 +127,7 @@ namespace NeverSayNever.Core
         public T GetUIMessenger<T>(string moduleName) where T : UIBaseMessenger
         {
             _allPanelInfoDic.TryGetValue(moduleName, out var registerInfo);
-            if(registerInfo != null)
+            if (registerInfo != null)
             {
                 return registerInfo.Messenger as T;
             }
@@ -149,15 +144,15 @@ namespace NeverSayNever.Core
         /// <param name="moduleName">模块名</param>
         public void RegisterCsPanelByReflect(string moduleName)
         {
-           // var uiNamespace = FrameworkConfig.CommonConfig.UIScriptNamespace;
+            // var uiNamespace = FrameworkConfig.CommonConfig.UIScriptNamespace;
             var messengerName = $"{moduleName}Messenger";//uiNamespace.IsNullOrEmpty()? $"{moduleName}Messenger" :$"{uiNamespace}.{moduleName}Messenger" ;
             var panelName = $"{moduleName}Panel";
-            var parameters = new object[] {panelName};
+            var parameters = new object[] { panelName };
 
             var target = ScriptManager.Instance.CreateInstance(messengerName, parameters);
             if (target == null)
             {
-                throw new System.Exception($"注册模块失败 : {moduleName}");
+                throw new Exception($"注册模块失败 : {moduleName}");
             }
             var panelMessenger = target as UIPanelMessenger;
             RegisterCsPanel(moduleName, panelMessenger);
@@ -182,7 +177,7 @@ namespace NeverSayNever.Core
             _allPanelInfoDic.TryGetValue(moduleName, out var registerInfo);
             if (registerInfo == null)
             {
-                Debug.LogError($"没找到界面信息，请先注册{ moduleName}");
+                Debug.LogError($"没找到界面信息，请先注册{moduleName}");
                 return;
             }
 
@@ -224,7 +219,7 @@ namespace NeverSayNever.Core
         public void ClosePanel(string moduleName, bool hide = true)
         {
             _allPanelInfoDic.TryGetValue(moduleName, out var info);
-            if(info == null)
+            if (info == null)
             {
                 Debug.LogError($"注册列表中没有界面 {moduleName}");
                 return;
@@ -252,8 +247,8 @@ namespace NeverSayNever.Core
         /// <param name="widgetName"></param>
         /// <param name="args"></param>
         public void OpenWidget(string widgetName, params object[] args)
-        { 
-            
+        {
+
         }
 
         /// <summary>
@@ -279,7 +274,7 @@ namespace NeverSayNever.Core
             }
             else
             {
-                if(messenger.OnPreOpen(args))
+                if (messenger.OnPreOpen(args))
                 {
                     LoadCsPanel(messenger, args);
                 }
@@ -362,7 +357,7 @@ namespace NeverSayNever.Core
         /// <param name="panelName"></param>
         private void LoadLuaPanel(string panelName)
         {
-           // ULog.Print("加载Lua界面" + panelName);
+            // ULog.Print("加载Lua界面" + panelName);
             _allPanelInfoDic.TryGetValue(panelName, out var info);
             if (info == null)
             {
@@ -389,7 +384,7 @@ namespace NeverSayNever.Core
                 // 显示UI对象
                 panelObj.gameObject.SetActive(true);
                 // 调用对应的lua脚本
-                var luaMessenger = (UIPanelMessengerForLua) info.Messenger;
+                var luaMessenger = (UIPanelMessengerForLua)info.Messenger;
                 luaMessenger.OnOpenPanel(panelObj);
             }
 

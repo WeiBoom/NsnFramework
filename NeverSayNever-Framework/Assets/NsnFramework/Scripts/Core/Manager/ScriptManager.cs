@@ -2,7 +2,7 @@
 using UnityEngine;
 using System.Reflection;
 
-namespace NeverSayNever.Core
+namespace NeverSayNever
 {
     public class ScriptManager : Singleton<ScriptManager>
     {

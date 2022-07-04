@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-//namespace NeverSayNever.Core.HUD
+//namespace NeverSayNever
 //{
 public class NsnGraphicRaycaster : UnityEngine.UI.GraphicRaycaster
 {

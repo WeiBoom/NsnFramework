@@ -2,7 +2,7 @@
 using System;
 using UnityEngine;
 
-namespace NeverSayNever.Utilitiy
+namespace NeverSayNever
 {
     public static class AppConst
     {

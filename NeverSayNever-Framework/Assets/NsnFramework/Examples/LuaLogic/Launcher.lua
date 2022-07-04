@@ -1,11 +1,11 @@
 
 --print("获取UIManager")
 ---@class UIManager
-UIMgr = CS.NeverSayNever.Core.UIManager.Instance;
+UIMgr = CS.NeverSayNever.UIManager.Instance;
 --print("获取ResourceManager")
 ---@class ResourceManager
-ResMgr = CS.NeverSayNever.Core.Asset.ResourceManager;
-UIListener = CS.NeverSayNever.Core.UIListener
+ResMgr = CS.NeverSayNever.ResourceManager;
+UIListener = CS.NeverSayNever.UIListener
 
 
 require("UIModuleDefine")

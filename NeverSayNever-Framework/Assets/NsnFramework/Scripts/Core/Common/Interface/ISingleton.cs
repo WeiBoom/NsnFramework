@@ -1,4 +1,4 @@
-namespace NeverSayNever.Core
+namespace NeverSayNever
 {
     public interface ISingleton
     {

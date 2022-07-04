@@ -1,7 +1,7 @@
 using System.Text;
 using UnityEngine;
 
-namespace NeverSayNever.Utilitiy
+namespace NeverSayNever
 {
     public static class ULog
     {

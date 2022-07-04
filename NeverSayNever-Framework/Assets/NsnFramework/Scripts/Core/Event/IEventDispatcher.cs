@@ -1,5 +1,5 @@
 ﻿
-namespace NeverSayNever.Core.Event
+namespace NeverSayNever
 {
     public interface IEventDispatcher
     {

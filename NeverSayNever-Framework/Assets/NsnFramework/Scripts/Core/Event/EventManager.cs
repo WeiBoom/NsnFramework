@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace NeverSayNever.Core.Event
+namespace NeverSayNever
 {
     public class EventManager : EventDispatcher
     {

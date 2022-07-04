@@ -6,9 +6,8 @@ using UnityEngine;
 
 using UObject = UnityEngine.Object;
 
-namespace NeverSayNever.Core.Asset
+namespace NeverSayNever
 {
-    using NeverSayNever.Utilitiy;
     public enum EAssetType
     {
         UI,

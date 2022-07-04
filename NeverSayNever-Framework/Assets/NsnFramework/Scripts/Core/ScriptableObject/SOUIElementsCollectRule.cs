@@ -7,7 +7,7 @@ using UnityEngine.UI;
 using TMPro;
 
 
-namespace NeverSayNever.Core.Asset
+namespace NeverSayNever
 {
     public class SOUIElementsCollectRule : SerializedScriptableObject
     {

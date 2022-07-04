@@ -3,9 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace NeverSayNever.Core.Asset
+namespace NeverSayNever
 {
-
     using UObject = UnityEngine.Object;
 
     public class AssetBundleHelper : Singleton<AssetBundleHelper>
@@ -60,7 +59,7 @@ namespace NeverSayNever.Core.Asset
             if(bundleMode)
             {
                 bundle_asset_path = args[0] as string;
-                var manifestPath = $"{bundle_asset_path}/{NeverSayNever.Utilitiy.AppConst.Platform}";//.manifest";
+                var manifestPath = $"{bundle_asset_path}/{NeverSayNever.AppConst.Platform}";//.manifest";
                 var manifestBundle = AssetBundle.LoadFromFile(manifestPath);
                 manifest = manifestBundle.LoadAsset<AssetBundleManifest>("AssetBundleManifest");
                 if (manifest == null)

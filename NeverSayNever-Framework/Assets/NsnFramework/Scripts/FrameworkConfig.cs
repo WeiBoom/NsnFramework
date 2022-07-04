@@ -12,6 +12,8 @@ namespace NeverSayNever
 
         public const string RootPath = "";
 
+        private static Dictionary<System.Type, ScriptableObject> SOCacheDic = new Dictionary<System.Type, ScriptableObject>();
+
         #region UNITY_EDITOR
         /// <summary>
         /// 编辑器 - 框架配置文件默认存放路径
@@ -31,7 +33,7 @@ namespace NeverSayNever
             get
             {
                 if (globalConfig == null)
-                    globalConfig = ScriptableObjectManager.Instance.GetScriptableObject<SOGlobalAssetConfig>();
+                    globalConfig = GetScriptableObject<SOGlobalAssetConfig>();
                 return globalConfig;
             }
         }
@@ -47,9 +49,35 @@ namespace NeverSayNever
             {
                 if (collecitonRuleConfig == null)
                     collecitonRuleConfig =
-                        ScriptableObjectManager.Instance.GetScriptableObject<SOUIElementsCollectRule>();
+                        GetScriptableObject<SOUIElementsCollectRule>();
                 return collecitonRuleConfig;
             }
+        }
+
+
+        public static T GetScriptableObject<T>() where T : ScriptableObject
+        {
+            var type = typeof(T);
+            SOCacheDic.TryGetValue(type, out var target);
+            if (target != null)
+                return (T)target;
+
+            target = GetScriptableObjectAsset<T>();
+            if (target != null)
+            {
+                SOCacheDic.Add(type, target);
+                return (T)target;
+            }
+
+            return null;
+        }
+
+        private static T GetScriptableObjectAsset<T>() where T : ScriptableObject
+        {
+            var name = typeof(T).Name;
+            var finalPath = $"Setting/{name}";
+            var asset = Resources.Load<T>(finalPath);
+            return asset;
         }
 
         #endregion

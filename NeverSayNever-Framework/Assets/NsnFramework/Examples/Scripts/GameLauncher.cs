@@ -55,7 +55,7 @@ namespace NeverSayNever.Example
 
             if(luaMode)
             {
-                LuaManager.Instance.DoFile("Launcher");
+                //LuaMgr.DoFile("Launcher");
             }
             else
             {

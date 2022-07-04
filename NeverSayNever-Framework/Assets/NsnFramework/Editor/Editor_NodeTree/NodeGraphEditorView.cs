@@ -5,7 +5,7 @@ using UnityEditor;
 using UnityEngine.UIElements;
 using UnityEditor.Experimental.GraphView;
 
-using NeverSayNever.EditorUtilitiy;
+using NeverSayNever.BehaviourTree;
 
 public class NodeGraphEditorView : GraphView
 {
@@ -36,11 +36,18 @@ public class NodeGraphEditorView : GraphView
         DeleteElements(graphElements);
         graphViewChanged += OnGraphViewChanged;
 
+
+        if(tree.rootNode == null)
+        {
+            tree.rootNode = tree.CreateNode(typeof(RootNode)) as RootNode;
+            EditorUtility.SetDirty(tree);
+            AssetDatabase.SaveAssets();
+        }
+
         // create node view
         tree.nodes.ForEach(n => CreateNodeView(n));
 
         // create edges
-
         tree.nodes.ForEach(n =>
         {
             var children = tree.GetChildren(n);

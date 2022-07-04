@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor.Experimental.GraphView;
 
-using NeverSayNever.EditorUtilitiy;
+using NeverSayNever.BehaviourTree;
 
 public class TreeNodeView : UnityEditor.Experimental.GraphView.Node
 {
@@ -26,6 +26,7 @@ public class TreeNodeView : UnityEditor.Experimental.GraphView.Node
 
         CreateOutputPorts();
         CreateInputPorts();
+
     }
 
     public override void SetPosition(Rect newPos)
@@ -60,8 +61,12 @@ public class TreeNodeView : UnityEditor.Experimental.GraphView.Node
         {
             input = InstantiatePort(Orientation.Horizontal, Direction.Input, Port.Capacity.Single, typeof(bool));
         }
+        else if (node is RootNode)
+        {
+            //input = InstantiatePort(Orientation.Horizontal, Direction.Input, Port.Capacity.Single, typeof(bool));
+        }
 
-        if(input != null)
+        if (input != null)
         {
             input.portName = "";
             inputContainer.Add(input);
@@ -70,7 +75,7 @@ public class TreeNodeView : UnityEditor.Experimental.GraphView.Node
 
     private void CreateOutputPorts()
     {
-        // Action Ò»°ãÊÇÖ´ÐÐÒ»¸öÐÐÎª£¬Ã»ÓÐÊä³öµÄ½á¹û
+        // Action Ò»ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä½ï¿½ï¿½
         if (node is ActionNode)
         {
             //output = InstantiatePort(Orientation.Horizontal, Direction.Output, Port.Capacity.Single, typeof(bool));
@@ -80,6 +85,10 @@ public class TreeNodeView : UnityEditor.Experimental.GraphView.Node
             output = InstantiatePort(Orientation.Horizontal, Direction.Output, Port.Capacity.Multi, typeof(bool));
         }
         else if (node is DecoratorNode)
+        {
+            output = InstantiatePort(Orientation.Horizontal, Direction.Output, Port.Capacity.Single, typeof(bool));
+        }
+        else if (node is RootNode)
         {
             output = InstantiatePort(Orientation.Horizontal, Direction.Output, Port.Capacity.Single, typeof(bool));
         }

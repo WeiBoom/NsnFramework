@@ -1,24 +1,15 @@
 using System;
-using System.Net.Configuration;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace NeverSayNever
 {
-    using NeverSayNever;
-    
     using UObject = UnityEngine.Object;
 
     public static class Framework
     {
-        /// <summary>
-        /// 是否启动Lua
-        /// </summary>
-        public static bool IsActivateLua { get; set; } = false;
 
-        /// <summary>
-        /// 是否开启热更
-        /// </summary>
-        public static bool IsActivateHotfix { get; set; } = false;
+        #region framework setting
 
         /// <summary>
         /// 是否启用lua脚本
@@ -51,6 +42,10 @@ namespace NeverSayNever
         /// </summary>
         public static AudioSource AudioSource { get; private set; }
 
+        #endregion
+
+        private static Dictionary<System.Type, IManager> mManagerDic = new Dictionary<Type, IManager>();
+
         /// <summary>
         /// 启动框架并初始化AssetBundle
         /// </summary>
@@ -60,20 +55,20 @@ namespace NeverSayNever
             UObject.DontDestroyOnLoad(BridgeObject);
             
             // 初始化事件管理器
-            EventListener.Instance.OnInitialize();
+            //EventManager.Instance.OnInitialize();
             // 初始化脚本管理器
-            ScriptManager.Instance.OnInitialize();
+            //NsnRuntime.OnInitialize();
             // 初始化资源加载管理器
-            ResourceManager.OnInitialize(LoadType);
+            ResourceMgr.OnInitialize(LoadType);
             // 初始化Lua模块管理器  如果不使用Lua,则跳过
-            if(IsUsingLuaScript)
-                LuaManager.Instance.OnInitialize("Launcher");
+            //if(IsUsingLuaScript)
+                //LuaMgr.Instance.OnInitialize("Launcher");
             // 初始化UI模块管理器
-            UIManager.Instance.OnInitialize(UIRoot);
+            //UIMgr.Instance.OnInitialize(UIRoot);
             // 初始化音频模块管理器
-            SimpleAudioManager.Instance.OnInitialize(AudioSource);
+            SoundMgr.Instance.OnInitialize(AudioSource);
             // 添加协程管理的模块
-            BridgeObject.AddComponent<CoroutineManager>();
+            BridgeObject.AddComponent<CoroutineMgr>();
 
             PrintFrameworkInfo();
         }
@@ -81,15 +76,31 @@ namespace NeverSayNever
         public static void OnUpdate()
         {
             // 更新事件 
-            EventListener.Instance.OnUpdate(); // EventManager.OnUpdate();
+            //EventManager.Instance.OnUpdate(); // EventManager.OnUpdate();
             // 更新Lua，清理GC
-            LuaManager.Instance.OnUpdate();
+            //LuaMgr.Instance.OnUpdate();
             // 更新计时器计时器
-            TimerManager.Instance.OnUpdate();
+            TimerMgr.Instance.OnUpdate();
             // 更新资源
-            ResourceManager.OnUpdate();
+            ResourceMgr.OnUpdate();
             // 更新模块系统
             //ModuleManager.Instance.OnUpdate();
+        }
+
+        private static void Initialize()
+        {
+            InitializeManager<IEventManager>();
+        }
+
+        private static void InitializeManager<T>() where T: IManager
+        {
+
+        }
+
+        public static IManager GetModule<T>() where T: IManager
+        {
+            mManagerDic.TryGetValue(typeof(T), out var manager);
+            return manager;
         }
 
         // 设置资源加载模式

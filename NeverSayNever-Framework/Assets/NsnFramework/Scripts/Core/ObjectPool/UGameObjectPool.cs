@@ -11,7 +11,7 @@ namespace NeverSayNever
         private readonly Transform _poolRoot;
         private readonly GameObject _poolObjectPrefab;
         private readonly bool _selfGrowing;
-        private readonly Stack<PoolObject> _availableObjStack = new Stack<PoolObject>();
+        private readonly Stack<UPoolObject> _availableObjStack = new Stack<UPoolObject>();
 
         public UGameObjectPool(string poolName, GameObject poolObjectPrefab, int initCount, int maxSize, Transform pool, bool selfGrowing = false)
         {
@@ -29,7 +29,7 @@ namespace NeverSayNever
         }
 
         //add to pool
-        private void AddObjectToPool(PoolObject po)
+        private void AddObjectToPool(UPoolObject po)
         {
             po.name = _poolName;
             po.gameObject.SetActive(false);
@@ -38,22 +38,22 @@ namespace NeverSayNever
             po.transform.SetParent(_poolRoot, false);
         }
 
-        private PoolObject NewObjectInstance()
+        private UPoolObject NewObjectInstance()
         {
             var go = Object.Instantiate(_poolObjectPrefab);
             go.name = _poolName;
-            var po = go.GetComponent<PoolObject>();
+            var po = go.GetComponent<UPoolObject>();
             if (po == null)
             {
-                po = go.AddComponent<PoolObject>();
+                po = go.AddComponent<UPoolObject>();
             }
             po.poolName = _poolName;
             return po;
         }
 
-        public PoolObject NextAvailableObject()
+        public UPoolObject NextAvailableObject()
         {
-            PoolObject po = null;
+            UPoolObject po = null;
             if (_availableObjStack.Count > 0)
             {
                 po = _availableObjStack.Pop();
@@ -78,7 +78,7 @@ namespace NeverSayNever
             return po;
         }
 
-        public void ReturnObjectToPool(PoolObject obj)
+        public void ReturnObjectToPool(UPoolObject obj)
         {
             if (_poolName.Equals(obj.poolName))
             {

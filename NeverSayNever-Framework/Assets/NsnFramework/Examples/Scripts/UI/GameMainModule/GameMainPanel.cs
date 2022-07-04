@@ -27,8 +27,8 @@ namespace NeverSayNever.Example
             btn_start.AddClickListener(()=>{
                 ULog.Print("���� ----- �����ʼ��ť");
 
-                GameSceneManager.LoadSceneAsync("example_scene");
-                UIManager.Instance.ClosePanel(UIModuleGroup.GameMain.ModuleName);
+                SceneMgr.LoadSceneAsync("example_scene");
+                //UIMgr.Instance.ClosePanel(UIModuleGroup.GameMain.ModuleName);
             });
 
             btn_quit.AddClickListener(() => {

@@ -1,8 +1,8 @@
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
-using NeverSayNever.EditorUtilitiy;
-using NeverSayNever.Utilitiy;
+using NeverSayNever;
+using NeverSayNever.BehaviourTree;
 
 public class NodeGraphEditor : EditorWindow
 {
@@ -38,9 +38,8 @@ public class NodeGraphEditor : EditorWindow
 
     private void OnSelectionChange()
     {
-        ULog.Print("[NodeGraphEditor] {0}", "OnSelectionChange");
         NodeGraphTree tree = Selection.activeObject as NodeGraphTree;
-        if(tree != null)
+        if(tree != null && AssetDatabase.CanOpenAssetInEditor(tree.GetInstanceID()))
         {
             treeView.PolulateView(tree);
         }

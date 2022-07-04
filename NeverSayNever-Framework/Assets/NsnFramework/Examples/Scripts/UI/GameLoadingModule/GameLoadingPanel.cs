@@ -23,14 +23,14 @@ namespace NeverSayNever.Example
         protected override void OnAwake()
         {
             base.OnAwake();
-            messenger = UIManager.Instance.GetUIMessenger<GameLoadingMessenger>(UIModuleGroup.GameLoading.ModuleName);
+            messenger = GameCore.Instance.GetManager<IUIMgr>().GetUIMessenger<GameLoadingMessenger>(UIModuleGroup.GameLoading.ModuleName);
         }
         
         protected override void OnStart()
         {
             base.OnStart();
             ResetLoading();
-            CoroutineManager.Instance.AddCoroutine(Coroutine_SceneLoading());
+            CoroutineMgr.Instance.AddCoroutine(Coroutine_SceneLoading());
             //StartCoroutine(Coroutine_SceneLoading());
         }
 

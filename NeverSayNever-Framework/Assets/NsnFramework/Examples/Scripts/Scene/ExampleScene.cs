@@ -10,7 +10,7 @@ namespace NeverSayNever.Example
         // Start is called before the first frame update
         void Start()
         {
-            NeverSayNever.ResourceManager.LoadModel(cubeName, (obj) =>
+            NeverSayNever.ResourceMgr.LoadModel(cubeName, (obj) =>
             {
                 Debug.Log("模型加载测试");
                 var cubeObj = obj as GameObject;

@@ -23,7 +23,7 @@ MonoBehaviour:
     SerializationNodes:
     - Name: UIElementsRuleDic
       Entry: 7
-      Data: 0|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[NeverSayNever.Asset.SOUIElementsCollectRule+CollectionDefine,
+      Data: 0|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[NeverSayNever.SOUIElementsCollectRule+CollectionDefine,
         Assembly-CSharp]], mscorlib
     - Name: comparer
       Entry: 7
@@ -43,7 +43,7 @@ MonoBehaviour:
       Data: node
     - Name: $v
       Entry: 7
-      Data: NeverSayNever.Asset.SOUIElementsCollectRule+CollectionDefine, Assembly-CSharp
+      Data: NeverSayNever.SOUIElementsCollectRule+CollectionDefine, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Transform
@@ -70,7 +70,7 @@ MonoBehaviour:
       Data: btn
     - Name: $v
       Entry: 7
-      Data: NeverSayNever.Asset.SOUIElementsCollectRule+CollectionDefine, Assembly-CSharp
+      Data: NeverSayNever.SOUIElementsCollectRule+CollectionDefine, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Button
@@ -97,7 +97,7 @@ MonoBehaviour:
       Data: txt
     - Name: $v
       Entry: 7
-      Data: NeverSayNever.Asset.SOUIElementsCollectRule+CollectionDefine, Assembly-CSharp
+      Data: NeverSayNever.SOUIElementsCollectRule+CollectionDefine, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Text
@@ -124,7 +124,7 @@ MonoBehaviour:
       Data: tmp
     - Name: $v
       Entry: 7
-      Data: NeverSayNever.Asset.SOUIElementsCollectRule+CollectionDefine, Assembly-CSharp
+      Data: NeverSayNever.SOUIElementsCollectRule+CollectionDefine, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: TextMeshProUGUI
@@ -151,7 +151,7 @@ MonoBehaviour:
       Data: img
     - Name: $v
       Entry: 7
-      Data: NeverSayNever.Asset.SOUIElementsCollectRule+CollectionDefine, Assembly-CSharp
+      Data: NeverSayNever.SOUIElementsCollectRule+CollectionDefine, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Image
@@ -178,7 +178,7 @@ MonoBehaviour:
       Data: tex
     - Name: $v
       Entry: 7
-      Data: NeverSayNever.Asset.SOUIElementsCollectRule+CollectionDefine, Assembly-CSharp
+      Data: NeverSayNever.SOUIElementsCollectRule+CollectionDefine, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: RawImage
@@ -205,7 +205,7 @@ MonoBehaviour:
       Data: scroll
     - Name: $v
       Entry: 7
-      Data: NeverSayNever.Asset.SOUIElementsCollectRule+CollectionDefine, Assembly-CSharp
+      Data: NeverSayNever.SOUIElementsCollectRule+CollectionDefine, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: ScrollRect
@@ -232,7 +232,7 @@ MonoBehaviour:
       Data: grid
     - Name: $v
       Entry: 7
-      Data: NeverSayNever.Asset.SOUIElementsCollectRule+CollectionDefine, Assembly-CSharp
+      Data: NeverSayNever.SOUIElementsCollectRule+CollectionDefine, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Grid

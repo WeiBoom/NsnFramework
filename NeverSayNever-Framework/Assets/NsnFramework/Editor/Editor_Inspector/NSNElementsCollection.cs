@@ -10,7 +10,7 @@ using NeverSayNever;
 
 namespace NeverSayNever.EditorUtilitiy
 {
-    using NeverSayNever.Core.HUD;
+    using NeverSayNever;
 
     public class NSNElementsCollection
     {

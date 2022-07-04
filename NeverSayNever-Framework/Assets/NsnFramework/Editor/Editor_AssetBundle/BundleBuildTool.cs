@@ -8,9 +8,7 @@ using UnityEditor.Callbacks;
 
 namespace NeverSayNever.EditorUtilitiy
 {
-    using NeverSayNever.Core;
-    using NeverSayNever.Core.Asset;
-
+    using NeverSayNever;
     public enum ECompressOption
     {
         Uncompressed,
@@ -141,7 +139,7 @@ namespace NeverSayNever.EditorUtilitiy
             BuildTarget = buildTarget;
             BundleVersion = bundleVersion;
             BuildOutputPath = Application.streamingAssetsPath; //NEditorTools.GetProjectPath();
-            PlatformOutputPath = $"{BuildOutputPath}/{Utilitiy.AppConst.Platform}";
+            PlatformOutputPath = $"{BuildOutputPath}/{AppConst.Platform}";
         }
 
         /// <summary>

@@ -1,7 +1,7 @@
 using UnityEditor;
+using UnityEditor.Callbacks;
 using UnityEngine;
 using UnityEngine.UIElements;
-using NeverSayNever;
 using NeverSayNever.BehaviourTree;
 
 public class NodeGraphEditor : EditorWindow
@@ -15,6 +15,18 @@ public class NodeGraphEditor : EditorWindow
         NodeGraphEditor wnd = GetWindow<NodeGraphEditor>();
         wnd.titleContent = new GUIContent("NodeGraphEditor");
     }
+
+    [OnOpenAsset]
+    public static bool OnOpenAsset(int instanceId, int line)
+    {
+        if (Selection.activeObject is NodeGraphTree)
+        {
+            OpenWindow();
+            return true;
+        }
+        return false;
+    }
+
     public void CreateGUI()
     {
         // Each editor window contains a root VisualElement object

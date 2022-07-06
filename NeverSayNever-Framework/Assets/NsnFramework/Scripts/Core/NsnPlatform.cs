@@ -4,12 +4,11 @@ using UnityEngine;
 
 namespace NeverSayNever
 {
-    public static class AppConst
+    public static class NsnPlatform
     {
-        public const string AppName = "NeverSayNever";
-        //Socket服务器端口
+        //Socket 服务器端口
         public const ushort SocketPort = 8080;
-        //Socket服务器地址
+        //Socket 服务器地址
         public const string SocketAddress = "127.0.0.1";        
         //Lua脚本放在Assets同层文件LuaScripts下面，这样可以不用处理meta文件的问题，同时避免更新脚本Unity自动加载卡顿的问题
         public static string EditorLuaScriptPath => Application.dataPath.Replace("Assets", "") + "LuaScripts/";
@@ -41,6 +40,9 @@ namespace NeverSayNever
             }
         }
 
+        /// <summary>
+        /// 当前运行的平台
+        /// </summary>
         public static string Platform
         {
             get

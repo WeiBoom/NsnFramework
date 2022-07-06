@@ -42,7 +42,7 @@ namespace NeverSayNever
         AllPack = 9,
     }
 
-    public class SOGlobalAssetConfig : SerializedScriptableObject
+    public class NsnGlobalAssetConfig : SerializedScriptableObject
     {
         public class AssetCollectionInfo
         {

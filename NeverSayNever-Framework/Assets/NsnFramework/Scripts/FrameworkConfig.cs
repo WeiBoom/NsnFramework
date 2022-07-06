@@ -23,33 +23,33 @@ namespace NeverSayNever
         #endregion
 
 
-        private static SOGlobalAssetConfig globalConfig;
+        private static NsnGlobalAssetConfig globalConfig;
 
         /// <summary>
         /// 框架默认的资源配置
         /// </summary>
-        public static SOGlobalAssetConfig GlobalConfig
+        public static NsnGlobalAssetConfig GlobalConfig
         {
             get
             {
                 if (globalConfig == null)
-                    globalConfig = GetScriptableObject<SOGlobalAssetConfig>();
+                    globalConfig = GetScriptableObject<NsnGlobalAssetConfig>();
                 return globalConfig;
             }
         }
 
-        private static SOUIElementsCollectRule collecitonRuleConfig;
+        private static NsnUIElementsCollectRule collecitonRuleConfig;
 
         /// <summary>
         /// UI元素收集配置
         /// </summary>
-        public static SOUIElementsCollectRule UICollectionConfig
+        public static NsnUIElementsCollectRule UICollectionConfig
         {
             get
             {
                 if (collecitonRuleConfig == null)
                     collecitonRuleConfig =
-                        GetScriptableObject<SOUIElementsCollectRule>();
+                        GetScriptableObject<NsnUIElementsCollectRule>();
                 return collecitonRuleConfig;
             }
         }

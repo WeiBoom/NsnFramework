@@ -86,7 +86,7 @@ namespace NeverSayNever.EditorUtilitiy
         /// <summary>
         /// 框架默认的全局配置
         /// </summary>
-        private static SOGlobalAssetConfig globalConfig;
+        private static NsnGlobalAssetConfig globalConfig;
         /// <summary>
         /// shader文件合并成一个bundle
         /// </summary>
@@ -139,7 +139,7 @@ namespace NeverSayNever.EditorUtilitiy
             BuildTarget = buildTarget;
             BundleVersion = bundleVersion;
             BuildOutputPath = Application.streamingAssetsPath; //NEditorTools.GetProjectPath();
-            PlatformOutputPath = $"{BuildOutputPath}/{AppConst.Platform}";
+            PlatformOutputPath = $"{BuildOutputPath}/{NsnPlatform.Platform}";
         }
 
         /// <summary>

@@ -9,7 +9,7 @@ using TMPro;
 
 namespace NeverSayNever
 {
-    public class SOUIElementsCollectRule : SerializedScriptableObject
+    public class NsnUIElementsCollectRule : SerializedScriptableObject
     {
         
         public enum EKeyPos

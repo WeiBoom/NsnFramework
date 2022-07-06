@@ -69,7 +69,7 @@ namespace NeverSayNever
         {
             var cfg = FrameworkConfig.GlobalConfig.VariesAssetFolderDic;
 
-            bundle_platform_root = Application.streamingAssetsPath + "/" + AppConst.Platform;  //$"{Application.dataPath.Replace("Assets", "")}/{AppSetting.Platform}";
+            bundle_platform_root = Application.streamingAssetsPath + "/" + NsnPlatform.Platform;  //$"{Application.dataPath.Replace("Assets", "")}/{AppSetting.Platform}";
 
         }
 
@@ -132,7 +132,7 @@ namespace NeverSayNever
         private static string GetAssetExtension(EAssetType type)
         {
             var assetConfigInfo = FrameworkConfig.GlobalConfig.VariesAssetFolderDic;
-            SOGlobalAssetConfig.AssetFolderInfo folderInfo = assetConfigInfo[type.ToString()]; 
+            NsnGlobalAssetConfig.AssetFolderInfo folderInfo = assetConfigInfo[type.ToString()]; 
             return folderInfo == null ? string.Empty : folderInfo.extension;
         }
 

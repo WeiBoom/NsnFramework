@@ -59,7 +59,7 @@ namespace NeverSayNever
             if(bundleMode)
             {
                 bundle_asset_path = args[0] as string;
-                var manifestPath = $"{bundle_asset_path}/{NeverSayNever.AppConst.Platform}";//.manifest";
+                var manifestPath = $"{bundle_asset_path}/{NeverSayNever.NsnPlatform.Platform}";//.manifest";
                 var manifestBundle = AssetBundle.LoadFromFile(manifestPath);
                 manifest = manifestBundle.LoadAsset<AssetBundleManifest>("AssetBundleManifest");
                 if (manifest == null)

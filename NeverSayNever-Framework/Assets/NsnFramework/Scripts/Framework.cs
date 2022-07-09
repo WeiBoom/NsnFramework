@@ -80,7 +80,7 @@ namespace NeverSayNever
             // 更新Lua，清理GC
             //LuaMgr.Instance.OnUpdate();
             // 更新计时器计时器
-            TimerMgr.Instance.OnUpdate();
+            //TimerMgr.Instance.OnUpdate();
             // 更新资源
            //esourceMgr.OnUpdate();
             // 更新模块系统

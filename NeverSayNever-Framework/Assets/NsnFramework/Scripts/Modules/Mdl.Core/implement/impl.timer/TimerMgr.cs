@@ -88,15 +88,20 @@ namespace NeverSayNever
             }
 
         }
-        
+
         #endregion
+
+        public void OnInitialize(params object[] args)
+        {
+        }
 
         // 所有监听器列表
         private readonly List<Timer> _allTimerListeners = new List<Timer>(20);
 
+
         public void OnUpdate(float deltaTime)
         {
-            for (var i = _allTimerListeners.Count - 1; i >= 0; i++)
+            for (var i = _allTimerListeners.Count - 1; i >= 0; i--)
             {
                 var timer = _allTimerListeners[i];
                 if (timer == null)

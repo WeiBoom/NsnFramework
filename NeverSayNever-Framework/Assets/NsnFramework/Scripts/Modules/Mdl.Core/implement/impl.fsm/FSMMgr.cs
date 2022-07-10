@@ -8,13 +8,12 @@ namespace NeverSayNever
     {
         private Dictionary<int, FSM> _fsmDic;
 
-        public FSMMgr()
+        public void OnInitialize(params object[] args)
         {
             _fsmDic = new Dictionary<int, FSM>();
         }
 
-
-        public void Update(float deltaTime)
+        public void OnUpdate(float deltaTime)
         {
             for (int i = 0; i < _fsmDic.Count; i++)
             {
@@ -42,6 +41,11 @@ namespace NeverSayNever
         public void Clear()
         {
             _fsmDic?.Clear();
+        }
+
+
+        public void OnDispose()
+        {
         }
     }
 }

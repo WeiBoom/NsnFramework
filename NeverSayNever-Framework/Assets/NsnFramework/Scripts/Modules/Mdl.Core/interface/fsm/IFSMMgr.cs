@@ -5,10 +5,8 @@ using UnityEngine;
 
 namespace NeverSayNever
 {
-    public interface IFSMMgr
+    public interface IFSMMgr : IManager
     {
-
-        void Update(float deltaTime);
 
         IFSM Add(int id);
 

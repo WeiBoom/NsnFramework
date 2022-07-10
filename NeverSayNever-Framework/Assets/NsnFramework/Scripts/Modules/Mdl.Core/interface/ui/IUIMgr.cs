@@ -5,7 +5,6 @@ namespace NeverSayNever
 {
     public interface IUIMgr : IManager
     {
-
         void RegisterCsPanel(string panelName, UIPanelMessenger panelMessenger);
 
         void RegisterCsPanelByReflect(string moduleName);

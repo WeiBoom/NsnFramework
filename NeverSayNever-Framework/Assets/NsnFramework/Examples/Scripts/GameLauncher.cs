@@ -28,12 +28,15 @@ namespace NeverSayNever.Example
         {
             loadType = bundleMode ? EAssetLoadType.AssetBundle : EAssetLoadType.AssetDataBase;
 
+            // -- 废弃 todo
             Framework.SetLuaMode(luaMode, luaBundle);
             Framework.SetAssetLoadType(loadType);
             Framework.SetUIRoot(UIRoot);
             Framework.SetAudioSourceRoot(AudioSourceRoot);
+            // -- 废弃 todo
 
-            Framework.StartUp();
+            // 只通过这一个接口初始化
+            NeverSayNever.FrameworkCore.Initialize();
         }
 
         private void Awake()
@@ -49,8 +52,8 @@ namespace NeverSayNever.Example
             if (loadType == EAssetLoadType.AssetBundle)
             {
                 // 预先加载shader，material，font等资源
-                AssetBundleHelper.Instance.LoadBundle("shaders.u3d");
-                AssetBundleHelper.Instance.LoadBundle("fonts.u3d");
+                AssetBundleHelper.Inst.LoadBundle("shaders.u3d");
+                AssetBundleHelper.Inst.LoadBundle("fonts.u3d");
             }
 
             if(luaMode)
@@ -70,7 +73,7 @@ namespace NeverSayNever.Example
 
         private void Update()
         {
-            Framework.OnUpdate();
+            //Framework.OnUpdate();
         }
     }
 }

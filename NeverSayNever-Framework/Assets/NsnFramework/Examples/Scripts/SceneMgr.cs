@@ -18,7 +18,7 @@ namespace NeverSayNever.Example
             operation.allowSceneActivation = false;
 
 
-            IUIMgr uimgr = GameCore.Instance.GetManager<IUIMgr>();
+            IUIMgr uimgr = FrameworkCore.Inst.GetManager<IUIMgr>();
             // 打开加载界面
             uimgr.OpenPanel(UIModuleGroup.GameLoading.ModuleName, operation,loadingAction, loadComplete);
 
@@ -46,7 +46,7 @@ namespace NeverSayNever.Example
 
             if (Framework.LoadType == EAssetLoadType.AssetBundle)
             {
-                IResourceMgr resMgr = GameCore.Instance.GetManager<IResourceMgr>();
+                IResourceMgr resMgr = FrameworkCore.Inst.GetManager<IResourceMgr>();
                 resMgr.LoadScene(sceneName, obj => {
                     Debug.Log("场景加载完成");
                     // 协程加载场景

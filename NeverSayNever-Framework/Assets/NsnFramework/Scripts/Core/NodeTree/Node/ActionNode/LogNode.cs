@@ -10,19 +10,19 @@ namespace NeverSayNever.BehaviourTree
 
         protected override void OnStart()
         {
-            ULog.Print("[LogNode][OnStart] : " + message);
+            NsnLog.Print("[LogNode][OnStart] : " + message);
         }
 
         protected override State OnUpdate()
         {
-            ULog.Print("[LogNode][OnUpdate] : " + message);
+            NsnLog.Print("[LogNode][OnUpdate] : " + message);
             return State.Success;
             //return base.Update();
         }
 
         protected override void OnStop()
         {
-            ULog.Print("[LogNode][OnStop] : " + message);
+            NsnLog.Print("[LogNode][OnStop] : " + message);
         }
     }
 }

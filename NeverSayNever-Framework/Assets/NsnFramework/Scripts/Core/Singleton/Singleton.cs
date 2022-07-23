@@ -10,7 +10,7 @@ namespace NeverSayNever
 
         // 不支持多线程
         // 必须加锁 synchronized 才能保证单例，但加锁会影响效率
-        public static T Instance => GetInstance();
+        public static T Inst => GetInstance();
 
         private static T GetInstance()
         {

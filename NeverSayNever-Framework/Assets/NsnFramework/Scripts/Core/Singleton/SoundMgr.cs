@@ -21,7 +21,7 @@ namespace NeverSayNever
             var audioSource = args[0] as AudioSource;
             _mBGMSource = audioSource;
 
-            _resourceMgr = GameCore.Instance.GetManager<IResourceMgr>();
+            _resourceMgr = FrameworkCore.Inst.GetManager<IResourceMgr>();
         }
 
 
@@ -58,7 +58,7 @@ namespace NeverSayNever
                 var clip = asset as AudioClip;
                 if (clip == null)
                 {
-                    ULog.Error($"加载音频文件失败 : {name}");
+                    NsnLog.Error($"加载音频文件失败 : {name}");
                     return;
                 }
 
@@ -108,7 +108,7 @@ namespace NeverSayNever
         {
             _mBGMSource.Stop();
             _mBGMSource.clip = null;
-            Utils.ReleaseMemory();
+            NsnUtils.ReleaseMemory();
         }
 
         // 暂停BGM

@@ -10,7 +10,7 @@ namespace NeverSayNever.Example
         // Start is called before the first frame update
         void Start()
         {
-            IResourceMgr resMgr = GameCore.Instance.GetManager<IResourceMgr>();
+            IResourceMgr resMgr = FrameworkCore.Inst.GetManager<IResourceMgr>();
             resMgr.LoadModel(cubeName, (obj) =>
             {
 

@@ -81,7 +81,7 @@ namespace NeverSayNever
         /// <param name="name"></param>
         public void LoadScriptBundle(string name)
         {
-            GameCore.Instance.GetManager<IResourceMgr>().LoadTextAsset(name, (obj) =>
+            FrameworkCore.Inst.GetManager<IResourceMgr>().LoadTextAsset(name, (obj) =>
             {
                 TextAsset[] luaFiles = obj as TextAsset[];
                 foreach (var t in luaFiles)

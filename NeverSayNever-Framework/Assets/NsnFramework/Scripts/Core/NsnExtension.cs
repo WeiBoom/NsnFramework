@@ -279,7 +279,7 @@ public static class ObjectFunctionExtension
 
     public static void LoadTexture(this RawImage rawImage, string textureName, bool isNativeSize = false)
     {
-        IResourceMgr resMgr = GameCore.Instance.GetManager<IResourceMgr>();
+        IResourceMgr resMgr = FrameworkCore.Inst.GetManager<IResourceMgr>();
         resMgr.LoadTexture(textureName, (obj) =>
         {
             var texture = (Texture)obj;
@@ -291,7 +291,7 @@ public static class ObjectFunctionExtension
 
     public static void LoadTexture(this RawImage rawImage, string textureName, float sizeX, float sizeY)
     {
-        IResourceMgr resMgr = GameCore.Instance.GetManager<IResourceMgr>();
+        IResourceMgr resMgr = FrameworkCore.Inst.GetManager<IResourceMgr>();
         resMgr.LoadTexture(textureName, (obj) =>
         {
             var texture = (Texture)obj;

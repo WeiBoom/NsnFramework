@@ -6,10 +6,9 @@ namespace NeverSayNever
 {
     using UObject = UnityEngine.Object;
 
-    public static class Framework
+    public class Framework : Singleton<Framework>
     {
-
-        #region framework setting
+        #region Framework Setting
 
         /// <summary>
         /// 是否启用lua脚本
@@ -44,7 +43,79 @@ namespace NeverSayNever
 
         #endregion
 
-        private static Dictionary<System.Type, IManager> mManagerDic = new Dictionary<Type, IManager>();
+        #region ScirptablaeObject Config
+
+        public const string RootPath = "";
+
+        private static Dictionary<System.Type, ScriptableObject> SOCacheDic = new Dictionary<System.Type, ScriptableObject>();
+
+        #region UNITY_EDITOR
+        /// <summary>
+        /// 编辑器 - 框架配置文件默认存放路径
+        /// </summary>
+        public const string ScriptableObjectAssetRootPath = "Assets/NsnFramework/Resources/Setting/";
+
+        #endregion
+
+
+        private static NsnGlobalAssetConfig globalConfig;
+
+        /// <summary>
+        /// 框架默认的资源配置
+        /// </summary>
+        public static NsnGlobalAssetConfig GlobalConfig
+        {
+            get
+            {
+                if (globalConfig == null)
+                    globalConfig = GetScriptableObject<NsnGlobalAssetConfig>();
+                return globalConfig;
+            }
+        }
+
+        private static NsnUIElementsCollectRule collecitonRuleConfig;
+
+        /// <summary>
+        /// UI元素收集配置
+        /// </summary>
+        public static NsnUIElementsCollectRule UICollectionConfig
+        {
+            get
+            {
+                if (collecitonRuleConfig == null)
+                    collecitonRuleConfig =
+                        GetScriptableObject<NsnUIElementsCollectRule>();
+                return collecitonRuleConfig;
+            }
+        }
+
+
+        public static T GetScriptableObject<T>() where T : ScriptableObject
+        {
+            var type = typeof(T);
+            SOCacheDic.TryGetValue(type, out var target);
+            if (target != null)
+                return (T)target;
+
+            target = GetScriptableObjectAsset<T>();
+            if (target != null)
+            {
+                SOCacheDic.Add(type, target);
+                return (T)target;
+            }
+
+            return null;
+        }
+
+        private static T GetScriptableObjectAsset<T>() where T : ScriptableObject
+        {
+            var name = typeof(T).Name;
+            var finalPath = $"Setting/{name}";
+            var asset = Resources.Load<T>(finalPath);
+            return asset;
+        }
+
+        #endregion
 
         /// <summary>
         /// 启动框架并初始化AssetBundle
@@ -66,14 +137,14 @@ namespace NeverSayNever
             // 初始化UI模块管理器
             //UIMgr.Instance.OnInitialize(UIRoot);
             // 初始化音频模块管理器
-            SoundMgr.Instance.OnInitialize(AudioSource);
+            SoundMgr.Inst.OnInitialize(AudioSource);
             // 添加协程管理的模块
             BridgeObject.AddComponent<CoroutineMgr>();
 
             PrintFrameworkInfo();
         }
 
-        public static void OnUpdate()
+        public static void OnUpdate(float deltaTime)
         {
             // 更新事件 
             //EventManager.Instance.OnUpdate(); // EventManager.OnUpdate();
@@ -87,20 +158,10 @@ namespace NeverSayNever
             //ModuleManager.Instance.OnUpdate();
         }
 
-        private static void Initialize()
-        {
-            InitializeManager<IEventManager>();
-        }
 
         private static void InitializeManager<T>() where T: IManager
         {
 
-        }
-
-        public static IManager GetModule<T>() where T: IManager
-        {
-            mManagerDic.TryGetValue(typeof(T), out var manager);
-            return manager;
         }
 
         // 设置资源加载模式
@@ -130,11 +191,11 @@ namespace NeverSayNever
 
         private static void PrintFrameworkInfo()
         {
-            ULog.Print("NsnFramework初始化完成!");
-            ULog.Print("Nsn ---> 资源加载方式 : " + LoadType);
-            ULog.Print("Nsn ---> 是否加载lua脚本: " + IsUsingLuaScript);
+            NsnLog.Print("NsnFramework初始化完成!");
+            NsnLog.Print("Nsn ---> 资源加载方式 : " + LoadType);
+            NsnLog.Print("Nsn ---> 是否加载lua脚本: " + IsUsingLuaScript);
             if (IsUsingLuaScript)
-                ULog.Print("Nsn ---> 是否通过AssetBundle模式加载 lua 脚本: " + IsUsingLuaBundleMode);
+                NsnLog.Print("Nsn ---> 是否通过AssetBundle模式加载 lua 脚本: " + IsUsingLuaBundleMode);
         }
 
     }

@@ -25,18 +25,18 @@ namespace NeverSayNever.Example
             base.OnAwake();
 
             btn_start.AddClickListener(()=>{
-                ULog.Print("���� ----- �����ʼ��ť");
+                NsnLog.Print("���� ----- �����ʼ��ť");
 
                 SceneMgr.LoadSceneAsync("example_scene");
                 //UIMgr.Instance.ClosePanel(UIModuleGroup.GameMain.ModuleName);
             });
 
             btn_quit.AddClickListener(() => {
-                ULog.Print("���� ----- ����˳���ť");
+                NsnLog.Print("���� ----- ����˳���ť");
             });
 
             btn_option.AddClickListener(() => {
-                ULog.Print("���� ----- ������ð�ť");
+                NsnLog.Print("���� ----- ������ð�ť");
             });
         }
         

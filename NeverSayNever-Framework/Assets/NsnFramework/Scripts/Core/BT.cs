@@ -171,7 +171,7 @@ namespace NeverSayNever
 
         public override BTState Tick()
         {
-            NeverSayNever.ULog.Print(msg, args);
+            NeverSayNever.NsnLog.Print(msg, args);
             return BTState.Success;
         }
     }

@@ -156,7 +156,7 @@ namespace NeverSayNever.EditorUtilitiy
             var outPutFolder = moduleName + "Module";
             //是否在字段、属性、方法之间添加空白行
             //输出文件路径
-            var outputFolderPath = FrameworkConfig.GlobalConfig.UIScriptRootForCs + outPutFolder;
+            var outputFolderPath = Framework.GlobalConfig.UIScriptRootForCs + outPutFolder;
             var fileName = GetModuleFileName(moduleName, scriptModuleType);
             var outputFilePath = outputFolderPath + "/" + fileName + ".cs";
 

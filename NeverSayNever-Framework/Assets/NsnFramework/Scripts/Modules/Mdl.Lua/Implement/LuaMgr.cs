@@ -51,7 +51,7 @@ namespace NeverSayNever
                 LoadScriptBundle(luaBundleName);
             else
             {
-                var luaFilePath = FrameworkConfig.GlobalConfig.LuaSciprtDirectory;
+                var luaFilePath = Framework.GlobalConfig.LuaSciprtDirectory;
                 GetAllLuaFiles(luaFilePath);
             }
         }

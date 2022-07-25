@@ -129,7 +129,7 @@ namespace NeverSayNever
                 return;
             }
 
-            FrameworkConfig.GlobalConfig.VariesAssetFolderDic.TryGetValue("UI", out var prefabDirectory);
+            Framework.GlobalConfig.VariesAssetFolderDic.TryGetValue("UI", out var prefabDirectory);
             if(prefabDirectory == null || prefabDirectory.folder == null)
             {
                 throw new Exception("无法找到UI保存路径，请检查配置");

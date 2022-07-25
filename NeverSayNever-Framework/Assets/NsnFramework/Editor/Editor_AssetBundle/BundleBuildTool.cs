@@ -179,7 +179,7 @@ namespace NeverSayNever.EditorUtilitiy
         {
             var targetBuildInfoList = new Dictionary<string, BundleBuild>();
 
-            var collectList = FrameworkConfig.GlobalConfig.BuildAssetCollections;
+            var collectList = Framework.GlobalConfig.BuildAssetCollections;
 
             foreach (var element in collectList)
             {
@@ -358,7 +358,7 @@ namespace NeverSayNever.EditorUtilitiy
 
         private string GetTargetSuffixByBuildType(EBundleBuildType type)
         {
-            var config = FrameworkConfig.GlobalConfig.BuildAssetCollections;
+            var config = Framework.GlobalConfig.BuildAssetCollections;
 
             for (int i = 0; i < config.Count; i++)
             {

@@ -39,7 +39,7 @@ namespace NeverSayNever.EditorUtilitiy
         public static T GetScriptableObjectAsset<T>() where T : ScriptableObject
         {
             var name = typeof(T).Name;
-            var finalPath = $"{FrameworkConfig.ScriptableObjectAssetRootPath}{name}.asset";
+            var finalPath = $"{Framework.ScriptableObjectAssetRootPath}{name}.asset";
             var asset = AssetDatabase.LoadAssetAtPath<T>(finalPath);
             return asset;
         }
@@ -51,7 +51,7 @@ namespace NeverSayNever.EditorUtilitiy
         public static void GenerateScriptableObjectAsset<T>() where T : ScriptableObject
         {
             var name = typeof(T).Name;
-            var finalPath = $"{FrameworkConfig.ScriptableObjectAssetRootPath}{name}.asset";
+            var finalPath = $"{Framework.ScriptableObjectAssetRootPath}{name}.asset";
             var asset = AssetDatabase.LoadAssetAtPath<T>(finalPath);
             if (asset != null)
                 return;

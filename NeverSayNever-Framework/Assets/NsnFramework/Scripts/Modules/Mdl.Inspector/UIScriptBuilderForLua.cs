@@ -27,7 +27,7 @@ namespace NeverSayNever.EditorUtilitiy
             var objName = uiTarget.gameObject.name;
             var moduleName = isPanel ? objName.Substring(0, objName.Length - 5) : objName;
             var moduleFolder = moduleName + "Module";
-            var outputFolederPath = FrameworkConfig.GlobalConfig.LuaSciprtDirectory + "/UI/" + moduleFolder;
+            var outputFolederPath = Framework.GlobalConfig.LuaSciprtDirectory + "/UI/" + moduleFolder;
 
             if (!Directory.Exists(outputFolederPath))
             {
@@ -50,7 +50,7 @@ namespace NeverSayNever.EditorUtilitiy
             targetAttributeName = moduleName + "Attribute";
             targetPanelName = moduleName + "Panel";
             targetMessengerName = moduleName + "Messenger";
-            var templetePath = Application.dataPath.Replace("Assets", "") + UnityEditor.AssetDatabase.GetAssetPath(FrameworkConfig.GlobalConfig.LuaTempleteFolder);
+            var templetePath = Application.dataPath.Replace("Assets", "") + UnityEditor.AssetDatabase.GetAssetPath(Framework.GlobalConfig.LuaTempleteFolder);
 
             // Step.1 拷贝并写入UI初始化代码
             var attributeFile = outputPath + "/" + targetAttributeName + ".lua";

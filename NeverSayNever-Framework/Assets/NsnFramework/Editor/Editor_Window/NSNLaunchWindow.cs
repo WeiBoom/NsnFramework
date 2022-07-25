@@ -60,7 +60,7 @@ namespace NeverSayNever.EditorUtilitiy
         {
             GUILayout.Label("NSN Framework",_style);
             EditorGUILayout.BeginHorizontal(GUI.skin.box);
-            GUILayout.Label($"框架配置文件存放路径 ： {FrameworkConfig.ScriptableObjectAssetRootPath}");
+            GUILayout.Label($"框架配置文件存放路径 ： {Framework.ScriptableObjectAssetRootPath}");
             EditorGUILayout.EndHorizontal();
 
             // 在project视图显示文件大小

@@ -67,7 +67,7 @@ namespace NeverSayNever
         // 初始化资源根目录
         private void InitAssetRootPath()
         {
-            var cfg = FrameworkConfig.GlobalConfig.VariesAssetFolderDic;
+            var cfg = Framework.GlobalConfig.VariesAssetFolderDic;
 
             bundle_platform_root = Application.streamingAssetsPath + "/" + NsnPlatform.Platform;  //$"{Application.dataPath.Replace("Assets", "")}/{AppSetting.Platform}";
 
@@ -77,7 +77,7 @@ namespace NeverSayNever
         private string GetAssetFinalPath(EAssetType assetType, string name)
         {
             var extension = LoadType == EAssetLoadType.Resources ? string.Empty : GetAssetExtension(assetType);
-            var folderInfo = FrameworkConfig.GlobalConfig.VariesAssetFolderDic[assetType.ToString()];
+            var folderInfo = Framework.GlobalConfig.VariesAssetFolderDic[assetType.ToString()];
             if (folderInfo != null)
             {
                 if (assetType == EAssetType.UI)
@@ -131,7 +131,7 @@ namespace NeverSayNever
         // 获取资源后缀
         private static string GetAssetExtension(EAssetType type)
         {
-            var assetConfigInfo = FrameworkConfig.GlobalConfig.VariesAssetFolderDic;
+            var assetConfigInfo = Framework.GlobalConfig.VariesAssetFolderDic;
             NsnGlobalAssetConfig.AssetFolderInfo folderInfo = assetConfigInfo[type.ToString()]; 
             return folderInfo == null ? string.Empty : folderInfo.extension;
         }

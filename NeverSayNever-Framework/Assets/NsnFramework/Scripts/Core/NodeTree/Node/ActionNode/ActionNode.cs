@@ -3,7 +3,7 @@ using UnityEditor;
 
 namespace NeverSayNever.BehaviourTree
 {
-	public abstract class ActionNode : TreeNode
+	public abstract class ActionNode : BaseNode
 	{
 
 

@@ -4,11 +4,11 @@ using System.Collections.Generic;
 
 namespace NeverSayNever.BehaviourTree
 {
-    public abstract class DecoratorNode : TreeNode
+    public abstract class DecoratorNode : BaseNode
     {
-        [HideInInspector] public TreeNode child;
+        [HideInInspector] public BaseNode child;
 
-        public override TreeNode Clone()
+        public override BaseNode Clone()
         {
             DecoratorNode node = Instantiate(this);
             node.child = child.Clone();

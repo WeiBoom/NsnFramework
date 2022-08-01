@@ -18,7 +18,7 @@ public class NodeTreeRunner : MonoBehaviour
     {
         var state = tree.Update();
     
-        if(state != NeverSayNever.BehaviourTree.TreeNode.State.Running)
+        if(state != NeverSayNever.BehaviourTree.BaseNode.State.Running)
         {
             Debug.Log(state);
         }

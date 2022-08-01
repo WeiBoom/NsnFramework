@@ -1,5 +1,5 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
-    <Style src="project://database/Assets/NsnFramework/Editor/Editor_NodeTree/NodeGraphEditor.uss?fileID=7433441132597879392&amp;guid=e585cb5da617fe349a3fa4233464f21e&amp;type=3#NodeGraphEditor" />
+    <Style src="project://database/Assets/NsnFramework/Editor/Editor.NodeTree/Data/NodeGraphEditor.uss?fileID=7433441132597879392&amp;guid=e585cb5da617fe349a3fa4233464f21e&amp;type=3#NodeGraphEditor" />
     <uie:Toolbar>
         <uie:ToolbarMenu display-tooltip-when-elided="true" text="Assets" />
     </uie:Toolbar>

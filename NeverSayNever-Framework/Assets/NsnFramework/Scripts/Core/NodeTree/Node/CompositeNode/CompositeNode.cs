@@ -5,11 +5,11 @@ using System.Collections.Generic;
 
 namespace NeverSayNever.BehaviourTree
 {
-	public abstract class CompositeNode : TreeNode
+	public abstract class CompositeNode : BaseNode
 	{
-		[HideInInspector] public List<TreeNode> children = new List<TreeNode>();
+		[HideInInspector] public List<BaseNode> children = new List<BaseNode>();
 
-        public override TreeNode Clone()
+        public override BaseNode Clone()
         {
             CompositeNode node = Instantiate(this);
             node.children = children.ConvertAll(c => c.Clone());

@@ -4,18 +4,20 @@ using UnityEngine;
 
 namespace NeverSayNever.BehaviourTree
 {
-    public abstract class TreeNode : ScriptableObject
+    public abstract class BaseNode : ScriptableObject
     {
         public enum State
         {
-            Running,
-            Failure,
-            Success,
+            Default = 0,
+            Running = 1,
+            Success = 2,
+            Failure = 3,
         }
 
         [HideInInspector]public string guid;
         [HideInInspector]public State state = State.Running;
         [HideInInspector]public Vector2 position;
+
         public bool IsStarted { get; private set; } = false;
 
         public State Update()
@@ -43,7 +45,7 @@ namespace NeverSayNever.BehaviourTree
 
         //protected abstract void InstantiatePort();
 
-        public virtual TreeNode Clone()
+        public virtual BaseNode Clone()
         {
             return Instantiate(this);
         }

@@ -6,9 +6,9 @@ using UnityEngine;
 
 namespace NeverSayNever.BehaviourTree
 {
-    public class RootNode : TreeNode
+    public class RootNode : BaseNode
     {
-        public TreeNode child;
+        public BaseNode child;
 
         protected override void OnStart()
         {
@@ -23,7 +23,7 @@ namespace NeverSayNever.BehaviourTree
             return child.Update();
         }
 
-        public override TreeNode Clone()
+        public override BaseNode Clone()
         {
             RootNode node = Instantiate(this);
             node.child = child.Clone();

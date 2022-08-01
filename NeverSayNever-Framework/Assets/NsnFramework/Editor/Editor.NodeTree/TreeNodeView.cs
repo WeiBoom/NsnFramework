@@ -9,12 +9,12 @@ public class TreeNodeView : UnityEditor.Experimental.GraphView.Node
 {
 
     public System.Action<TreeNodeView> OnNodeSelected;
-    public TreeNode node;
+    public BaseNode node;
 
     public Port input;
     public Port output;
 
-    public TreeNodeView(TreeNode node)
+    public TreeNodeView(BaseNode node) //: base("Assets/NsnFramework/Editor/Editor.NodeTree/Data/TreeNodeView.uxml")
     {
         this.node = node;
         this.title = node.name;
@@ -41,7 +41,7 @@ public class TreeNodeView : UnityEditor.Experimental.GraphView.Node
     {
         base.OnSelected();
 
-        if (OnNodeSelected!= null)
+        if (OnNodeSelected != null)
         {
             OnNodeSelected(this);
         }
@@ -49,15 +49,15 @@ public class TreeNodeView : UnityEditor.Experimental.GraphView.Node
 
     private void CreateInputPorts()
     {
-        if(node is ActionNode)
+        if (node is ActionNode)
         {
             input = InstantiatePort(Orientation.Horizontal, Direction.Input, Port.Capacity.Single, typeof(bool));
         }
-        else if(node is CompositeNode)
+        else if (node is CompositeNode)
         {
             input = InstantiatePort(Orientation.Horizontal, Direction.Input, Port.Capacity.Single, typeof(bool));
         }
-        else if(node is DecoratorNode)
+        else if (node is DecoratorNode)
         {
             input = InstantiatePort(Orientation.Horizontal, Direction.Input, Port.Capacity.Single, typeof(bool));
         }
@@ -98,5 +98,5 @@ public class TreeNodeView : UnityEditor.Experimental.GraphView.Node
             output.portName = "";
             outputContainer.Add(output);
         }
-    } 
+    }
 }

@@ -24,7 +24,7 @@ public class NodeGraphEditorView : GraphView
         this.AddManipulator(new RectangleSelector());
 
         var styleSheet =
-            AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/NsnFramework/Editor/Editor_NodeTree/NodeGraphEditor.uss");
+            AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/NsnFramework/Editor/Editor.NodeTree/Data/NodeGraphEditor.uss");
         styleSheets.Add(styleSheet);
     }
     
@@ -63,7 +63,7 @@ public class NodeGraphEditorView : GraphView
 
     }
 
-    TreeNodeView FindNodeView(TreeNode node)
+    TreeNodeView FindNodeView(BaseNode node)
     {
         return GetNodeByGuid(node.guid) as TreeNodeView;
     }
@@ -81,7 +81,7 @@ public class NodeGraphEditorView : GraphView
         AppendActionByType<CompositeNode>(evt);
     }
 
-    private void AppendActionByType<T>(ContextualMenuPopulateEvent evt) where T: TreeNode
+    private void AppendActionByType<T>(ContextualMenuPopulateEvent evt) where T: BaseNode
     {
         var types = TypeCache.GetTypesDerivedFrom<T>();
         foreach (var type in types)
@@ -92,11 +92,11 @@ public class NodeGraphEditorView : GraphView
 
     void CreateNode(System.Type type)
     {
-        TreeNode node = tree.CreateNode(type);
+        BaseNode node = tree.CreateNode(type);
         CreateNodeView(node);
     }
 
-    void CreateNodeView(TreeNode node)
+    void CreateNodeView(BaseNode node)
     {
         TreeNodeView nodeView = new TreeNodeView(node);
         nodeView.OnNodeSelected = OnNodeSelected;

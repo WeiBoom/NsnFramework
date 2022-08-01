@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   guid: b43e50fd08cfd534dad216e415a8934f
   state: 0
-  position: {x: -144.74886, y: -18.999979}
+  position: {x: -142, y: -19}
   children:
   - {fileID: -6496821354453855131}
   - {fileID: -5040685176432356364}
@@ -35,7 +35,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   guid: a1f03846b067d1f4eaa386dce2842b04
   state: 0
-  position: {x: 164, y: -200}
+  position: {x: 64, y: -181}
   message: 111
 --- !u!114 &-5040685176432356364
 MonoBehaviour:
@@ -51,7 +51,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   guid: e3976afbe11387d4ea44ee3094055fc3
   state: 0
-  position: {x: 164, y: -95.79999}
+  position: {x: 91, y: -86}
   duration: 1
 --- !u!114 &-4143056680689921364
 MonoBehaviour:
@@ -67,24 +67,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   guid: a7717daa083a0be4f945e1cf46ddb620
   state: 0
-  position: {x: 164, y: 199}
+  position: {x: 68.5, y: 213}
   message: 333
---- !u!114 &-3955760356124636035
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 101d365e609344fe88d02c601eac9d6b, type: 3}
-  m_Name: WaitNode
-  m_EditorClassIdentifier: 
-  guid: a941a739087a9494faa578d0b0f99336
-  state: 0
-  position: {x: 0, y: 0}
-  duration: 1
 --- !u!114 &-3198626553533485670
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -99,7 +83,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   guid: bef928c6c01e7e84dbb47f4cde5ae99a
   state: 0
-  position: {x: 164, y: 0}
+  position: {x: 99, y: 4}
   message: 222
 --- !u!114 &11400000
 MonoBehaviour:
@@ -124,7 +108,6 @@ MonoBehaviour:
   - {fileID: 6465737661925770930}
   - {fileID: -4143056680689921364}
   - {fileID: 7697561689161365634}
-  - {fileID: -3955760356124636035}
 --- !u!114 &3854075948329091951
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -139,7 +122,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   guid: d430f5fe7a85bc645b9e65b350ba4a3c
   state: 0
-  position: {x: -511.48, y: -35.5}
+  position: {x: -531, y: -49.5}
   child: {fileID: 7697561689161365634}
 --- !u!114 &6465737661925770930
 MonoBehaviour:
@@ -155,7 +138,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   guid: a66fde7c51ac8de4596cefdbb6af3a0c
   state: 0
-  position: {x: 164, y: 98}
+  position: {x: 99, y: 100}
   duration: 1
 --- !u!114 &7697561689161365634
 MonoBehaviour:
@@ -171,5 +154,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   guid: 639502c388868f54098a832f5117c4f4
   state: 0
-  position: {x: -349, y: -35}
+  position: {x: -349.0001, y: -35.000004}
   child: {fileID: -7383769907204533628}

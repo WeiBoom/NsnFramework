@@ -6,14 +6,14 @@ namespace NeverSayNever.BehaviourTree
     [CreateAssetMenu(menuName ="创建NodeGraphTrees",fileName = "NodeGraphTree")]
 	public class NodeGraphTree : ScriptableObject
 	{
-		public TreeNode rootNode;
-		public TreeNode.State treeState = TreeNode.State.Running;
+		public BaseNode rootNode;
+		public BaseNode.State treeState = BaseNode.State.Running;
 
-		public List<TreeNode> nodes = new List<TreeNode> ();
+		public List<BaseNode> nodes = new List<BaseNode> ();
 
-		public TreeNode.State Update()
+		public BaseNode.State Update()
 		{
-			if(rootNode.state == TreeNode.State.Running)
+			if(rootNode.state == BaseNode.State.Running)
             {
 				treeState = rootNode.Update();
 			}
@@ -21,10 +21,10 @@ namespace NeverSayNever.BehaviourTree
 			return treeState;
 		}
 
-		public TreeNode CreateNode(System.Type type)
+		public BaseNode CreateNode(System.Type type)
         {
 #if UNITY_EDITOR
-            TreeNode node =ScriptableObject.CreateInstance(type) as TreeNode;
+            BaseNode node =ScriptableObject.CreateInstance(type) as BaseNode;
 			node.name = type.Name;
 			node.guid = UnityEditor.GUID.Generate().ToString();
 			nodes.Add(node);
@@ -38,7 +38,7 @@ namespace NeverSayNever.BehaviourTree
 #endif
         }
 
-		public void DeleteNode(TreeNode node)
+		public void DeleteNode(BaseNode node)
         {
 #if UNITY_EDITOR
             nodes.Remove(node);
@@ -47,7 +47,7 @@ namespace NeverSayNever.BehaviourTree
 #endif
         }
 
-		public void AddChild(TreeNode parent,TreeNode child)
+		public void AddChild(BaseNode parent,BaseNode child)
         {
 
             RootNode root = parent as RootNode;
@@ -69,7 +69,7 @@ namespace NeverSayNever.BehaviourTree
             }
         }
 
-        public void RemoveChild(TreeNode parent, TreeNode child)
+        public void RemoveChild(BaseNode parent, BaseNode child)
         {
             RootNode root = parent as RootNode;
             if (root)
@@ -90,9 +90,9 @@ namespace NeverSayNever.BehaviourTree
             }
         }
 
-        public List<TreeNode> GetChildren(TreeNode parent)
+        public List<BaseNode> GetChildren(BaseNode parent)
         {
-            List<TreeNode> children = new List<TreeNode>();
+            List<BaseNode> children = new List<BaseNode>();
 
             RootNode root = parent as RootNode;
             if (root && root.child != null)

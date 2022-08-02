@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 
-namespace NeverSayNever.BehaviourTree
+namespace NeverSayNever.NodeGraphView
 {
     public class RootNode : BaseNode
     {

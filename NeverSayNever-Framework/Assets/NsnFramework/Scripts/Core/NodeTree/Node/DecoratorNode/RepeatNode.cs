@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NeverSayNever.BehaviourTree
+namespace NeverSayNever.NodeGraphView
 {
     public class RepeatNode : DecoratorNode
     {

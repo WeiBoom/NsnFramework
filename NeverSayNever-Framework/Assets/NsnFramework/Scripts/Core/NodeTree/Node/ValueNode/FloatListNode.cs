@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NeverSayNever.BehaviourTree
+namespace NeverSayNever.NodeGraphView
 {
     [NodeName("FloatList")]
     [NodePath("Base/Value/FloatListNode")]

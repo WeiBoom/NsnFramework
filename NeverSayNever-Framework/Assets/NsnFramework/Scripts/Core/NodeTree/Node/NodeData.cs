@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace NeverSayNever.BehaviourTree
+namespace NeverSayNever.NodeGraphView
 {
     [System.Serializable]
     public class NodeValueData

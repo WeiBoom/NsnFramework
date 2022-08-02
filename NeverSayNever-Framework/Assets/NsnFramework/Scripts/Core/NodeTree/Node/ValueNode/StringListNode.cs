@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 using UnityEngine;
 
-namespace NeverSayNever.BehaviourTree
+namespace NeverSayNever.NodeGraphView
 {
     [NodeName("StringList")]
     [NodePath("Base/Value/StringListNode")]

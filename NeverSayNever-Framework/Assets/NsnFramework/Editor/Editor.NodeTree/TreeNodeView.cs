@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor.Experimental.GraphView;
 
-using NeverSayNever.BehaviourTree;
+using NeverSayNever.NodeGraphView;
 
 public class TreeNodeView : UnityEditor.Experimental.GraphView.Node
 {

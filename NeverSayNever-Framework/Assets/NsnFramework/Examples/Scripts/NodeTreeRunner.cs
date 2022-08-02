@@ -6,7 +6,7 @@ using NeverSayNever;
 
 public class NodeTreeRunner : MonoBehaviour
 {
-    public NeverSayNever.BehaviourTree.NodeGraphTree tree;
+    public NeverSayNever.NodeGraphView.NodeGraphTree tree;
 
     void Start()
     {
@@ -18,7 +18,7 @@ public class NodeTreeRunner : MonoBehaviour
     {
         var state = tree.Update();
     
-        if(state != NeverSayNever.BehaviourTree.BaseNode.State.Running)
+        if(state != NeverSayNever.NodeGraphView.BaseNode.State.Running)
         {
             Debug.Log(state);
         }

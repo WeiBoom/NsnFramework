@@ -3,7 +3,7 @@ using UnityEditor;
 
 using System.Collections.Generic;
 
-namespace NeverSayNever.BehaviourTree
+namespace NeverSayNever.NodeGraphView
 {
 	public abstract class CompositeNode : BaseNode
 	{

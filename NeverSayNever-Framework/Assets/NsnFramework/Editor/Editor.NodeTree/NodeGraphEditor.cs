@@ -2,14 +2,14 @@ using UnityEditor;
 using UnityEditor.Callbacks;
 using UnityEngine;
 using UnityEngine.UIElements;
-using NeverSayNever.BehaviourTree;
+using NeverSayNever.NodeGraphView;
 
 public class NodeGraphEditor : EditorWindow
 {
     NodeGraphEditorView treeView;
     InspectorView inspectorView;
 
-    [MenuItem("NeverSayNever/UI Toolkit/NodeGraphEditor")]
+    [MenuItem("NeverSayNever/GraphView/NodeGraphEditor")]
     public static void OpenWindow()
     {
         NodeGraphEditor wnd = GetWindow<NodeGraphEditor>();

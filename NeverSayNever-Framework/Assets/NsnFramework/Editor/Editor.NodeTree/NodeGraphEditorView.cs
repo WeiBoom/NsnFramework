@@ -5,7 +5,7 @@ using UnityEditor;
 using UnityEngine.UIElements;
 using UnityEditor.Experimental.GraphView;
 
-using NeverSayNever.BehaviourTree;
+using NeverSayNever.NodeGraphView;
 
 public class NodeGraphEditorView : GraphView
 {

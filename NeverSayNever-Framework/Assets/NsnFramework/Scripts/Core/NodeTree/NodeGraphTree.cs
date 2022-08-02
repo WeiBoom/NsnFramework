@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-namespace NeverSayNever.BehaviourTree
+namespace NeverSayNever.NodeGraphView
 {
     [CreateAssetMenu(menuName ="创建NodeGraphTrees",fileName = "NodeGraphTree")]
 	public class NodeGraphTree : ScriptableObject

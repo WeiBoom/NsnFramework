@@ -1,5 +1,5 @@
 
-namespace NeverSayNever.BehaviourTree
+namespace NeverSayNever.NodeGraphView
 {
     public class WaitNode : ActionNode
     {

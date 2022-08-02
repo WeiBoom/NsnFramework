@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace NeverSayNever.BehaviourTree
+namespace NeverSayNever.NodeGraphView
 {
     [NodeColor(74, 42, 192)]
     public abstract class ValueNode : BaseNode

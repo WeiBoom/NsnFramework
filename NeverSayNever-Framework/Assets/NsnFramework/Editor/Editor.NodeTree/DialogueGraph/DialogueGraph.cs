@@ -72,20 +72,19 @@ namespace NeverSayNever.NodeGraphView
         // todo
         private void RequestDataOperation(bool save)
         {
-            /*
             if (!string.IsNullOrEmpty(_fileName))
             {
-                var saveUtility = GraphSaveUtility.GetInstance(_graphView);
+                var saveUtility = DialogueGraphUtility.GetInstance(_graphView);
                 if (save)
                     saveUtility.SaveGraph(_fileName);
                 else
-                    saveUtility.LoadNarrative(_fileName);
+                    saveUtility.LoadGraph(_fileName);
             }
             else
             {
                 EditorUtility.DisplayDialog("Invalid File name", "Please Enter a valid filename", "OK");
             }
-            */
+            
         }
     }
 }

@@ -57,6 +57,4 @@ namespace NeverSayNever.NodeGraphView
             this.inputValueName = inputValueName;
         }
     }
-
-
 }

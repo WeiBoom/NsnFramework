@@ -16,11 +16,47 @@ namespace NeverSayNever.NodeGraphView
         public readonly Vector2 DefaultCommentBlockSize = new Vector2(300, 200);
         public DialogueNode EntryPointNode;
 
+        #region StyleSheet
+
+        private StyleSheet _dialogueViewStyleSheet;
+        private StyleSheet DialogueViewStyleSheet
+        {
+            get
+            {
+                if (_dialogueViewStyleSheet == null)
+                    _dialogueViewStyleSheet = UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/NsnFramework/Editor/Editor.NodeTree/Data/DialogueGraph.uss", typeof(StyleSheet)) as StyleSheet;
+                return _dialogueViewStyleSheet;
+            }
+        }
+
+        private StyleSheet _dialogueNodeStyleSheet;
+        private StyleSheet DialogueNodeStyleSheet
+        {
+            get
+            {
+                if (_dialogueNodeStyleSheet == null)
+                    _dialogueNodeStyleSheet = UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/NsnFramework/Editor/Editor.NodeTree/Data/DialogueNode.uss", typeof(StyleSheet)) as StyleSheet;
+                return _dialogueNodeStyleSheet;
+            }
+        }
+
+
+        private StyleSheet _dialogueStartNodeStyleSheet;
+        private StyleSheet DialogueStartNodeStyleSheet
+        {
+            get
+            {
+                if (_dialogueStartNodeStyleSheet == null)
+                    _dialogueStartNodeStyleSheet = UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/NsnFramework/Editor/Editor.NodeTree/Data/DialogueStartNode.uss", typeof(StyleSheet)) as StyleSheet;
+                return _dialogueStartNodeStyleSheet;
+            }
+        }
+
+        #endregion
 
         public DialogueGraphView()
         {
-            var styleSheet = UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/NsnFramework/Editor/Editor.NodeTree/Data/DialogueGraph.uss", typeof(StyleSheet));
-            styleSheets.Add(styleSheet as StyleSheet);
+            styleSheets.Add(DialogueViewStyleSheet);
             SetupZoom(ContentZoomer.DefaultMinScale, ContentZoomer.DefaultMaxScale);
 
             this.AddManipulator(new ContentZoomer());
@@ -64,6 +100,7 @@ namespace NeverSayNever.NodeGraphView
                 EntryPoint = true
             };
 
+            nodeCache.styleSheets.Add(DialogueStartNodeStyleSheet);
             // only one output port
             var generatedPort = GetPortInstance(nodeCache, Direction.Output);
             generatedPort.portName = "Next";
@@ -86,9 +123,16 @@ namespace NeverSayNever.NodeGraphView
             return node.InstantiatePort(Orientation.Horizontal, nodeDirection, capacity, typeof(float));
         }
 
+
+        public void CreateNewDialogueNode(string fileName,Vector2 position)
+        {
+            DialogueNode node = CreateDialogueNode(fileName ,position);
+            AddElement(node);
+        }
+
         // create new dialogue node
 
-        public DialogueNode CreateDialogueNode(string nodeName)
+        private DialogueNode CreateDialogueNode(string nodeName, Vector2 position)
         {
             DialogueNode dialogueNode = new DialogueNode
             {
@@ -102,6 +146,8 @@ namespace NeverSayNever.NodeGraphView
             inputPort.portName = "Input";
             dialogueNode.inputContainer.Add(inputPort);
 
+            var styleSheet = UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/NsnFramework/Editor/Editor.NodeTree/Data/DialogueNode.uss", typeof(StyleSheet));
+            dialogueNode.styleSheets.Add(styleSheet as StyleSheet);
             // button for add choice
             var button = new UnityEngine.UIElements.Button(() => { AddChoicePort(dialogueNode); })
             {
@@ -114,7 +160,7 @@ namespace NeverSayNever.NodeGraphView
 
             dialogueNode.RefreshExpandedState();
             dialogueNode.RefreshPorts();
-            dialogueNode.SetPosition(new Rect(Vector2.zero, DefaultNodeSize));
+            dialogueNode.SetPosition(new Rect(position, DefaultNodeSize));
 
             return dialogueNode;
         }

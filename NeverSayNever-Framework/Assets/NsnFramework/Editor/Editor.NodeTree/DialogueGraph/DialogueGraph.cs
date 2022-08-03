@@ -54,6 +54,7 @@ namespace NeverSayNever.NodeGraphView
 
             toolbar.Add(fileNameTextField);
 
+            toolbar.Add(new Button(() => _graphView.CreateNewDialogueNode("New Node" , Vector2.zero)) { text = "Create Node" });
             toolbar.Add(new Button(() => RequestDataOperation(true)) { text = "Save Data" });
 
             toolbar.Add(new Button(() => RequestDataOperation(false)) { text = "Load Data" });

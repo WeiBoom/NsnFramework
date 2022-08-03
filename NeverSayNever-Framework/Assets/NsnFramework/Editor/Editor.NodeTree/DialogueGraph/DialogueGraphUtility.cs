@@ -23,16 +23,52 @@ namespace NeverSayNever.NodeGraphView
             };
         }
 
+
+        private string DialogueObjectSavePath = "Assets/Ressources";
+
         #region SAVE
 
         public void SaveGraph(string fileName)
         {
+            var dialogueContainer = UnityEngine.ScriptableObject.CreateInstance<DialogueContainer>();
+            bool saveNodeResult = SaveNodes(fileName,dialogueContainer);
+            if (!saveNodeResult)
+                return;
 
+            SaveExposedProperties(dialogueContainer);
+            SaveCommentBlocks(dialogueContainer);
         }
 
         private bool SaveNodes(string fileName, DialogueContainer dialogueContainerObject)
         {
-            return false;
+            if (!Edges.Any()) return false;
+
+            // 先找连接的点的信息
+            var connectedSockets = Edges.Where(x => x.input.node != null).ToArray();
+            for (int i = 0; i < connectedSockets.Length; i++)
+            {
+                var outputNode = connectedSockets[i].output.node as DialogueNode;
+                var inputNode = connectedSockets[i].input.node as DialogueNode;
+
+                dialogueContainerObject.NodeLinks.Add(new DialogueNodeLinkData
+                {
+                    BaseNodeGUID = outputNode.GUID,
+                    PortName = connectedSockets[i].output.portName,
+                    TargetNodeGUID = inputNode.GUID
+                });
+            }
+            // 再遍历每个入口的点的信息
+            foreach (var node in Nodes.Where(node => !node.EntryPoint))
+            {
+                dialogueContainerObject.DialogueNodeData.Add(new DialogueNodeData
+                {
+                    NodeGUID = node.GUID,
+                    DialogueText = node.DialogueText,
+                    Position = node.GetPosition().position
+                });
+            }
+
+            return true;
         }
 
         private void SaveExposedProperties(DialogueContainer dialogueContainer)

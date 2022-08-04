@@ -29,7 +29,8 @@ namespace NeverSayNever.NodeGraphView
 
         private void OnDisable()
         {
-            rootVisualElement.Remove(_graphView);
+            if(_graphView != null)
+                rootVisualElement.Remove(_graphView);
         }
 
         private void ConstructDialogueGraphView()

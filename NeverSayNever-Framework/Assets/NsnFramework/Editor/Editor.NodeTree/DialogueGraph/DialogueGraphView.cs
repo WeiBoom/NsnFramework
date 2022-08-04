@@ -24,7 +24,8 @@ namespace NeverSayNever.NodeGraphView
             get
             {
                 if (_dialogueViewStyleSheet == null)
-                    _dialogueViewStyleSheet = UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/NsnFramework/Editor/Editor.NodeTree/Data/DialogueGraph.uss", typeof(StyleSheet)) as StyleSheet;
+                    _dialogueViewStyleSheet = LoadStyleSheet("DialogueGraph");
+                //UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/NsnFramework/Editor/Editor.NodeTree/Data/DialogueGraph.uss", typeof(StyleSheet)) as StyleSheet;
                 return _dialogueViewStyleSheet;
             }
         }
@@ -35,7 +36,8 @@ namespace NeverSayNever.NodeGraphView
             get
             {
                 if (_dialogueNodeStyleSheet == null)
-                    _dialogueNodeStyleSheet = UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/NsnFramework/Editor/Editor.NodeTree/Data/DialogueNode.uss", typeof(StyleSheet)) as StyleSheet;
+                    _dialogueNodeStyleSheet = LoadStyleSheet("DialogueNode");
+                //UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/NsnFramework/Editor/Editor.NodeTree/Data/DialogueNode.uss", typeof(StyleSheet)) as StyleSheet;
                 return _dialogueNodeStyleSheet;
             }
         }
@@ -47,7 +49,8 @@ namespace NeverSayNever.NodeGraphView
             get
             {
                 if (_dialogueStartNodeStyleSheet == null)
-                    _dialogueStartNodeStyleSheet = UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/NsnFramework/Editor/Editor.NodeTree/Data/DialogueStartNode.uss", typeof(StyleSheet)) as StyleSheet;
+                    _dialogueStartNodeStyleSheet = LoadStyleSheet("DialogueStartNode");
+                //UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/NsnFramework/Editor/Editor.NodeTree/Data/DialogueStartNode.uss", typeof(StyleSheet)) as StyleSheet;
                 return _dialogueStartNodeStyleSheet;
             }
         }
@@ -72,6 +75,14 @@ namespace NeverSayNever.NodeGraphView
             EntryPointNode = GetEntryPointNodeInstance();
             // add entry node
             AddElement(EntryPointNode);
+        }
+
+        private StyleSheet LoadStyleSheet(string sheetName)
+        {
+            //var styleSheet = Resources.Load<StyleSheet>($"Theme/{sheetName}.uss");
+            string filePath = $"Assets/NsnFramework/Editor/Editor.NodeTree/Data/{sheetName}.uss";
+            var styleSheet= UnityEditor.AssetDatabase.LoadAssetAtPath(filePath, typeof(StyleSheet)) as StyleSheet;
+            return styleSheet;
         }
 
         public override List<Port> GetCompatiblePorts(Port startPort, NodeAdapter nodeAdapter)
@@ -124,15 +135,15 @@ namespace NeverSayNever.NodeGraphView
         }
 
 
-        public void CreateNewDialogueNode(string fileName,Vector2 position)
+        public void CreateNewDialogueNode(string fileName, Vector2 position)
         {
-            DialogueNode node = CreateDialogueNode(fileName ,position);
+            DialogueNode node = CreateDialogueNode(fileName, position);
             AddElement(node);
         }
 
         // create new dialogue node
 
-        private DialogueNode CreateDialogueNode(string nodeName, Vector2 position)
+        public DialogueNode CreateDialogueNode(string nodeName, Vector2 position)
         {
             DialogueNode dialogueNode = new DialogueNode
             {
@@ -146,8 +157,7 @@ namespace NeverSayNever.NodeGraphView
             inputPort.portName = "Input";
             dialogueNode.inputContainer.Add(inputPort);
 
-            var styleSheet = UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/NsnFramework/Editor/Editor.NodeTree/Data/DialogueNode.uss", typeof(StyleSheet));
-            dialogueNode.styleSheets.Add(styleSheet as StyleSheet);
+            dialogueNode.styleSheets.Add(DialogueNodeStyleSheet);
             // button for add choice
             var button = new UnityEngine.UIElements.Button(() => { AddChoicePort(dialogueNode); })
             {
@@ -211,5 +221,23 @@ namespace NeverSayNever.NodeGraphView
             node.RefreshExpandedState();
         }
 
+
+        public void ClearBlackBoardAndExposedProperties()
+        {
+            // ExposedProperties.Clear();
+            // Blackboard.Clear();
+        }
+
+        public Group CreateCommentBlock(Rect rect, DialogueCommentBlockData commentBlockData = null)
+        {
+            // todo
+            return null;
+        }
+
+        public void AddPropertyToBlackBoard(ExposedProperty property, bool loadMode = false)
+        {
+            // todo
+        }
     }
 }
+

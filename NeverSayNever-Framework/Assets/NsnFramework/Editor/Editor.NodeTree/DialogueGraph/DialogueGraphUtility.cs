@@ -121,7 +121,7 @@ namespace NeverSayNever.NodeGraphView
 
         public void LoadGraph(string fileName)
         {
-            _dialogueContainer = UnityEngine.Resources.Load<DialogueContainer>(fileName);
+            _dialogueContainer = UnityEngine.Resources.Load<DialogueContainer>($"{_dialogueObjectSaveFolder}/{fileName}");
             if(_dialogueContainer == null)
             {
                 UnityEditor.EditorUtility.DisplayDialog("File Not Found", "指定文件没找到", "了解");

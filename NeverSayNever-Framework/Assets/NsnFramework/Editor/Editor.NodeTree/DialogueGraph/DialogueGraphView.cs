@@ -159,13 +159,21 @@ namespace NeverSayNever.NodeGraphView
 
             dialogueNode.styleSheets.Add(DialogueNodeStyleSheet);
             // button for add choice
-            var button = new UnityEngine.UIElements.Button(() => { AddChoicePort(dialogueNode); })
+            var button = new UnityEngine.UIElements.Button(() => { AddChoicePort(dialogueNode); });
+            button.text = "Add Choice";
+
+            // content text
+            var textField = new TextField(string.Empty);
+            textField.RegisterValueChangedCallback(evt =>
             {
-                text = "Add Choice"
-            };
+                dialogueNode.DialogueText = evt.newValue;
+                //dialogueNode.title = evt.newValue;
+            });
+            textField.SetValueWithoutNotify(dialogueNode.title);
+            dialogueNode.mainContainer.Add(textField);
 
             // add button to titleContainer
-            dialogueNode.title = "Add Choice";
+            dialogueNode.title = "Dialogue";
             dialogueNode.titleContainer.Add(button);
 
             dialogueNode.RefreshExpandedState();
@@ -194,10 +202,8 @@ namespace NeverSayNever.NodeGraphView
             textField.RegisterValueChangedCallback(evt => generatedPort.portName = evt.newValue);
             generatedPort.contentContainer.Add(new Label("  "));
             generatedPort.contentContainer.Add(textField);
-            var deleteButton = new Button(() => RemovePort(nodeCache, generatedPort))
-            {
-                text = "X"
-            };
+            var deleteButton = new Button(() => RemovePort(nodeCache, generatedPort));
+            deleteButton.text = "X";
             generatedPort.contentContainer.Add(deleteButton);
             generatedPort.portName = outputPortName;
             nodeCache.outputContainer.Add(generatedPort);

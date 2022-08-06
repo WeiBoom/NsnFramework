@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace NeverSayNever.Example
 {
-    using NeverSayNever;
+    using Framework = NeverSayNever.Framework;
 
     public class GameLauncher : MonoBehaviour
     {
@@ -28,25 +28,23 @@ namespace NeverSayNever.Example
         {
             loadType = bundleMode ? EAssetLoadType.AssetBundle : EAssetLoadType.AssetDataBase;
 
-            // -- 废弃 todo
+            // 设置基本的信息
             Framework.SetLuaMode(luaMode, luaBundle);
             Framework.SetAssetLoadType(loadType);
             Framework.SetUIRoot(UIRoot);
             Framework.SetAudioSourceRoot(AudioSourceRoot);
-            // -- 废弃 todo
 
-            // 只通过这一个接口初始化
-            NeverSayNever.FrameworkCore.Initialize();
+            Framework.StartUp();
         }
 
         private void Awake()
         {
             DontDestroyOnLoad(gameObject);
+            InitFramework();
         }
 
         private void Start()
         {
-            InitFramework();
 
             Debug.Log("GameLauncher Start");
             if (loadType == EAssetLoadType.AssetBundle)
@@ -56,24 +54,27 @@ namespace NeverSayNever.Example
                 AssetBundleHelper.Inst.LoadBundle("fonts.u3d");
             }
 
+            IUIMgr uimgr = Framework.GetManager<IUIMgr>();
+
             if(luaMode)
             {
                 //LuaMgr.DoFile("Launcher");
             }
             else
             {
+                // todo 改为通过UIConfig 文件来注册所有的UI界面
                 //注册UI界面
-                //UIManager.Instance.RegisterCsPanelByReflect(UIModuleGroup.GameMain.GetModuleName());
-                //UIManager.Instance.RegisterCsPanelByReflect(UIModuleGroup.GameLoading.GetModuleName());
+                //uimgr.RegisterCsPanelByReflect(UIModuleGroup.GameMain.GetModuleName());
+                //uimgr.RegisterCsPanelByReflect(UIModuleGroup.GameLoading.GetModuleName());
                 //打开面板
-                //UIManager.Instance.OpenPanel(UIModuleGroup.GameMain.GetModuleName());
+                //uimgr.OpenPanel(UIModuleGroup.GameMain.GetModuleName());
             }
 
         }
 
         private void Update()
         {
-            //Framework.OnUpdate();
+            Framework.OnUpdate(Time.deltaTime);
         }
     }
 }

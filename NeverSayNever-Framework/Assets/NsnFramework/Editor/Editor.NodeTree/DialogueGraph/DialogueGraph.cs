@@ -66,8 +66,9 @@ namespace NeverSayNever.NodeGraphView
         private void GenerateMiniMap()
         {
             var miniMap = new UnityEditor.Experimental.GraphView.MiniMap { anchored = true };
-            var cords = _graphView.contentViewContainer.WorldToLocal(new Vector2(this.maxSize.x - 10, 30));
-            miniMap.SetPosition(new Rect(cords.x, cords.y, 200, 140));
+            //var cords = _graphView.contentViewContainer.WorldToLocal(new Vector2(this.maxSize.x - 10, 30));
+            //miniMap.SetPosition(new Rect(cords.x, cords.y, 200, 140));
+            miniMap.SetPosition(new Rect(10,30, 200, 140));
             _graphView.Add(miniMap);
         }
 

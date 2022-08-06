@@ -105,9 +105,9 @@ namespace NeverSayNever.NodeGraphView
         {
             var nodeCache = new DialogueNode()
             {
-                title = "START",
+                title = "ENTRY",
                 GUID = Guid.NewGuid().ToString(),
-                DialogueText = "ENTRYPOINT",
+                DialogueText = "ENTRY POINT",
                 EntryPoint = true
             };
 
@@ -124,7 +124,7 @@ namespace NeverSayNever.NodeGraphView
 
             nodeCache.RefreshExpandedState();
             nodeCache.RefreshPorts();
-            nodeCache.SetPosition(new Rect(100, 200, 100, 150));
+            nodeCache.SetPosition(new Rect(-100, 50, 100, 150));
             return nodeCache;
         }
 

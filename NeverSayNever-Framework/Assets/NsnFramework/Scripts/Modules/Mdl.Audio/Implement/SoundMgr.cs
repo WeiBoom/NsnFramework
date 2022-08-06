@@ -21,7 +21,7 @@ namespace NeverSayNever
             var audioSource = args[0] as AudioSource;
             _mBGMSource = audioSource;
 
-            _resourceMgr = FrameworkCore.Inst.GetManager<IResourceMgr>();
+            _resourceMgr = Framework.GetManager<IResourceMgr>();
         }
 
 

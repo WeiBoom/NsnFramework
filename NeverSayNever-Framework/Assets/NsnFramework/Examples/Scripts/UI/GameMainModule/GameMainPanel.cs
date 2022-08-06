@@ -19,30 +19,22 @@ namespace NeverSayNever.Example
 
     public partial class GameMainPanel : NeverSayNever.UIBasePanel
     {
-        
+
         protected override void OnAwake()
         {
             base.OnAwake();
-
-            btn_start.AddClickListener(()=>{
-                NsnLog.Print("���� ----- �����ʼ��ť");
-
-                SceneMgr.LoadSceneAsync("example_scene");
-                //UIMgr.Instance.ClosePanel(UIModuleGroup.GameMain.ModuleName);
-            });
-
-            btn_quit.AddClickListener(() => {
-                NsnLog.Print("���� ----- ����˳���ť");
-            });
-
-            btn_option.AddClickListener(() => {
-                NsnLog.Print("���� ----- ������ð�ť");
-            });
+            btn_start.AddClickListener(
+                () =>{ PrintClickedBtnName(btn_start.gameObject);
+                    SceneMgr.LoadSceneAsync("example_scene");
+                });
+            btn_quit.AddClickListener(
+                () => { PrintClickedBtnName(btn_start.gameObject); });
+            btn_option.AddClickListener(
+                () => { PrintClickedBtnName(btn_start.gameObject); });
         }
-        
-        protected override void OnStart()
+        private void PrintClickedBtnName(GameObject go)
         {
-            base.OnStart();
+            NsnLog.Print($"On {go.name} clicked");
         }
     }
 }

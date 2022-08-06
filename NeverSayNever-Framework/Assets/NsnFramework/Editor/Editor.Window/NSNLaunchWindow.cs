@@ -19,7 +19,7 @@ namespace NeverSayNever.EditorUtilitiy
         private bool _currentShowFileSize;
 
         // 目前没有使用window的必要，减少操作，只提供初始化配置的接口
-        //[MenuItem("NeverSayNever/Launch ")]
+        [MenuItem("NeverSayNever/Launch")]
         private static void InitWindow()
         {
             if (_window == null)
@@ -129,7 +129,7 @@ namespace NeverSayNever.EditorUtilitiy
         {
             var folderInfo = new NsnGlobalAssetConfig.AssetFolderInfo();
             folderInfo.extension = extension;
-            folderInfo.folder = AssetDatabase.LoadAssetAtPath("Framework/NsnFramework/Examples/DataRes/" + folderName, typeof(UnityEngine.Object));
+            folderInfo.folder = AssetDatabase.LoadAssetAtPath("NsnFramework/Examples/DataRes/" + folderName, typeof(UnityEngine.Object));
             if(folderInfo.folder != null)
             {
                 folderInfo.path = AssetDatabase.GetAssetPath(folderInfo.folder);

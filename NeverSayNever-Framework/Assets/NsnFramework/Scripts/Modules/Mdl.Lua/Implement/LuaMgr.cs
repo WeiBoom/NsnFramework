@@ -31,8 +31,6 @@ namespace NeverSayNever
         private static float LastGCTime = 0;
         // Lua gc 间隔时间
         private const float GCInterval = 1;
-        // Lua 入口脚本
-        private static string launchFileName = "Launcher";
         // Lua 打包成的bundle资源的名字
         private const string luaBundleName = "lualogic.u3d";
         
@@ -81,7 +79,7 @@ namespace NeverSayNever
         /// <param name="name"></param>
         public void LoadScriptBundle(string name)
         {
-            FrameworkCore.Inst.GetManager<IResourceMgr>().LoadTextAsset(name, (obj) =>
+            Framework.GetManager<IResourceMgr>().LoadTextAsset(name, (obj) =>
             {
                 TextAsset[] luaFiles = obj as TextAsset[];
                 foreach (var t in luaFiles)

@@ -17,16 +17,11 @@ namespace NeverSayNever.Example
     using TMPro;
     using NeverSayNever;
     
-    
     public partial class GameMainPanel : NeverSayNever.UIBasePanel
     {
-        
         private TextMeshProUGUI tmp_title;
-        
         private Button btn_start;
-        
         private Button btn_option;
-        
         private Button btn_quit;
         
         protected override void OnInitAttribute()

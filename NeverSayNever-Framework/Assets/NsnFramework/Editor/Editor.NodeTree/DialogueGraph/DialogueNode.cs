@@ -13,5 +13,6 @@ namespace NeverSayNever.NodeGraphView
         public string DialogueText;
 
         public bool EntryPoint = false;
+
     }
 }

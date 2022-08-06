@@ -1,0 +1,10 @@
+DialogueNode 
+#title{
+	background-color : #FBFBFB;
+}
+#title-label{
+	color:#233644
+}
+#contents{
+	background-color : #171B1D;
+}

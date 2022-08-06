@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3553e3ccde4370c48a08f65d0ce486fd, type: 3}
-  m_Name: SOGlobalAssetConfig
+  m_Name: NsnGlobalAssetConfig
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
@@ -25,8 +25,9 @@ MonoBehaviour:
     - {fileID: 102900000, guid: 8df051340584ce843a66921b59fe3036, type: 3}
     - {fileID: 102900000, guid: ac3afd68642256b4d82c4fa0fa777f82, type: 3}
     - {fileID: 102900000, guid: b324ff152db7e6646aa46884a76d7944, type: 3}
-    - {fileID: 102900000, guid: a9c185e0ca006ab449a7dc66d19ae556, type: 3}
+    - {fileID: 102900000, guid: bdca31cb456c3e447835725ee50df567, type: 3}
     - {fileID: 102900000, guid: ad15f5d0bcb50ef49adfd1fe3a4cf3c8, type: 3}
+    - {fileID: 102900000, guid: a9c185e0ca006ab449a7dc66d19ae556, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -34,14 +35,14 @@ MonoBehaviour:
     SerializationNodes:
     - Name: BuildAssetCollections
       Entry: 7
-      Data: 0|System.Collections.Generic.List`1[[NeverSayNever.SOGlobalAssetConfig+AssetCollectionInfo,
-        Assembly-CSharp]], mscorlib
+      Data: 0|System.Collections.Generic.List`1[[NeverSayNever.NsnGlobalAssetConfig+AssetCollectionInfo,
+        NsnFramework]], mscorlib
     - Name: 
       Entry: 12
       Data: 10
     - Name: 
       Entry: 7
-      Data: 1|NeverSayNever.SOGlobalAssetConfig+AssetCollectionInfo, Assembly-CSharp
+      Data: 1|NeverSayNever.NsnGlobalAssetConfig+AssetCollectionInfo, NsnFramework
     - Name: folder
       Entry: 10
       Data: 0
@@ -59,7 +60,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 2|NeverSayNever.SOGlobalAssetConfig+AssetCollectionInfo, Assembly-CSharp
+      Data: 2|NeverSayNever.NsnGlobalAssetConfig+AssetCollectionInfo, NsnFramework
     - Name: folder
       Entry: 10
       Data: 1
@@ -77,7 +78,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 3|NeverSayNever.SOGlobalAssetConfig+AssetCollectionInfo, Assembly-CSharp
+      Data: 3|NeverSayNever.NsnGlobalAssetConfig+AssetCollectionInfo, NsnFramework
     - Name: folder
       Entry: 10
       Data: 2
@@ -95,7 +96,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 4|NeverSayNever.SOGlobalAssetConfig+AssetCollectionInfo, Assembly-CSharp
+      Data: 4|NeverSayNever.NsnGlobalAssetConfig+AssetCollectionInfo, NsnFramework
     - Name: folder
       Entry: 10
       Data: 3
@@ -113,7 +114,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 5|NeverSayNever.SOGlobalAssetConfig+AssetCollectionInfo, Assembly-CSharp
+      Data: 5|NeverSayNever.NsnGlobalAssetConfig+AssetCollectionInfo, NsnFramework
     - Name: folder
       Entry: 10
       Data: 4
@@ -131,7 +132,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 6|NeverSayNever.SOGlobalAssetConfig+AssetCollectionInfo, Assembly-CSharp
+      Data: 6|NeverSayNever.NsnGlobalAssetConfig+AssetCollectionInfo, NsnFramework
     - Name: folder
       Entry: 10
       Data: 5
@@ -149,7 +150,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 7|NeverSayNever.SOGlobalAssetConfig+AssetCollectionInfo, Assembly-CSharp
+      Data: 7|NeverSayNever.NsnGlobalAssetConfig+AssetCollectionInfo, NsnFramework
     - Name: folder
       Entry: 10
       Data: 6
@@ -167,7 +168,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 8|NeverSayNever.SOGlobalAssetConfig+AssetCollectionInfo, Assembly-CSharp
+      Data: 8|NeverSayNever.NsnGlobalAssetConfig+AssetCollectionInfo, NsnFramework
     - Name: folder
       Entry: 10
       Data: 7
@@ -185,7 +186,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 9|NeverSayNever.SOGlobalAssetConfig+AssetCollectionInfo, Assembly-CSharp
+      Data: 9|NeverSayNever.NsnGlobalAssetConfig+AssetCollectionInfo, NsnFramework
     - Name: folder
       Entry: 10
       Data: 8
@@ -203,7 +204,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 10|NeverSayNever.SOGlobalAssetConfig+AssetCollectionInfo, Assembly-CSharp
+      Data: 10|NeverSayNever.NsnGlobalAssetConfig+AssetCollectionInfo, NsnFramework
     - Name: folder
       Entry: 10
       Data: 9
@@ -227,8 +228,8 @@ MonoBehaviour:
       Data: 
     - Name: VariesAssetFolderDic
       Entry: 7
-      Data: 11|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[NeverSayNever.SOGlobalAssetConfig+AssetFolderInfo,
-        Assembly-CSharp]], mscorlib
+      Data: 11|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[NeverSayNever.NsnGlobalAssetConfig+AssetFolderInfo,
+        NsnFramework]], mscorlib
     - Name: comparer
       Entry: 7
       Data: 12|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
@@ -247,7 +248,7 @@ MonoBehaviour:
       Data: UI
     - Name: $v
       Entry: 7
-      Data: 13|NeverSayNever.SOGlobalAssetConfig+AssetFolderInfo, Assembly-CSharp
+      Data: 13|NeverSayNever.NsnGlobalAssetConfig+AssetFolderInfo, NsnFramework
     - Name: folder
       Entry: 10
       Data: 2
@@ -271,7 +272,7 @@ MonoBehaviour:
       Data: Model
     - Name: $v
       Entry: 7
-      Data: 14|NeverSayNever.SOGlobalAssetConfig+AssetFolderInfo, Assembly-CSharp
+      Data: 14|NeverSayNever.NsnGlobalAssetConfig+AssetFolderInfo, NsnFramework
     - Name: folder
       Entry: 10
       Data: 3
@@ -295,7 +296,7 @@ MonoBehaviour:
       Data: Effect
     - Name: $v
       Entry: 7
-      Data: 15|NeverSayNever.SOGlobalAssetConfig+AssetFolderInfo, Assembly-CSharp
+      Data: 15|NeverSayNever.NsnGlobalAssetConfig+AssetFolderInfo, NsnFramework
     - Name: folder
       Entry: 10
       Data: 4
@@ -319,7 +320,7 @@ MonoBehaviour:
       Data: Texture
     - Name: $v
       Entry: 7
-      Data: 16|NeverSayNever.SOGlobalAssetConfig+AssetFolderInfo, Assembly-CSharp
+      Data: 16|NeverSayNever.NsnGlobalAssetConfig+AssetFolderInfo, NsnFramework
     - Name: folder
       Entry: 10
       Data: 5
@@ -343,7 +344,7 @@ MonoBehaviour:
       Data: Audio
     - Name: $v
       Entry: 7
-      Data: 17|NeverSayNever.SOGlobalAssetConfig+AssetFolderInfo, Assembly-CSharp
+      Data: 17|NeverSayNever.NsnGlobalAssetConfig+AssetFolderInfo, NsnFramework
     - Name: folder
       Entry: 10
       Data: 1
@@ -367,7 +368,7 @@ MonoBehaviour:
       Data: Font
     - Name: $v
       Entry: 7
-      Data: 18|NeverSayNever.SOGlobalAssetConfig+AssetFolderInfo, Assembly-CSharp
+      Data: 18|NeverSayNever.NsnGlobalAssetConfig+AssetFolderInfo, NsnFramework
     - Name: folder
       Entry: 10
       Data: 6
@@ -391,7 +392,7 @@ MonoBehaviour:
       Data: Shader
     - Name: $v
       Entry: 7
-      Data: 19|NeverSayNever.SOGlobalAssetConfig+AssetFolderInfo, Assembly-CSharp
+      Data: 19|NeverSayNever.NsnGlobalAssetConfig+AssetFolderInfo, NsnFramework
     - Name: folder
       Entry: 10
       Data: 7
@@ -415,7 +416,7 @@ MonoBehaviour:
       Data: TextAsset
     - Name: $v
       Entry: 7
-      Data: 20|NeverSayNever.SOGlobalAssetConfig+AssetFolderInfo, Assembly-CSharp
+      Data: 20|NeverSayNever.NsnGlobalAssetConfig+AssetFolderInfo, NsnFramework
     - Name: folder
       Entry: 10
       Data: 10
@@ -439,7 +440,7 @@ MonoBehaviour:
       Data: Atlas
     - Name: $v
       Entry: 7
-      Data: 21|NeverSayNever.SOGlobalAssetConfig+AssetFolderInfo, Assembly-CSharp
+      Data: 21|NeverSayNever.NsnGlobalAssetConfig+AssetFolderInfo, NsnFramework
     - Name: folder
       Entry: 10
       Data: 0
@@ -463,10 +464,10 @@ MonoBehaviour:
       Data: Scene
     - Name: $v
       Entry: 7
-      Data: 22|NeverSayNever.SOGlobalAssetConfig+AssetFolderInfo, Assembly-CSharp
+      Data: 22|NeverSayNever.NsnGlobalAssetConfig+AssetFolderInfo, NsnFramework
     - Name: folder
       Entry: 10
-      Data: 9
+      Data: 11
     - Name: path
       Entry: 1
       Data: Assets/NsnFramework/Examples/DataRes/Scene

@@ -6,7 +6,7 @@ namespace NeverSayNever
 {
     using UObject = UnityEngine.Object;
 
-    public class Framework : Singleton<Framework>
+    public class Framework 
     {
         #region Framework Setting
 
@@ -56,7 +56,6 @@ namespace NeverSayNever
         public const string ScriptableObjectAssetRootPath = "Assets/NsnFramework/Resources/Setting/";
 
         #endregion
-
 
         private static NsnGlobalAssetConfig globalConfig;
 
@@ -117,27 +116,25 @@ namespace NeverSayNever
 
         #endregion
 
+        private static Dictionary<string, IManager> mManagerDic;
+
         /// <summary>
         /// 启动框架并初始化AssetBundle
         /// </summary>
         public static void StartUp()
         {
-            BridgeObject = new GameObject("NsnFramework.Core");
+            mManagerDic = new Dictionary<string, IManager>(10);
+            BridgeObject = new GameObject("NsnFramework");
             UObject.DontDestroyOnLoad(BridgeObject);
-            
-            // 初始化事件管理器
-            //EventManager.Instance.OnInitialize();
-            // 初始化脚本管理器
-            //NsnRuntime.OnInitialize();
-            // 初始化资源加载管理器
-            //sourceMgr.OnInitialize(LoadType);
-            // 初始化Lua模块管理器  如果不使用Lua,则跳过
-            //if(IsUsingLuaScript)
-                //LuaMgr.Instance.OnInitialize("Launcher");
-            // 初始化UI模块管理器
-            //UIMgr.Instance.OnInitialize(UIRoot);
-            // 初始化音频模块管理器
-            SoundMgr.Inst.OnInitialize(AudioSource);
+
+            AddManager<IResourceMgr>(LoadType);
+            AddManager<IEventManager>();
+            AddManager<IUIMgr>(UIRoot);
+            AddManager<ILuaMgr>();
+            AddManager<ITimerMgr>();
+            AddManager<IFSMMgr>();
+            AddManager<IAudioMgr>();
+
             // 添加协程管理的模块
             BridgeObject.AddComponent<CoroutineMgr>();
 
@@ -146,22 +143,43 @@ namespace NeverSayNever
 
         public static void OnUpdate(float deltaTime)
         {
-            // 更新事件 
-            //EventManager.Instance.OnUpdate(); // EventManager.OnUpdate();
-            // 更新Lua，清理GC
-            //LuaMgr.Instance.OnUpdate();
-            // 更新计时器计时器
-            //TimerMgr.Instance.OnUpdate();
-            // 更新资源
-           //esourceMgr.OnUpdate();
-            // 更新模块系统
-            //ModuleManager.Instance.OnUpdate();
+            UpdateMgr(deltaTime);
         }
 
-
-        private static void InitializeManager<T>() where T: IManager
+        private static void UpdateMgr(float deltaTime)
         {
+            var e = mManagerDic.GetEnumerator();
+            while (e.MoveNext())
+            {
+                e.Current.Value.OnUpdate(deltaTime);
+            }
+            e.Dispose();
+        }
 
+        public static void AddManager<T>(params object[] args) where T : IManager
+        {
+            System.Reflection.Assembly assembly = typeof(T).Assembly;
+            string targetNamespace = typeof(T).Namespace;
+            string typeName = typeof(T).Name;
+            string targetName = typeName.Substring(1, typeName.Length - 1);
+            string target = string.IsNullOrEmpty(targetNamespace) ? targetName : $"{targetNamespace}.{targetName}";
+            if (!mManagerDic.ContainsKey(target))
+            {
+                object inst = NsnRuntime.CreateInstance(assembly, target);
+                T script = (T)inst;
+                if (script != null)
+                {
+                    script.OnInitialize(args);
+                    mManagerDic.Add(target, script);
+                }
+            }
+        }
+
+        public static T GetManager<T>() where T : IManager
+        {
+            string key = typeof(T).ToString();
+            mManagerDic.TryGetValue(key, out IManager mgr);
+            return (T)mgr;
         }
 
         // 设置资源加载模式

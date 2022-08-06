@@ -74,7 +74,7 @@ namespace NeverSayNever
 
         private void InitModule()
         {
-            mResourceMgr = FrameworkCore.Inst.GetManager<IResourceMgr>();
+            mResourceMgr = Framework.GetManager<IResourceMgr>();
         }
 
         /// <summary>

@@ -73,7 +73,7 @@ namespace NeverSayNever.Example
             loadingActionList.Clear();
             CompleteActionList.Clear();
 
-            FrameworkCore.Inst.GetManager<IUIMgr>().ClosePanel(UIModuleGroup.GameLoading.ModuleName);
+            Framework.GetManager<IUIMgr>().ClosePanel(UIModuleGroup.GameLoading.ModuleName);
         }
 
 

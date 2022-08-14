@@ -18,6 +18,8 @@ namespace NeverSayNever
         void ClosePanel(string panelName);
 
         T GetUIMessenger<T>(string moduleName) where T : UIBaseMessenger;
+
+        bool IsUIOpen(int id);
     }
 
 }

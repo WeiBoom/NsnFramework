@@ -6,25 +6,18 @@ namespace NeverSayNever
 {
     public class Singleton<T> :ISingleton where T : class, new()
     {
-        private static T _instance;
+        private volatile static T _instance;
 
-        // 不支持多线程
         // 必须加锁 synchronized 才能保证单例，但加锁会影响效率
         public static T Inst => GetInstance();
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         private static T GetInstance()
         {
             if (_instance == null)
-            {
-                if (_instance == null)
-                {
-                    _instance = Activator.CreateInstance<T>();
-                }
-                else
-                {
-                    Debug.LogError($"已经存在相同的Singleton : {typeof(T)}");
-                }
-            }
+                _instance = Activator.CreateInstance<T>();
+            else
+                Debug.LogError($"已经存在相同的Singleton : {typeof(T)}");
             return _instance;
         }
 

@@ -5,11 +5,11 @@ using UnityEngine.Events;
 
 namespace NeverSayNever
 {
-    public class ObjectManager : Singleton<ObjectManager>
+    public class ObjectManager : IManager
     {
         private Transform _poolRootObject;
         private readonly Dictionary<string, object> _objectPools = new Dictionary<string, object>();
-        private readonly Dictionary<string, UGameObjectPool> _gameObjectPools = new Dictionary<string, UGameObjectPool>();
+        private readonly Dictionary<string, NsnGoPool> _gameObjectPools = new Dictionary<string, NsnGoPool>();
 
         Transform PoolRoot
         {
@@ -27,24 +27,33 @@ namespace NeverSayNever
             }
         }
 
-        public override void OnInitialize(params object[] args)
+        public void OnInitialize(params object[] args)
         {
-            base.OnInitialize(args);
         }
 
-        public UGameObjectPool CreatePool(string poolName, int initSize, int maxSize, GameObject prefab, bool selfGrowing = false)
+        public void OnUpdate(float deltaTime)
         {
-            var pool = new UGameObjectPool(poolName, prefab, initSize, maxSize, PoolRoot, selfGrowing);
+        }
+
+        public void OnDispose()
+        {
+            _objectPools?.Clear();
+            _gameObjectPools.Clear();
+        }
+
+        public NsnGoPool CreatePool(string poolName, int initSize, int maxSize, GameObject prefab, bool selfGrowing = false)
+        {
+            var pool = new NsnGoPool(poolName, prefab, initSize, maxSize, PoolRoot, selfGrowing);
             _gameObjectPools[poolName] = pool;
             return pool;
         }
 
-        public UGameObjectPool GetPool(string poolName)
+        public NsnGoPool GetPool(string poolName)
         {
             return _gameObjectPools.ContainsKey(poolName) ? _gameObjectPools[poolName] : null;
         }
 
-        public GameObject Get(string poolName)
+        public GameObject GetObject(string poolName)
         {
             GameObject result = null;
             if (_gameObjectPools.ContainsKey(poolName))
@@ -67,13 +76,13 @@ namespace NeverSayNever
             return result;
         }
 
-        public void Release(GameObject gameObj)
+        public void ReleaseObj(GameObject gameObj)
         {
             if (gameObj == null)
             {
                 return;
             }
-            var poolObject = gameObj.GetComponent<UPoolObject>();
+            var poolObject = gameObj.GetComponent<NsnMonoPoolObj>();
             if (poolObject == null) return;
             var poolName = poolObject.poolName;
             if (_gameObjectPools.ContainsKey(poolName))
@@ -88,21 +97,21 @@ namespace NeverSayNever
         }
 
         ///-----------------------------------------------------------------------------------------------
-        public UPool<T> CreatePool<T>(UnityAction<T> actionOnGet, UnityAction<T> actionOnRelease) where T : class
+        public NsnPool<T> CreatePool<T>(UnityAction<T> actionOnGet, UnityAction<T> actionOnRelease) where T : class
         {
             var type = typeof(T);
-            var pool = new UPool<T>(actionOnGet, actionOnRelease);
+            var pool = new NsnPool<T>(actionOnGet, actionOnRelease);
             _objectPools[type.Name] = pool;
             return pool;
         }
 
-        public UPool<T> GetPool<T>() where T : class
+        public NsnPool<T> GetPool<T>() where T : class
         {
             var type = typeof(T);
-            UPool<T> pool = null;
+            NsnPool<T> pool = null;
             if (_objectPools.ContainsKey(type.Name))
             {
-                pool = _objectPools[type.Name] as UPool<T>;
+                pool = _objectPools[type.Name] as NsnPool<T>;
             }
             return pool;
         }
@@ -124,5 +133,6 @@ namespace NeverSayNever
             var pool = GetPool<T>();
             pool?.Release(obj);
         }
+
     }
 }

@@ -45,8 +45,8 @@ namespace NeverSayNever.Example
 
             if (Framework.LoadType == EAssetLoadType.AssetBundle)
             {
-                IResourceMgr resMgr = Framework.GetManager<IResourceMgr>();
-                resMgr.LoadScene(sceneName, obj => {
+                IResMdl resMdl = Framework.GetModule<IResMdl>();
+                resMdl.LoadScene(sceneName, obj => {
                     Debug.Log("场景加载完成");
                     // 协程加载场景
                     CoroutineMgr.Instance.AddCoroutine(Coroutine_LoadSceneAsync(sceneName, loadingAction, loadComplete));

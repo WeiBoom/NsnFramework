@@ -117,27 +117,21 @@ namespace NeverSayNever
         #endregion
 
         private static Dictionary<string, IManager> mManagerDic;
+        private readonly static Dictionary<System.Type, INsnModule> mModuleDic = new Dictionary<System.Type, INsnModule>(10);
 
-        /// <summary>
-        /// 启动框架并初始化AssetBundle
-        /// </summary>
         public static void StartUp()
         {
             mManagerDic = new Dictionary<string, IManager>(10);
             BridgeObject = new GameObject("NsnFramework");
             UObject.DontDestroyOnLoad(BridgeObject);
 
-            AddManager<IResourceMgr>(LoadType);
-            AddManager<IEventManager>();
-            AddManager<IUIMgr>(UIRoot);
-            AddManager<ILuaMgr>();
-            AddManager<ITimerMgr>();
-            AddManager<IFSMMgr>();
-            AddManager<IAudioMgr>();
+            // 初始化模块
+            InitModules();
+            // 初始化管理器
+            InitManagers();
 
             // 添加协程管理的模块
             BridgeObject.AddComponent<CoroutineMgr>();
-
             PrintFrameworkInfo();
         }
 
@@ -154,6 +148,21 @@ namespace NeverSayNever
                 e.Current.Value.OnUpdate(deltaTime);
             }
             e.Dispose();
+        }
+
+        private static void InitModules()
+        {
+            mModuleDic.Add(typeof(IResMdl), new ResourceMgr());
+            mModuleDic.Add(typeof(IUIMdl), new UIMdl());
+            mModuleDic.Add(typeof(ILuaMdl), new LuaMdl());
+            mModuleDic.Add(typeof(ITimerMdl), new TimerMdl());
+        }
+
+        private static void InitManagers()
+        {
+            AddManager<IEventManager>();
+            AddManager<IFSMMgr>();
+            AddManager<IAudioMgr>();
         }
 
         public static void AddManager<T>(params object[] args) where T : IManager
@@ -182,26 +191,29 @@ namespace NeverSayNever
             return (T)mgr;
         }
 
-        // 设置资源加载模式
+        public static T GetModule<T>() where T : INsnModule
+        {
+            var mdlType = typeof(T);
+            mModuleDic.TryGetValue(mdlType, out var targetMdl);
+            return (T)targetMdl;
+        }
+
         public static void SetAssetLoadType(EAssetLoadType loadType)
         {
             LoadType = loadType;
         }
 
-        // 设置lua，是否启用，以及是否以assetbundle的模式加载lua脚本
         public static void SetLuaMode(bool enable,bool bundleMode)
         {
             IsUsingLuaScript = enable;
             IsUsingLuaBundleMode = enable && bundleMode;
         }
 
-        // 设置UI根节点
         public static void SetUIRoot(GameObject uiroot)
         {
             UIRoot = uiroot;
         }
 
-        // 设置音频播放器节点
         public static void SetAudioSourceRoot(AudioSource audioRoot)
         {
             AudioSource = audioRoot;

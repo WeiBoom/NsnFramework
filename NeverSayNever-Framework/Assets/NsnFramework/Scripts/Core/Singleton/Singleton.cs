@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
+using System.Runtime.CompilerServices;
 
 namespace NeverSayNever
 {
@@ -28,17 +29,22 @@ namespace NeverSayNever
             _instance = default;
         }
 
-        public virtual void OnInitialize(params object[] args)
-        {
-        }
+        public virtual void OnInitialize(params object[] args){}
+        public virtual void OnUpdate(){}
+        public virtual void OnDispose(){}
+    }
 
-        public virtual void OnUpdate()
-        {
-        }
-        
-        public virtual void OnDispose()
-        {
-        }
+    public class SingletonSafe<T> : ISingleton where T : class, new()
+    {
+        private static readonly Lazy<T> lazy = new Lazy<T>(() => new T());
+
+        public static T Inst { get { return lazy.Value; } }
+
+        public virtual void OnDispose(){}
+
+        public virtual void OnInitialize(params object[] args){}
+
+        public virtual void OnUpdate(){}
     }
 }
 

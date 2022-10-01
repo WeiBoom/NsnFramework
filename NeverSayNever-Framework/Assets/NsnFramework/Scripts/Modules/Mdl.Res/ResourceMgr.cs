@@ -6,7 +6,7 @@ using UObject = UnityEngine.Object;
 
 namespace NeverSayNever
 {
-    public class ResourceMgr : IResourceMgr
+    public class ResourceMgr : IResMdl
     {
         public EAssetLoadType LoadType { get; private set; } = EAssetLoadType.AssetDataBase;
 
@@ -18,7 +18,7 @@ namespace NeverSayNever
 
         private List<Dictionary<string, string>> m_AllAssetCacheList = new List<Dictionary<string, string>>();
 
-        public void OnInitialize(params object[] args)
+        public void OnCreate(params object[] args)
         {
             var loadType = (EAssetLoadType)args[0];// as EAssetLoadType;
             if (loadType == EAssetLoadType.AssetDataBase)
@@ -158,7 +158,7 @@ namespace NeverSayNever
         /// </summary>
         /// <param name="panelName"></param>
         /// <param name="callback"></param>
-        public void LoadUIPanel(string panelName, Action<object> callback)
+        public void LoadUIAsset(string panelName, Action<object> callback)
         {
             LoadAsset<GameObject>(EAssetType.UI, panelName, callback);
         }

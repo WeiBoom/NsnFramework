@@ -41,7 +41,7 @@ namespace NeverSayNever
             IsInitialized = true;
             IsClosed = false;
 
-            ILuaMgr luaMgr = null;
+            ILuaMdl luaMgr = null;
             luaTable = luaMgr.CallNewLuaWindowFunc(PanelName);
             if (luaTable == null)
             {

@@ -4,6 +4,7 @@ using UnityEngine;
 
 using UnityEditor;
 using UnityEngine.UIElements;
+using UnityEditor.Callbacks;
 
 namespace NeverSayNever.NodeGraphView
 {
@@ -13,6 +14,9 @@ namespace NeverSayNever.NodeGraphView
 
         private string _fileName = "New Narrative";
 
+
+        private static string _selectedGraphName = "";
+
         [MenuItem("NeverSayNever/GraphView/Open DialogueGraph")]
         public static void OpenDialogueGraphWindow()
         {
@@ -20,17 +24,34 @@ namespace NeverSayNever.NodeGraphView
             window.titleContent = new GUIContent("Dialogue Graph");
         }
 
+        private void CreateGUI()
+        {
+        }
+
         private void OnEnable()
         {
             ConstructDialogueGraphView();
             GenerateToolBar();
             GenerateMiniMap();
+
+            OnNodeSelectionChanged();
         }
 
         private void OnDisable()
         {
             if(_graphView != null)
                 rootVisualElement.Remove(_graphView);
+        }
+
+        private void OnNodeSelectionChanged()
+        {
+            DialogueContainer dialogue = Selection.activeObject as DialogueContainer;
+            if (dialogue != null && AssetDatabase.CanOpenAssetInEditor(dialogue.GetInstanceID()))
+            {
+                string graphViewName = dialogue.name;
+                var saveUtility = DialogueGraphUtility.GetInstance(_graphView);
+                saveUtility.LoadGraph(graphViewName);
+            }
         }
 
         private void ConstructDialogueGraphView()
@@ -87,7 +108,6 @@ namespace NeverSayNever.NodeGraphView
             {
                 EditorUtility.DisplayDialog("Invalid File name", "Please Enter a valid filename", "OK");
             }
-            
         }
     }
 }

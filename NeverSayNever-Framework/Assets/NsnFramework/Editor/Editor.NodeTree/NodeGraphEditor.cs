@@ -16,17 +16,6 @@ public class NodeGraphEditor : EditorWindow
         wnd.titleContent = new GUIContent("NodeGraphEditor");
     }
 
-    [OnOpenAsset]
-    public static bool OnOpenAsset(int instanceId, int line)
-    {
-        if (Selection.activeObject is NodeGraphTree)
-        {
-            OpenWindow();
-            return true;
-        }
-        return false;
-    }
-
     public void CreateGUI()
     {
         // Each editor window contains a root VisualElement object

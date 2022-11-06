@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace NeverSayNever
 {
-    public interface IUIMdl : INsnModule
+    public interface IUIMdl : IModule
     {
         public void OpenView(int viewID, params object[] userDatas);
 

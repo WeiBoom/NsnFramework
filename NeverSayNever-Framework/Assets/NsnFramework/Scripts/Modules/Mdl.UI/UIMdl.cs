@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace NeverSayNever
 {
+
     public class UIViewInfo
     {
         // 基本配置信息

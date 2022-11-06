@@ -7,8 +7,6 @@ using Sirenix.OdinInspector;
 
 namespace NeverSayNever
 {
-    
-
     [RequireComponent(typeof(Canvas))]
     [RequireComponent(typeof(NsnGraphicRaycaster))]
     public class UIPanelInfo : UIBaseBehaviour

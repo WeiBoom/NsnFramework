@@ -7,7 +7,7 @@ namespace NeverSayNever
     /// <summary>
     /// LuaÄ£¿é£¬ÒÀÀµÓÚxlua
     /// </summary>
-    public interface ILuaMdl : INsnModule
+    public interface ILuaMdl : IModule
     {
         XLua.LuaTable Global { get;}
         XLua.LuaTable NewTable();

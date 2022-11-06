@@ -7,7 +7,7 @@ public delegate bool OnTimeListenerCallback(float time);
 
 namespace NeverSayNever
 {
-    public interface ITimerMdl : INsnModule
+    public interface ITimerMdl : IModule
     {
         void AddDelayTimer(float delayTime, OnTimeListenerCallback callback);
 

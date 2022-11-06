@@ -35,7 +35,7 @@ namespace NeverSayNever
         AssetBundle,
     }
 
-    public interface IResMdl : INsnModule
+    public interface IResMdl : IModule
     {
         void LoadUIAsset(string uiName, Action<object> callback);
 

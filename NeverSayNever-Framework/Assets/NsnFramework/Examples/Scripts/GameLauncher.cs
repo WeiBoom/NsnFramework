@@ -62,12 +62,10 @@ namespace NeverSayNever.Example
             }
             else
             {
-                // todo 改为通过UIConfig 文件来注册所有的UI界面
                 //注册UI界面
-                //uimgr.RegisterCsPanelByReflect(UIModuleGroup.GameMain.GetModuleName());
-                //uimgr.RegisterCsPanelByReflect(UIModuleGroup.GameLoading.GetModuleName());
+                uimgr.Register(UIModuleGroup.GameMain.GetModuleName());
                 //打开面板
-                //uimgr.OpenPanel(UIModuleGroup.GameMain.GetModuleName());
+                uimgr.OpenPanel(UIModuleGroup.GameMain.GetModuleName());
             }
 
         }

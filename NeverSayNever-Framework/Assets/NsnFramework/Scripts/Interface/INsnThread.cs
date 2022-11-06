@@ -2,7 +2,7 @@
 
 namespace NeverSayNever
 {
-    public interface INsnThreadLogicCore
+    public interface IThreadLogicCore
     {
         void MainLoop();
 
@@ -13,16 +13,16 @@ namespace NeverSayNever
         string ThreadName { get; }
     }
 
-    public interface INsnThread
+    public interface IThread
     {
         public bool IsRunning { get; }
 
-        public void Start(INsnThreadLogicCore logicCore);
+        public void Start(IThreadLogicCore logicCore);
 
         public void Stop();
     }
 
-    public class NsnThread : INsnThread
+    public class NsnThread : IThread
     {
         private static System.Threading.Thread mWorkingThread;
         public static System.Threading.Thread WokingThread => mWorkingThread;
@@ -30,9 +30,9 @@ namespace NeverSayNever
         private bool isRunning = false;
         public bool IsRunning => IsRunning;
 
-        private INsnThreadLogicCore mLogicCore;
+        private IThreadLogicCore mLogicCore;
 
-        public void Start(INsnThreadLogicCore logicCore)
+        public void Start(IThreadLogicCore logicCore)
         {
             if (logicCore == null)
                 return;

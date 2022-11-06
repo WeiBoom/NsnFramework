@@ -117,7 +117,7 @@ namespace NeverSayNever
         #endregion
 
         private static Dictionary<string, IManager> mManagerDic;
-        private readonly static Dictionary<System.Type, INsnModule> mModuleDic = new Dictionary<System.Type, INsnModule>(10);
+        private readonly static Dictionary<System.Type, IModule> mModuleDic = new Dictionary<System.Type, IModule>(10);
 
         public static void StartUp()
         {
@@ -191,7 +191,7 @@ namespace NeverSayNever
             return (T)mgr;
         }
 
-        public static T GetModule<T>() where T : INsnModule
+        public static T GetModule<T>() where T : IModule
         {
             var mdlType = typeof(T);
             mModuleDic.TryGetValue(mdlType, out var targetMdl);

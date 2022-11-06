@@ -8,7 +8,9 @@ namespace NeverSayNever
     {
         T GetUIMessenger<T>(string moduleName) where T : UIBaseMessenger;
 
-        void Register(string uiName, UIConfigInfo config);
+        void Register(string uiName);
+
+        void Register4Lua(string uiName);
 
         void OpenPanel(string panelName, params object[] args);
 

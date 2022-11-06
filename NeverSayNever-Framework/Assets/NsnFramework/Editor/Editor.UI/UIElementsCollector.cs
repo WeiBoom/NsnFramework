@@ -27,7 +27,7 @@ namespace NeverSayNever.EditorUtilitiy
             return target;
         }
 
-        [MenuItem("GameObject/NSNCore/UICollector", priority = 0)]
+        //[MenuItem("GameObject/NSNCore/UICollector", priority = 0)]
         public static void CollectElements()
         {
             UIBaseBehaviour panel = GetSelectedUITarget();
@@ -38,7 +38,7 @@ namespace NeverSayNever.EditorUtilitiy
            
         }
 
-        [MenuItem("GameObject/NSNCore/Build CSharp Script", priority = 1)]
+        //[MenuItem("GameObject/NSNCore/Build CSharp Script", priority = 1)]
         public static void BuildUIPanelCSharpScript()
         {
             UIBaseBehaviour target = GetSelectedUITarget();

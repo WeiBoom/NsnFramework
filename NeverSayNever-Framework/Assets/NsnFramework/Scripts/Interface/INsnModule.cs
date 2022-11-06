@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NeverSayNever
 {
-    public interface INsnModule
+    public interface IModule
     {
         void OnCreate(params object[] args);
         void OnUpdate(float deltaTime);

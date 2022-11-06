@@ -18,12 +18,12 @@ using UnityEngine.Experimental.UIElements;
 namespace NeverSayNever.EditorUtilitiy
 {
 
-	[InitializeOnLoad]
+	//[InitializeOnLoad]
 	public class NEditorToolBar
 	{
 		static NEditorToolBar()
 		{
-			ToolbarExtender.RightToolbarGUI.Add(OnToolbarGUIRight);
+			//ToolbarExtender.RightToolbarGUI.Add(OnToolbarGUIRight);
 		}
 
 		static void OnToolbarGUIRight()

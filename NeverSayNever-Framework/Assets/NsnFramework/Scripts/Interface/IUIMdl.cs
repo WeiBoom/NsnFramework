@@ -7,13 +7,13 @@ namespace NeverSayNever
 {
     public interface IUIMdl : IModule
     {
-        public void OpenView(int viewID, params object[] userDatas);
+        void OpenView(int viewID, params object[] userDatas);
 
-        public void CloseView(int viewID);
+        void CloseView(int viewID);
 
-        public void GetView(int viewID);
+        void GetView(int viewID);
 
-        public void CloseAll();
+        void CloseAll();
     }
 
 }

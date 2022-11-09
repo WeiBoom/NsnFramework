@@ -2,19 +2,19 @@
 
 namespace NeverSayNever
 {
-    using Status = IFSMState.Status;
 
     public class FSMState : IFSMState
     {
         protected readonly float _timer;
         protected readonly string _name;
         protected readonly string _tag;
-        protected Status currentStatus;
+        protected FSMRunStatus currentStatus;
+
 
         public float Timer => _timer;
         public string Name => _name;
         public string Tag => _tag;
-        public Status CurStatus => currentStatus;
+        public FSMRunStatus Status => currentStatus;
 
 
         public FSMState()
@@ -22,7 +22,7 @@ namespace NeverSayNever
             _timer = UnityEngine.Time.deltaTime;
             _name = GetType().Name;
             _tag = string.Empty;
-            currentStatus = Status.None;
+            currentStatus = FSMRunStatus.None;
         }
 
         public FSMState(float timer, string name, string tag)
@@ -30,23 +30,23 @@ namespace NeverSayNever
             _timer = timer;
             _name = name;
             _tag = tag;
-            currentStatus = Status.None;
+            currentStatus = FSMRunStatus.None;
         }
 
         public virtual void OnEnter()
         {
-            currentStatus = Status.Enter;
+            currentStatus = FSMRunStatus.Enter;
         }
 
         public virtual void OnExit()
         {
-            currentStatus = Status.Exit;
+            currentStatus = FSMRunStatus.Exit;
         }
 
         public virtual void OnUpdate(float deltaTime)
         {
-            if(currentStatus == Status.Enter)
-                currentStatus = Status.Update;
+            if(currentStatus == FSMRunStatus.Enter)
+                currentStatus = FSMRunStatus.Update;
         }
 
     }

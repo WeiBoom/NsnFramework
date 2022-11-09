@@ -17,7 +17,7 @@ namespace NeverSayNever
         protected Dictionary<int, IFSMState> AllStateDic;
 
         // 当前的状态
-        protected IFSMState CurrentState;
+        protected IFSMState CurFSMState;
 
 
         public FSM()
@@ -34,8 +34,11 @@ namespace NeverSayNever
         // 更新当前状态的行为
         public void Update(float deltaTime)
         {
-            if (CurrentState != null && CurrentState.CurStatus == IFSMState.Status.Update)
-                CurrentState.OnUpdate(deltaTime);
+            if (CurFSMState == null
+                || CurFSMState.Status == FSMRunStatus.Exit
+                || CurFSMState.Status == FSMRunStatus.None) 
+                return;
+            CurFSMState.OnUpdate(deltaTime);
         }
 
         // 切换新的状态
@@ -44,9 +47,9 @@ namespace NeverSayNever
             AllStateDic.TryGetValue(stateId, out var state);
             if (state != null)
             {
-                CurrentState?.OnExit();
-                CurrentState = state;
-                CurrentState?.OnEnter();
+                CurFSMState?.OnExit();
+                CurFSMState = state;
+                CurFSMState?.OnEnter();
             }
             else
             {

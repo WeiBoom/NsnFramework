@@ -15,11 +15,11 @@ namespace NeverSayNever
 
     public interface IThread
     {
-        public bool IsRunning { get; }
+         bool IsRunning { get; }
 
-        public void Start(IThreadLogicCore logicCore);
+         void Start(IThreadLogicCore logicCore);
 
-        public void Stop();
+         void Stop();
     }
 
     public class NsnThread : IThread

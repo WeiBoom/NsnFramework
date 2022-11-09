@@ -28,15 +28,7 @@ namespace NeverSayNever
 
     public interface IFSMState
     {
-        public enum Status
-        {
-            None,
-            Enter,
-            Update,
-            Exit,
-        }
-
-        public Status CurStatus { get; }
+        FSMRunStatus Status { get; }
 
         float Timer { get; }
         string Name { get; }
@@ -45,5 +37,13 @@ namespace NeverSayNever
         void OnEnter();
         void OnUpdate(float deltaTime);
         void OnExit();
+    }
+
+    public enum FSMRunStatus
+    {
+        None,
+        Enter,
+        Update,
+        Exit,
     }
 }

@@ -40,14 +40,14 @@ namespace NeverSayNever
         public List<UIComponentItem> dynamicElements = new List<UIComponentItem>();
 
         [FoldoutGroup("UI Elements Group"),ShowIf("uiScriptType", EUIScriptType.CSharp)]
-        [InlineButton("GenerateUIScriptForCSharp", "生成UI模块代码(C#)")]
+        [InlineButton("GenerateUIScriptForCSharp", "Generate Code(C#)")]
         public bool isPanel = true;
 
         [FoldoutGroup("UI Elements Group"),ShowIf("uiScriptType", EUIScriptType.Lua)]
-        [InlineButton("GenerateUIScriptForLua", "生成UI代码(Lua)")]
+        [InlineButton("GenerateUIScriptForLua", "Generate Code(Lua)")]
         public bool isLuaPanel = true;
 
-        [InlineButton("SaveUIPrefab", "保存预制体")]
+        [InlineButton("SaveUIPrefab", "Save Prefab")]
         
         /// <summary>
         /// 界面包含的UI元素的缓存,界面初始化时自动添加
@@ -86,7 +86,7 @@ namespace NeverSayNever
 
 #if UNITY_EDITOR
 
-        [Button("获取UI组件", ButtonSizes.Small), GUIColor(0.4f, 0.8f, 1)]
+        [Button("Refresh UI Control", ButtonSizes.Small), GUIColor(0.4f, 0.8f, 1)]
         [HorizontalGroup("UI Elements Group/Horizontal", 0.7f)]
         [FoldoutGroup("UI Elements Group", true)]
         private void CollectDynamicUIComponents()
@@ -94,7 +94,7 @@ namespace NeverSayNever
             NeverSayNever.EditorUtilitiy.NSNPanelElementsCollector.CollectPanelUIElements(this);
         }
 
-        [Button("清空UI组件"), GUIColor(253 / 255f, 74 / 255f, 73 / 255f)]
+        [Button("Clear UI Control"), GUIColor(253 / 255f, 74 / 255f, 73 / 255f)]
         [HorizontalGroup("UI Elements Group/Horizontal", 0.3f)]
         [FoldoutGroup("UI Elements Group", true)]
         private void ClearDynamicUIComponents()
@@ -120,7 +120,7 @@ namespace NeverSayNever
             }
         }
 
-        [Button("保存UI预制体")]
+        [Button("Save UI Prefab")]
         private void SaveUIPrefab()
         {
             if (isPanel == false)

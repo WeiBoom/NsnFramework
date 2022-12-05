@@ -14,10 +14,10 @@ namespace NeverSayNever
 
         public AnimationCurve animationCurve;
 
-        [LabelText("动画"), Tooltip("界面动画类型")]
+        [LabelText("Anim"), Tooltip("Window Animation Type")]
         public EPanelTween tweenType = EPanelTween.None;
 
-        [LabelText("层级"), Tooltip("界面层级")]
+        [LabelText("Layer"), Tooltip("Displayer Layer")]
         public EPanelLayer panelLayer = EPanelLayer.Main;
 
         [SceneObjectsOnly]

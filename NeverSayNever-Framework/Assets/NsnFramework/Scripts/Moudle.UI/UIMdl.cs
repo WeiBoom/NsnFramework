@@ -7,7 +7,7 @@ using XLua;
 namespace Nsn
 {
     [System.Serializable]
-    public class UIViewInfoConfig
+    public class UIViewConfig
     {
         public int ID;
         public string Name;
@@ -25,13 +25,13 @@ namespace Nsn
             System = 3,
         }
 
-        public UIViewInfoConfig Config;
+        public UIViewConfig Config;
 
         public UILayer Layer => (UILayer)Config.LayerID;
         public string ViewName => Config.Name;
         public int ViewID => Config.ID;
 
-        public UIViewInfo(UIViewInfoConfig config)
+        public UIViewInfo(UIViewConfig config)
         {
             Config = config;
         }
@@ -51,7 +51,7 @@ namespace Nsn
             
         }
 
-        private void CreateUIViewInfo(UIViewInfoConfig config)
+        private void CreateUIViewInfo(UIViewConfig config)
         {
             UIViewInfo viewInfo = new UIViewInfo(config);
             m_UIViewID2NameDic.Add(config.ID, config.Name);

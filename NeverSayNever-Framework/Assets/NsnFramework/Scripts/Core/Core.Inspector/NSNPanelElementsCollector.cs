@@ -37,73 +37,30 @@ namespace NeverSayNever.EditorUtilitiy
         /// </summary>
         private static void CheckPanelUIElements(Transform root, ref List<Component> collectionList)
         {
-            var childCount = root.childCount;
+            int childCount = root.childCount;
             for (var i = 0; i < childCount; i++)
             {
-                var node = root.GetChild(i);
-                var type = GetSpecialNodeComponentType(node);
-                if (type != null)
-                {
-                    var component = node.GetComponent(type);
-                    collectionList.Add(component);
-                }
-
+                Transform node = root.GetChild(i);
                 if (node.childCount > 0)
                 {
                     CheckPanelUIElements(node, ref collectionList);
                 }
-            }
-        }
 
-
-
-        private static UIElementType GetSpecialNodeType(Transform node)
-        {
-            if (node == null)
-                return UIElementType.Node;
-
-            var nodeName = node.gameObject.name.ToLower();
-            // transform
-            if (nodeName.StartsWith("node_"))
-            {
-                return UIElementType.Node;
+                System.Type compType = GetSpecialNodeComponentType(node);
+                if(compType == null) continue;
+                string compName = compType.Name;
+                compName = compName.Replace("UnityEngine.UI", string.Empty);
+                if (!string.IsNullOrEmpty(compName))
+                {
+                    Component component = node.GetComponent(compName);
+                    if(component == null)
+                    {
+                        Debug.LogError($"GetComponent Error! type is {compType}");
+                        continue;
+                    }
+                    collectionList.Add(component);
+                }
             }
-            // button
-            if (nodeName.StartsWith("btn_"))
-            {
-                return UIElementType.Button;
-            }
-            // text
-            if (nodeName.StartsWith("txt_"))
-            {
-                return UIElementType.Text;
-            }
-            // textMeshPro UGUI
-            if (nodeName.StartsWith("tmp_"))
-            {
-                return UIElementType.TextMeshPro;
-            }
-            // sprite
-            if (nodeName.StartsWith("img_"))
-            {
-                return UIElementType.Image;
-            }
-            // texture
-            if (nodeName.StartsWith("tex_"))
-            {
-                return UIElementType.Texture;
-            }
-            // scroll view
-            if (nodeName.StartsWith("scroll_"))
-            {
-                return UIElementType.Scroll;
-            }
-            // grid
-            if (nodeName.StartsWith("grid_"))
-            {
-                return UIElementType.Grid;
-            }
-            return UIElementType.Node;
         }
 
         private static System.Type GetSpecialNodeComponentType(Transform node)
@@ -112,52 +69,19 @@ namespace NeverSayNever.EditorUtilitiy
                 return null;
 
             var nodeName = node.gameObject.name.ToLower();
-            // transform
-            if (nodeName.StartsWith("node_"))
-            {
-                return typeof(Transform);
-            }
-            // button
-            if (nodeName.StartsWith("btn_"))
-            {
-                return typeof(Button);
-            }
-            // text
-            if (nodeName.StartsWith("txt_"))
-            {
-                return typeof(Text);
-            }
-            // textMeshPro UGUI
-            if (nodeName.StartsWith("tmp_"))
-            {
-                return typeof(TextMeshProUGUI);
-            }
-            // sprite
-            if (nodeName.StartsWith("img_"))
-            {
-                return typeof(Image);
-            }
-            // texture
-            if (nodeName.StartsWith("tex_"))
-            {
-                return typeof(RawImage);
-            }
-            // scroll view
-            if (nodeName.StartsWith("scroll_"))
-            {
-                return typeof(ScrollRect);
-            }
-            // grid
-            if (nodeName.StartsWith("grid_"))
-            {
-                return typeof(Grid);
-            }
-            // slider
-            if (nodeName.StartsWith("slider_"))
-            {
-                return typeof(Slider);
-            }
-            return null;
+            System.Type type = null;
+            
+            if (nodeName.StartsWith("node_")) type = typeof(Transform);
+            else if (nodeName.StartsWith("btn_")) type = typeof(Button);
+            else if (nodeName.StartsWith("txt_")) type = typeof(Text);
+            else if (nodeName.StartsWith("tmp_")) type = typeof(TextMeshProUGUI);
+            else if (nodeName.StartsWith("img_")) type = typeof(Image);
+            else if (nodeName.StartsWith("tex_")) type = typeof(RawImage);
+            else if (nodeName.StartsWith("scroll_")) type = typeof(ScrollRect);
+            else if (nodeName.StartsWith("grid_")) type = typeof(Grid);
+            else if (nodeName.StartsWith("slider_")) type = typeof(Slider);
+
+            return type;
         }
     }
 }

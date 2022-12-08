@@ -2,7 +2,7 @@
 
 namespace NeverSayNever
 {
-    public class NsnMonoPoolObj : GameBehaviour
+    public class NsnMonoPoolObj : MonoBehaviour
     {
         public string poolName;
         

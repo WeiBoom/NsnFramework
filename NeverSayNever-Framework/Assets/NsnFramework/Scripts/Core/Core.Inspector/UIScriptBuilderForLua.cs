@@ -121,7 +121,7 @@ namespace NeverSayNever.EditorUtilitiy
             {
                 if (element == null)
                     continue;
-                if (element.key.IsNullOrEmpty() || element.element == null)
+                if (string.IsNullOrEmpty(element.key) || element.element == null)
                 {
                     throw new System.Exception("Element is null. Please check your ui elements in inspector");
                 }

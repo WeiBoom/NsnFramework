@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace NeverSayNever
 {
-    public class SingletonMono<T> : GameBehaviour where T : MonoBehaviour
+    public class SingletonMono<T> : MonoBehaviour where T : MonoBehaviour
     {
         private static T _instance;
         private static readonly object Lock = new object();
@@ -59,9 +59,8 @@ namespace NeverSayNever
             }
         }
 
-        protected override void OnAwake()
+        private void Awake()
         {
-            base.OnAwake();
             OnInitialize();
         }
 

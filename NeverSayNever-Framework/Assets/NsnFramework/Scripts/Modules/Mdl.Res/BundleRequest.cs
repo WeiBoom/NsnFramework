@@ -381,14 +381,14 @@ namespace NeverSayNever
             if (loadState == EBundleLoadState.Loaded || loadState == EBundleLoadState.Unload)
                 return true;
             // 包含加载错误信息
-            if (!error.IsNullOrEmpty() || !bundleRequest.error.IsNullOrEmpty())
+            if (!string.IsNullOrEmpty(error) || !string.IsNullOrEmpty(bundleRequest.error))
                 return true;
 
             // 检查依赖资源是否含有错误信息
             for (int i = 0, max = bundleRequest.dependencies.Count; i < max; i++)
             {
                 var item = bundleRequest.dependencies[i];
-                if (!item.error.IsNullOrEmpty())
+                if (!string.IsNullOrEmpty(item.error))
                     return true;
             }
 
@@ -479,7 +479,7 @@ namespace NeverSayNever
 
         internal override void Load()
         {
-            if (!assetBundleName.IsNullOrEmpty())
+            if (!string.IsNullOrEmpty(assetBundleName))
             {
                 bundleRequest = AssetBundleHelper.Inst.LoadBundle(assetBundleName);
                 if (bundleRequest != null)

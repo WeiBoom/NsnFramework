@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 
 namespace NeverSayNever
 {
-    public class Singleton<T> :ISingleton where T : class, new()
+    public class Singleton<T>  where T : class, new()
     {
         private volatile static T _instance;
 
@@ -29,12 +29,10 @@ namespace NeverSayNever
             _instance = default;
         }
 
-        public virtual void OnInitialize(params object[] args){}
-        public virtual void OnUpdate(){}
         public virtual void OnDispose(){}
     }
 
-    public class SingletonSafe<T> : ISingleton where T : class, new()
+    public class SingletonSafe<T> where T : class, new()
     {
         private static readonly Lazy<T> lazy = new Lazy<T>(() => new T());
 

@@ -125,11 +125,6 @@ namespace NeverSayNever
             BridgeObject = new GameObject("NsnFramework");
             UObject.DontDestroyOnLoad(BridgeObject);
 
-            // 初始化模块
-            InitModules();
-            // 初始化管理器
-            InitManagers();
-
             // 添加协程管理的模块
             BridgeObject.AddComponent<CoroutineMgr>();
             PrintFrameworkInfo();
@@ -150,20 +145,6 @@ namespace NeverSayNever
             e.Dispose();
         }
 
-        private static void InitModules()
-        {
-            mModuleDic.Add(typeof(IResMdl), new ResourceMgr());
-            mModuleDic.Add(typeof(IUIMdl), new UIMdl());
-            mModuleDic.Add(typeof(ILuaMdl), new LuaMdl());
-            mModuleDic.Add(typeof(ITimerMdl), new TimerMdl());
-        }
-
-        private static void InitManagers()
-        {
-            AddManager<IEventManager>();
-            AddManager<IFSMMgr>();
-            AddManager<IAudioMgr>();
-        }
 
         public static void AddManager<T>(params object[] args) where T : IManager
         {

@@ -72,8 +72,8 @@ namespace NeverSayNever.EditorUtilitiy
         /// <param name="filePath">文件路径</param>
         public static void CreateFileDirectory(string filePath)
         {
-            var directory = Path.GetDirectoryName(filePath);
-            if (directory.IsNullOrEmpty())
+            string directory = Path.GetDirectoryName(filePath);
+            if (string.IsNullOrEmpty(directory))
             {
                 Debug.LogError("所需创建的文件路径为空");
                 return;
@@ -96,7 +96,7 @@ namespace NeverSayNever.EditorUtilitiy
         /// <param name="folderPath"></param>
         public static void CreateDirectory(string folderPath)
         {
-            if (folderPath.IsNullOrEmpty())
+            if (string.IsNullOrEmpty(folderPath))
             {
                 Debug.LogError("所需创建的文件夹路径为空");
                 return;

@@ -31,21 +31,19 @@ namespace NeverSayNever
 
         public bool IsActive { get; private set; } = false;
 
-        protected override void OnAwake()
+        private void Awake()
         {
             Content = transform.Find("Content");
         }
 
-        protected override void OnShow()
+        private void OnEnable()
         {
-            base.OnShow();
             IsActive = true;
             OnPlayShowAnim();
         }
 
-        protected override void OnHide()
+        protected void OnDisable()
         {
-            base.OnHide();
             IsActive = false;
         }
 

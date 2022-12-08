@@ -6,7 +6,7 @@ namespace NeverSayNever
 {
     
 
-    public class UIBasePanel : GameBehaviour
+    public class UIBasePanel : MonoBehaviour
     {
         #region Property && Component
         
@@ -27,7 +27,7 @@ namespace NeverSayNever
 
         #region Monobehaviour Function
 
-        protected override void OnAwake()
+        private void Awake()
         {
             // 初始化组件， 属性
             m_Trans = this.transform;
@@ -40,23 +40,15 @@ namespace NeverSayNever
             OnInitAttribute();
         }
 
-        protected override void OnShow()
+        private void OnEnable()
         {
             IsShow = true;
-            base.OnShow();
         }
 
-        protected override void OnHide()
+        private void OnDisable()
         {
             IsShow = false;
-            base.OnHide();
         }
-
-        protected override void OnDestroyMe()
-        {
-            base.OnDestroyMe();
-        }
-
         /// <summary> 
         /// 接受其他界面发送的消息 
         /// </summary>

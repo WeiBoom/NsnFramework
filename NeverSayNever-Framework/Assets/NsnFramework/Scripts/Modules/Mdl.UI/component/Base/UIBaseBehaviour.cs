@@ -18,9 +18,8 @@ namespace NeverSayNever
         }
     }
 
-    [XLua.LuaCallCSharp]
     [SerializeField]
-    public class UIBaseBehaviour : GameBehaviour
+    public class UIBaseBehaviour : MonoBehaviour
     {
         public enum EUIScriptType
         {

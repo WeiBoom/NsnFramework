@@ -15,8 +15,8 @@ namespace NeverSayNever
         public static UIConfigInfo DeserializeFromJson(string json)
         {
             UIConfigInfo configInfo = null;
-            if(!string.IsNullOrEmpty(json))
-                configInfo = Newtonsoft.Json.JsonConvert.DeserializeObject<UIConfigInfo>(json);
+            //if(!string.IsNullOrEmpty(json))
+                //configInfo = Newtonsoft.Json.JsonConvert.DeserializeObject<UIConfigInfo>(json);
             return configInfo;
         }
     }

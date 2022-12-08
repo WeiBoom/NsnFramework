@@ -53,9 +53,8 @@ namespace NeverSayNever
 
         #endregion
 
-        public override void OnInitialize(params object[] args)
+        public  void OnInitialize(params object[] args)
         {
-            base.OnInitialize(args);
             if(bundleMode)
             {
                 bundle_asset_path = args[0] as string;
@@ -67,9 +66,8 @@ namespace NeverSayNever
             }
         }
 
-        public override void OnUpdate()
+        public  void OnUpdate()
         {
-            base.OnUpdate();
             // 更新加载中的资源
             OnUpdateLoadingAssets();
             // 更新正在使用的资源，没使用的移动到未使用列表中
@@ -93,7 +91,7 @@ namespace NeverSayNever
                 if (request.Tick())
                     continue;
                 // 如果资源加载错误
-                if(!request.error.IsNullOrEmpty())
+                if(!string.IsNullOrEmpty(request.error))
                 {
                     if (request == null)
                     {
@@ -286,7 +284,7 @@ namespace NeverSayNever
         /// <param name="isAsync"></param>
         private BundleRequest LoadBundle(string bundleName,bool isAsync)
         {
-            if(bundleName.IsNullOrEmpty())
+            if(string.IsNullOrEmpty(bundleName))
             {
                 Debug.LogError("bundleName 为空");
                 return null;
@@ -345,7 +343,7 @@ namespace NeverSayNever
         /// <returns></returns>
         public SceneAssetRequest LoadScene(string scenePath,string sceneName, bool addictive,System.Action<object> callback)
         {
-            if(scenePath.IsNullOrEmpty())
+            if(string.IsNullOrEmpty(scenePath))
             {
                 Debug.LogError("scene path is invalid");
                 return null;

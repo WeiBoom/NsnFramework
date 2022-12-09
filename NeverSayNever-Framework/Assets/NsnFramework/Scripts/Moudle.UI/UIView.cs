@@ -6,7 +6,7 @@ namespace Nsn
 {
     public class UIView : UIBehaviour
     {
-        public UIViewInfo ViewInfo;
+        public UIViewAttribute ViewInfo { get; set; }
     }
 
 }

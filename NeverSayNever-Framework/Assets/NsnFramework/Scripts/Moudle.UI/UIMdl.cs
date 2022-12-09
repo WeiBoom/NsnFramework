@@ -1,4 +1,3 @@
-using NeverSayNever;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,60 +15,56 @@ namespace Nsn
     [System.Serializable]
     public class UIViewInfo
     {
-        public enum UILayer
-        {
-            Window = 0,
-            Widget = 1,
-            Popup = 2,
-            System = 3,
-        }
-
-        public UIViewConfig Config;
-
-        public UILayer Layer => (UILayer)Config.LayerID;
-        public string ViewName => Config.Name;
-        public int ViewID => Config.ID;
+        private UIViewAttribute Attribute;
+        private UIViewConfig Config;
 
         public UIViewInfo(UIViewConfig config)
         {
             Config = config;
+            // TODO , 通过config 初始化Attribute数据
         }
     }
 
 
-    public class UIMdl
+    public interface IUIMdl
     {
-        public Dictionary<int, string> m_UIViewID2NameDic = new Dictionary<int, string>();
-        public Dictionary<string, UIViewInfo> m_UIViewInfoDic = new Dictionary<string, UIViewInfo>();
+        void Open(string view);
+        void Close(string view);
+    }
 
-        public Stack<UIViewInfo> m_UIViewStack = new Stack<UIViewInfo>();
+    public class UIMdl : IUIMdl
+    {
 
-        public void Initialzie()
+        private Dictionary<int ,UIViewInfo> m_ViewInfos = new Dictionary<int ,UIViewInfo>();
+        private Dictionary<string,UIViewInfo> m_ViewInfosName2ID  = new Dictionary<string,UIViewInfo>();
+
+        private UIRoot m_Root;
+        private UIViewStack m_ViewStack = new UIViewStack();
+        private UIViewTaskQueue m_UITaskQueue = new UIViewTaskQueue();
+
+
+        public void Open(string view)
         {
-            // TODO 初始化所有UIView的信息
-            
+            if(m_UITaskQueue.Contains(view))
+                return;
+            // todo
         }
 
-        private void CreateUIViewInfo(UIViewConfig config)
+        public void Close(string view)
         {
-            UIViewInfo viewInfo = new UIViewInfo(config);
-            m_UIViewID2NameDic.Add(config.ID, config.Name);
-            m_UIViewInfoDic.Add(config.Name, viewInfo);
         }
 
-        private UIViewInfo GetUIViewInfo(int id)
+        private UIViewTask CreateTask(string view)
         {
-            m_UIViewID2NameDic.TryGetValue(id, out string uiName);
-            return GetUIViewInfo(uiName);
-        }
+            UIViewTask task = new UIViewTask()
+            {
 
-        private UIViewInfo GetUIViewInfo(string uiName)
-        {
-            if (string.IsNullOrEmpty(uiName))
-                return null;
-            m_UIViewInfoDic.TryGetValue(uiName, out UIViewInfo uiViewInfo);
-            return uiViewInfo;
+            };
+
+            return task;
         }
 
     }
+
+
 }

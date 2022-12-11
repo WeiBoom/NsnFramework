@@ -1,27 +1,46 @@
-using Boo.Lang;
-using UnityEditor;
+using System.Collections.Generic;
 
 namespace Nsn
 {
-    public enum ViewTaskType
+    public enum UIViewTaskType
     {
         Open,
         Close,
-        Pop,
-        CloseWindowsPanels,
-        CloseSysPanels,
-        ClearHistory
     }
 
     public struct UIViewTask
     {
-        public ViewTaskType TaskType;
+        public UIViewTaskType TaskType;
         public string ViewName;
         public int ViewID;
-        public UIViewAttribute ViewAttribute;
         public System.Object[] Params;
 
-        public static UIViewTask Default => default(UIViewTask);
+        public static UIViewTask Empty => default(UIViewTask);
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is UIViewTask)
+            {
+                var task = (UIViewTask)obj;
+                return task.ViewID == ViewID && task.ViewName == ViewName;
+            }
+            return false;
+        }
+
+        public static bool operator == (UIViewTask left , UIViewTask right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(UIViewTask left, UIViewTask right)
+        {
+            return !left.Equals(right);
+        }
     }
 
 
@@ -34,27 +53,35 @@ namespace Nsn
             get { return tasks.Count; }
         }
 
-        public bool Contains(string viewName)
+        public bool Contains(string viewName) => Get(viewName) != UIViewTask.Empty;
+
+        public bool Contains(int viewID) => Get(viewID) != UIViewTask.Empty;
+
+        public UIViewTask Get(string viewName)
         {
-            for(int i = 0; i < tasks.Count; i++)
+            if(!string.IsNullOrEmpty(viewName))
             {
-                UIViewTask task = tasks[i];
-                if (task.ViewName == viewName)
-                    return true;
+                for (int i = 0; i < tasks.Count; i++)
+                {
+                    UIViewTask task = tasks[i];
+                    if (task.ViewName.Equals(viewName))
+                        return task;
+                }
             }
-            return false;
+            return UIViewTask.Empty;
         }
 
-        public bool Contains(int viewID)
+        public UIViewTask Get(int viewID)
         {
-            for(int i =0;i < tasks.Count; i++)
+            for (int i = 0; i < tasks.Count; i++)
             {
                 UIViewTask task = tasks[i];
                 if (task.ViewID == viewID)
-                    return true;
+                    return task;
             }
-            return false;
+            return UIViewTask.Empty;
         }
+
 
         public void Enqueue(UIViewTask task)
         {
@@ -66,14 +93,13 @@ namespace Nsn
             int length = tasks.Count;
             if(length > 0 )
                 return RemoveAt(0);
-            return UIViewTask.Default;
+            return UIViewTask.Empty;
         }
-
 
         private UIViewTask RemoveAt(int index)
         {
             if(index < 0 || index >= tasks.Count)
-                return UIViewTask.Default;
+                return UIViewTask.Empty;
             UIViewTask task = tasks[index];
             tasks.RemoveAt(index);
             return task;

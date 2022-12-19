@@ -1,10 +1,12 @@
-﻿
-namespace NeverSayNever
+﻿using System.Collections;
+using UnityEngine;
+
+namespace Nsn
 {
     public interface IManager
     {
-        void OnInitialize(params object[] args);
+        void OnInitialized(params object[] args);
         void OnUpdate(float deltaTime);
-        void OnDispose();
+        void OnDisposed();
     }
 }

@@ -116,12 +116,12 @@ namespace NeverSayNever
 
         #endregion
 
-        private static Dictionary<string, IManager> mManagerDic;
+        private static Dictionary<string, INsnManager> mManagerDic;
         private readonly static Dictionary<System.Type, IModule> mModuleDic = new Dictionary<System.Type, IModule>(10);
 
         public static void StartUp()
         {
-            mManagerDic = new Dictionary<string, IManager>(10);
+            mManagerDic = new Dictionary<string, INsnManager>(10);
             BridgeObject = new GameObject("NsnFramework");
             UObject.DontDestroyOnLoad(BridgeObject);
 
@@ -146,7 +146,7 @@ namespace NeverSayNever
         }
 
 
-        public static void AddManager<T>(params object[] args) where T : IManager
+        public static void AddManager<T>(params object[] args) where T : INsnManager
         {
             System.Reflection.Assembly assembly = typeof(T).Assembly;
             string targetNamespace = typeof(T).Namespace;
@@ -165,10 +165,10 @@ namespace NeverSayNever
             }
         }
 
-        public static T GetManager<T>() where T : IManager
+        public static T GetManager<T>() where T : INsnManager
         {
             string key = typeof(T).ToString();
-            mManagerDic.TryGetValue(key, out IManager mgr);
+            mManagerDic.TryGetValue(key, out INsnManager mgr);
             return (T)mgr;
         }
 

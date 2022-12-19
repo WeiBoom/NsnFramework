@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 namespace NeverSayNever
 {
-    public class ObjectManager : IManager
+    public class ObjectManager : INsnManager
     {
         private Transform _poolRootObject;
         private readonly Dictionary<string, object> _objectPools = new Dictionary<string, object>();

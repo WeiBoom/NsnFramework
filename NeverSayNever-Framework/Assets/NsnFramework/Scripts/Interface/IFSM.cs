@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NeverSayNever
 {
-    public interface IFSMMgr : IManager
+    public interface IFSMMgr : INsnManager
     {
         IFSM Add(int id);
 

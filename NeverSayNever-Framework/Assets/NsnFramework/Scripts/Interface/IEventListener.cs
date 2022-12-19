@@ -46,7 +46,7 @@ namespace NeverSayNever
 
     public delegate EventDelegateState GameEventDelegate(EventData e);
 
-    public interface IEventManager : IManager
+    public interface IEventManager : INsnManager
     {
         /// <summary>
         /// ×¢²áÊÂ¼ş

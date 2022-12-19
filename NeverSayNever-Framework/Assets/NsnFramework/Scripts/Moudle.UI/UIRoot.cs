@@ -7,17 +7,42 @@ namespace Nsn
 {
     public class UIRoot : UIBehaviour
     {
-        public Camera UICamera;
-        public Canvas UICancas;
+        private static bool m_Initialized = false;
+
+        private Camera m_Camera;
+        private Canvas m_Canvas;
+
+
+        public Camera UICamera => m_Camera;
+        public Canvas UICanvas => m_Canvas;
+
+        public static void Create()
+        {
+            if(m_Initialized)
+                return;
+            m_Initialized = true;
+
+            // TODO
+        }
 
         protected override void OnAwake()
         {
             base.OnAwake();
             DontDestroyOnLoad(this.gameObject);
+
+            Initialize();
         }
 
-        public static void Create()
+        private void Initialize()
         {
+            m_Camera = UIUtility.Search<Camera>(transform,"UICamera");
+            m_Canvas = UIUtility.Search<Canvas>(transform,"UICanvas");
+        }
+
+
+        private void ApplyFixScreen()
+        {
+
         }
     }
 }

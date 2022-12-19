@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Nsn
 {
-    public class UIView : UIBehaviour
+    public class UIView : UIBase
     {
         public UIViewAttribute ViewInfo { get; set; }
     }

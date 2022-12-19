@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Nsn
 {
 
-    public class UIBehaviour : MonoBehaviour
+    public class UIBase : MonoBehaviour
     {
         private void Awake() => OnAwake();
 

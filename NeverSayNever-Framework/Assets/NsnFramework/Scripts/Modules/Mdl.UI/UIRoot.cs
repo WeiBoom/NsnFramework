@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace Nsn
 {
-    public class UIRoot : UIBehaviour
+    public class UIRoot : UIBase
     {
         private static bool m_Initialized = false;
 

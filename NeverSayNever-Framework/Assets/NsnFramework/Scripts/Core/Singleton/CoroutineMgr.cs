@@ -2,9 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using NeverSayNever;
+using Nsn;
 
-namespace NeverSayNever
+namespace Nsn
 {
     public class CoroutineMgr : SingletonMono<CoroutineMgr>
     {

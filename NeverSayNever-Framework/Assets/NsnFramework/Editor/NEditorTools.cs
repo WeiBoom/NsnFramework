@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-namespace NeverSayNever.EditorUtilitiy
+namespace Nsn.EditorUtilitiy
 {
     public static class NEditorTools
     {
@@ -29,40 +29,6 @@ namespace NeverSayNever.EditorUtilitiy
             var projectPath = Path.GetDirectoryName(Application.dataPath);
             return GetRegularPath(projectPath);
         }
-
-        #region ScriptableObject
-
-        /// <summary>
-        /// 获取ScriptableObject资源
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        public static T GetScriptableObjectAsset<T>() where T : ScriptableObject
-        {
-            var name = typeof(T).Name;
-            var finalPath = $"{Framework.ScriptableObjectAssetRootPath}{name}.asset";
-            var asset = AssetDatabase.LoadAssetAtPath<T>(finalPath);
-            return asset;
-        }
-
-        /// <summary>
-        /// 在指定路径生成ScriptableObject
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        public static void GenerateScriptableObjectAsset<T>() where T : ScriptableObject
-        {
-            var name = typeof(T).Name;
-            var finalPath = $"{Framework.ScriptableObjectAssetRootPath}{name}.asset";
-            var asset = AssetDatabase.LoadAssetAtPath<T>(finalPath);
-            if (asset != null)
-                return;
-            CreateFileDirectory(finalPath);
-            Debug.Log($"生成{typeof(T).Name}  路径 {finalPath}");
-            AssetDatabase.CreateAsset(ScriptableObject.CreateInstance(name), finalPath);
-            AssetDatabase.SaveAssets();
-            AssetDatabase.Refresh();
-        }
-
-        #endregion
 
         #region Dictonary / File
 

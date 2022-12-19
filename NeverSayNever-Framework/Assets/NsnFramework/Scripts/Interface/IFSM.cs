@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NeverSayNever
+namespace Nsn
 {
-    public interface IFSMMgr : INsnManager
+    public interface IFSMMgr : IManager
     {
         IFSM Add(int id);
 

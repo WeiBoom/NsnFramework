@@ -1,7 +1,7 @@
 using System;
 using UObject = UnityEngine.Object;
 
-namespace NeverSayNever
+namespace Nsn
 {
     public enum EAssetType
     {
@@ -35,7 +35,7 @@ namespace NeverSayNever
         AssetBundle,
     }
 
-    public interface IResMdl : IModule
+    public interface IResMdl : IManager
     {
         void LoadUIAsset(string uiName, Action<object> callback);
 

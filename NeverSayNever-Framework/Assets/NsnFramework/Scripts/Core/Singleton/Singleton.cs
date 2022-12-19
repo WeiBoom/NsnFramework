@@ -3,7 +3,7 @@ using System.Collections;
 using System;
 using System.Runtime.CompilerServices;
 
-namespace NeverSayNever
+namespace Nsn
 {
     public class Singleton<T>  where T : class, new()
     {

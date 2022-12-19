@@ -1,6 +1,6 @@
 using System;
 
-namespace NeverSayNever
+namespace Nsn
 {
     public class EventData
     {
@@ -46,7 +46,7 @@ namespace NeverSayNever
 
     public delegate EventDelegateState GameEventDelegate(EventData e);
 
-    public interface IEventManager : INsnManager
+    public interface IEventManager : IManager
     {
         /// <summary>
         /// ×¢²áÊÂ¼ş

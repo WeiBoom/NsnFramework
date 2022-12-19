@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace NeverSayNever
+namespace Nsn
 {
     public class SingletonMono<T> : MonoBehaviour where T : MonoBehaviour
     {

@@ -14,5 +14,10 @@ namespace Nsn
             base.OnAwake();
             mLinker = GetComponent<UIObjectLinker>();
         }
+
+        public UnityEngine.Object Get(UIObjectLinker.LinkedObjectType type)
+        {
+            return null;
+        }
     }
 }

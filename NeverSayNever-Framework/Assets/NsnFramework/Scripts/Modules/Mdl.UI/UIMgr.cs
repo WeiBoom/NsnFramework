@@ -31,28 +31,48 @@ namespace Nsn
 
     public class UIMgr : IUIMgr
     {
-        private Dictionary<int ,UIViewInfo> mViewInfos = new Dictionary<int ,UIViewInfo>();
-        private Dictionary<string,UIViewInfo> mViewInfosName2ID  = new Dictionary<string,UIViewInfo>();
+        // dependent mgr
+        private IResMgr mResMgr;
+
+        private Dictionary<int ,UIViewInfo> mViewInfos;
+        private Dictionary<string,UIViewInfo> mViewInfosName2ID;
 
         private UIRoot mUIRoot;
-        private UIViewStack mViewStack = new UIViewStack();
-        private UIViewTaskQueue mUITaskQueue = new UIViewTaskQueue();
-
-        private IResMgr mResMgr;
+        private UIViewStack mViewStack;
+        private UIViewTaskQueue mUITaskQueue;
 
         private UIViewTask mCurTask;
 
 
         public void OnInitialized(params object[] args)
         {
+            mViewInfos = new Dictionary<int ,UIViewInfo>();
+            mViewInfosName2ID = new Dictionary<string,UIViewInfo>();
+
+            mViewStack = new UIViewStack();
+            mUITaskQueue = new UIViewTaskQueue();
+
+            mResMgr = Framework.GetManager<IResMgr>();
         }
 
         public void OnDisposed()
         {
+            mViewInfos.Clear();
+            mViewInfosName2ID.Clear();
+
+            mViewInfos = null;
+            mViewInfosName2ID = null;
+
+            mViewStack.Clear();
+            mUITaskQueue.Clear();
         }
 
         public void OnUpdate(float deltaTime)
         {
+            if(mCurTask == null || mCurTask == UIViewTask.Empty)
+            {
+                mCurTask = mUITaskQueue.Dequeue();
+            }
             if (mCurTask != null && mCurTask != UIViewTask.Empty)
             {
                 mCurTask.Update();

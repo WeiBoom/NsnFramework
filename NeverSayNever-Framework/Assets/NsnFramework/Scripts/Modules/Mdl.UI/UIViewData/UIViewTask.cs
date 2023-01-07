@@ -17,6 +17,14 @@ namespace Nsn
         public bool Completed;
         public System.Object[] Params;
 
+        public void Stop()
+        {
+            // TODO
+            Running = false;
+            Completed = true;
+        }
+
+
         public static UIViewTask Empty => default(UIViewTask);
 
         public override int GetHashCode()
@@ -62,6 +70,16 @@ namespace Nsn
         public int Count
         {
             get { return tasks.Count; }
+        }
+
+        public void Clear()
+        {
+            for(int  i =0; i < Count; i++)
+            {
+                var task = tasks[i];
+                task.Stop();
+            }
+            tasks.Clear();
         }
 
         public bool Contains(string viewName) => Get(viewName) != UIViewTask.Empty;

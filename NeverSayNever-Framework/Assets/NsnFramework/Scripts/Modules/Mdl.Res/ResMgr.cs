@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+
+using System;
 
 namespace Nsn
 {
@@ -14,9 +13,35 @@ namespace Nsn
         {
         }
 
+
         public void OnUpdate(float deltaTime)
+        {
+
+        }
+        public int GetResourceVersion()
+        {
+            return 0;
+        }
+
+        public void LoadAsset(Type type, string location)
+        {
+        }
+
+        public void LoadAsset<T>(string location) where T : UnityEngine.Object
+        {
+        }
+
+        public void LoadAssetAsync(Type type, string location)
+        {
+        }
+
+        public void LoadAssetAsync<T>(string location) where T : UnityEngine.Object
+        {
+        }
+
+
+        public void UnloadUnusedAssets()
         {
         }
     }
 }
-

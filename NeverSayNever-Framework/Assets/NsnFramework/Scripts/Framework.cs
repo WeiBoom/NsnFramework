@@ -22,11 +22,6 @@ namespace Nsn
         public static bool IsUsingLuaBundleMode { get; private set; } = false;
 
         /// <summary>
-        /// 框架所采取的加载方式
-        /// </summary>
-        public static EAssetLoadType LoadType { get; private set; } = EAssetLoadType.AssetDataBase;
-
-        /// <summary>
         /// 框架核心script承载mono对象
         /// </summary>
         public static GameObject BridgeObject { get; private set; }
@@ -53,7 +48,6 @@ namespace Nsn
 
             // 添加协程管理的模块
             BridgeObject.AddComponent<CoroutineMgr>();
-            PrintFrameworkInfo();
         }
 
         public static void OnUpdate(float deltaTime)
@@ -98,12 +92,6 @@ namespace Nsn
             return (T)mgr;
         }
 
-
-        public static void SetAssetLoadType(EAssetLoadType loadType)
-        {
-            LoadType = loadType;
-        }
-
         public static void SetLuaMode(bool enable,bool bundleMode)
         {
             IsUsingLuaScript = enable;
@@ -119,15 +107,5 @@ namespace Nsn
         {
             AudioSource = audioRoot;
         }
-
-        private static void PrintFrameworkInfo()
-        {
-            NsnLog.Print("NsnFramework初始化完成!");
-            NsnLog.Print("Nsn ---> 资源加载方式 : " + LoadType);
-            NsnLog.Print("Nsn ---> 是否加载lua脚本: " + IsUsingLuaScript);
-            if (IsUsingLuaScript)
-                NsnLog.Print("Nsn ---> 是否通过AssetBundle模式加载 lua 脚本: " + IsUsingLuaBundleMode);
-        }
-
     }
 }

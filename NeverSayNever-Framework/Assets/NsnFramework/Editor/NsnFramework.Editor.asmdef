@@ -1,5 +1,5 @@
 {
-    "name": "NsnEditor",
+    "name": "NsnFramework.Editor",
     "rootNamespace": "",
     "references": [
         "GUID:b457c063445f14642981eebd5da71ed2"

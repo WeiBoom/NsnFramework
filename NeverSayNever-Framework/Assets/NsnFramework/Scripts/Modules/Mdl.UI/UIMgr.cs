@@ -39,10 +39,9 @@ namespace Nsn
 
         private UIRoot mUIRoot;
         private UIViewStack mViewStack;
-        private UIViewTaskQueue mUITaskQueue;
+        private UIViewTaskQueue mViewTaskQueue;
 
         private UIViewTask mCurTask;
-
 
         public void OnInitialized(params object[] args)
         {
@@ -50,7 +49,7 @@ namespace Nsn
             mViewInfosName2ID = new Dictionary<string,UIViewInfo>();
 
             mViewStack = new UIViewStack();
-            mUITaskQueue = new UIViewTaskQueue();
+            mViewTaskQueue = new UIViewTaskQueue();
 
             mResMgr = Framework.GetManager<IResMgr>();
         }
@@ -64,14 +63,14 @@ namespace Nsn
             mViewInfosName2ID = null;
 
             mViewStack.Clear();
-            mUITaskQueue.Clear();
+            mViewTaskQueue.Clear();
         }
 
         public void OnUpdate(float deltaTime)
         {
             if(mCurTask == null || mCurTask == UIViewTask.Empty)
             {
-                mCurTask = mUITaskQueue.Dequeue();
+                mCurTask = mViewTaskQueue.Dequeue();
             }
             if (mCurTask != null && mCurTask != UIViewTask.Empty)
             {
@@ -79,10 +78,9 @@ namespace Nsn
             }
         }
 
-
         public void Open(string view)
         {
-            UIViewTask task = mUITaskQueue.Get(view);
+            UIViewTask task = mViewTaskQueue.Get(view);
             if(task == UIViewTask.Empty)
             {
                 AddTaskToQueue(view);
@@ -94,7 +92,7 @@ namespace Nsn
                 task.TaskType = UIViewTaskType.Open;
             }
 
-            if(mUITaskQueue.Count == 1)
+            if(mViewTaskQueue.Count == 1)
             {
                 ExecuteTask(task);
             }
@@ -102,7 +100,20 @@ namespace Nsn
 
         public void Close(string view)
         {
+            if(mViewTaskQueue.Contains(view))
+            {
+                mViewTaskQueue.Remove(view);
+            }
+
         }
+
+        public bool IsOpened(string view)
+        {
+            if(mViewStack.Contains(view))
+                return true;
+            return false;
+        }
+
 
         private UIViewTask AddTaskToQueue(string view)
         {
@@ -115,7 +126,7 @@ namespace Nsn
                     ViewName = viewInfo.Name,
                     ViewID = viewInfo.ID,
                 };
-                mUITaskQueue.Enqueue(task);
+                mViewTaskQueue.Enqueue(task);
                 return task;
             }
             else
@@ -134,11 +145,18 @@ namespace Nsn
             }
             task.Running = true;
 
+            mResMgr.LoadAsset<GameObject>(task.ViewName);
+
+            // step1 : load ui asset
             //mResMgr.LoadUIAsset(task.ViewName, OnUIAssetLoadCompleted);
+
         }
 
         private void OnUIAssetLoadCompleted(object obj)
         {
+            GameObject uiObj = (GameObject)obj;
+            UIView uiView = uiObj.GetComponent<UIView>();
+            mViewStack.Add(uiView);
 
         }
 

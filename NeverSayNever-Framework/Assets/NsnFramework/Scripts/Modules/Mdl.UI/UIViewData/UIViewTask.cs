@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 namespace Nsn
 {
@@ -58,10 +59,18 @@ namespace Nsn
                 Running = true;
             if (Running)
             {
+
             }
         }
     }
 
+    public static class UIVireTaskExtent
+    {
+        public static bool IsEmpty(this UIViewTask task)
+        {
+            return task == null || task == UIViewTask.Empty;
+        }
+    }
 
     public class UIViewTaskQueue
     {
@@ -125,6 +134,25 @@ namespace Nsn
             return UIViewTask.Empty;
         }
 
+        public void Remove(string viewName)
+        {
+            if(!string.IsNullOrEmpty(viewName))
+            {
+                int index = -1;
+                for (int i = 0; i < tasks.Count; i++)
+                {
+                    UIViewTask task = tasks[i];
+                    if (task.ViewName == viewName)
+                    {
+                        index = i;
+                        break;
+                    }
+                }
+                if (index >= 0)
+                    RemoveAt(index);
+            }
+        }
+
         private UIViewTask RemoveAt(int index)
         {
             if(index < 0 || index >= tasks.Count)
@@ -133,5 +161,6 @@ namespace Nsn
             tasks.RemoveAt(index);
             return task;
         }
+
     }
 }

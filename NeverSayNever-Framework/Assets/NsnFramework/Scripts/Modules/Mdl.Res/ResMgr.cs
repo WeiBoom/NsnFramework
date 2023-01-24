@@ -13,11 +13,11 @@ namespace Nsn
         {
         }
 
-
         public void OnUpdate(float deltaTime)
         {
-
         }
+
+
         public int GetResourceVersion()
         {
             return 0;
@@ -38,7 +38,6 @@ namespace Nsn
         public void LoadAssetAsync<T>(string location) where T : UnityEngine.Object
         {
         }
-
 
         public void UnloadUnusedAssets()
         {

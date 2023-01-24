@@ -11,7 +11,7 @@ namespace Nsn
             public WeakReference List;
         }
         
-        private Dictionary<int, List<GameEventDelegate>> m_eventDic;
+        private Dictionary<int, List<EventDelegate>> m_eventDic;
 
         private Queue<InternalEvent> m_eventQueue;
         private Queue<InternalEvent> m_eventPool;
@@ -21,7 +21,7 @@ namespace Nsn
 
         public void OnInitialized(params object[] args)
         {
-            m_eventDic = new Dictionary<int, List<GameEventDelegate>>();
+            m_eventDic = new Dictionary<int, List<EventDelegate>>();
             m_eventQueue = new Queue<InternalEvent>(m_maxEventCount);
             m_eventPool = new Queue<InternalEvent>(m_maxEventCount);
             for (int i = 0; i < m_maxEventCount; i++)
@@ -41,7 +41,7 @@ namespace Nsn
                 if (e.Data == null || e.List == null || e.Data.IsAlive == false || e.List.IsAlive == false)
                     continue;
                 EventData data = e.Data.Target as EventData;
-                if (e.List.Target is List<GameEventDelegate> list && list.Count > 0)
+                if (e.List.Target is List<EventDelegate> list && list.Count > 0)
                 {
                     foreach (var gameEvent in list)
                     {
@@ -64,7 +64,7 @@ namespace Nsn
             m_eventQueue = null;
         }
 
-        public void RegisterEvent(int eventId, GameEventDelegate gameEvent)
+        public void RegisterEvent(int eventId, EventDelegate gameEvent)
         {
             m_eventDic.TryGetValue(eventId, out var eventList);
             if (eventList != null)
@@ -80,7 +80,7 @@ namespace Nsn
             }
             else
             {
-                eventList = new List<GameEventDelegate> {gameEvent};
+                eventList = new List<EventDelegate> {gameEvent};
                 m_eventDic.Add(eventId,eventList);
             }
         }
@@ -93,7 +93,7 @@ namespace Nsn
             }
         }
 
-        public void RemoveEvent(int eventId, GameEventDelegate gameEvent)
+        public void RemoveEvent(int eventId, EventDelegate gameEvent)
         {
             if (m_eventDic.TryGetValue(eventId, out var eventList))
             {

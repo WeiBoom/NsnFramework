@@ -2,7 +2,8 @@
     "name": "NsnFramework.Module",
     "rootNamespace": "",
     "references": [
-        "GUID:b457c063445f14642981eebd5da71ed2"
+        "GUID:b457c063445f14642981eebd5da71ed2",
+        "GUID:e34a5702dd353724aa315fb8011f08c3"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

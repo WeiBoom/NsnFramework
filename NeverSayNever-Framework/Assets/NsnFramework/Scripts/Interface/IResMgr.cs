@@ -2,15 +2,17 @@
 
 namespace Nsn
 {
+    using UObject = UnityEngine.Object;
+
     public interface IResMgr : IManager
     {
-        void LoadAsset(System.Type type, string location);
+        void LoadAsset(System.Type type, string location, System.Action<UObject> callback);
 
-        void LoadAsset<T>(string location) where T : UnityEngine.Object;
+        void LoadAsset<T>(string location, System.Action<UObject> callback) where T : UObject;
 
-        void LoadAssetAsync(System.Type type, string location);
+        void LoadAssetAsync(System.Type type, string location, System.Action<UObject> callback);
 
-        void LoadAssetAsync<T>(string location) where T : UnityEngine.Object;
+        void LoadAssetAsync<T>(string location, System.Action<UObject> callback) where T : UObject;
 
         void UnloadUnusedAssets();
 

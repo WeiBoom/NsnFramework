@@ -9,7 +9,7 @@ namespace Nsn
 {
     using YooAsset;
 
-    public interface IAssetMgr
+    public interface IAssetMgr : IManager
     {
         int GetResourceVersion();
 

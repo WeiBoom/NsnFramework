@@ -145,7 +145,7 @@ namespace Nsn
             }
             task.Running = true;
 
-            mResMgr.LoadAsset<GameObject>(task.ViewName);
+            //mResMgr.LoadAsset<GameObject>(task.ViewName);
 
             // step1 : load ui asset
             //mResMgr.LoadUIAsset(task.ViewName, OnUIAssetLoadCompleted);

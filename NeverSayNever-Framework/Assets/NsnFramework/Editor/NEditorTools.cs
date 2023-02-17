@@ -5,11 +5,10 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-namespace Nsn.EditorUtilitiy
+namespace Nsn.EditorToolKit
 {
     public static class NEditorTools
     {
-
         /// <summary>
         /// 获取规范路径
         /// </summary>
@@ -31,6 +30,26 @@ namespace Nsn.EditorUtilitiy
         }
 
         #region Dictonary / File
+
+        /// <summary>
+        /// 打开指定路径的文件夹
+        /// </summary>
+        /// <param name="folerPath"></param>
+        public static void OpenFolder(string folerPath)
+        {
+            #if UNITY_EDITOR_WIN
+            
+            if (!System.IO.Directory.Exists(folerPath))
+            {
+                Debug.LogError("目录不存在 ： " + folerPath);
+                return;
+            }
+
+            folerPath = GetRegularPath(folerPath);
+            System.Diagnostics.Process.Start("explorer.exe", folerPath);
+            
+            #endif
+        }
 
         /// <summary>
         /// 生成指定的目录并创建文件，
@@ -186,14 +205,21 @@ namespace Nsn.EditorUtilitiy
                 Directory.Delete(childDirectory);
             }
         }
-
+        
+        #endregion
+        
+        #region Time
+        
         /// <summary>
-        /// 获取选中的文件夹
+        /// 获取当前的时间戳
         /// </summary>
-        public static void GetSelectionFolder()
+        /// <returns></returns>
+        public static string GetCurTimeStamp()
         {
-        }
-
+            TimeSpan ts = DateTime.Now - new DateTime(1970, 1, 1, 0, 0, 0, 0);
+            return Convert.ToInt64(ts.TotalSeconds).ToString();
+        } 
+        
         #endregion
 
         #region AssetBundle

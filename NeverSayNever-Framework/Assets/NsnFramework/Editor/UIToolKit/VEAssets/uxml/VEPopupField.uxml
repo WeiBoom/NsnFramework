@@ -1,0 +1,8 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+    <ui:VisualElement style="height: 30px; flex-direction: row; width: 100%; max-width: none; max-height: none; min-width: auto; min-height: auto;">
+        <ui:Label text="Command" name="ItemLabel" style="-unity-text-align: middle-left; width: 50%;" />
+        <ui:Button text="Button" name="ItemMenu" style="flex-grow: 1; min-width: auto; max-width: none; align-items: auto; flex-shrink: 1; justify-content: center; -unity-text-align: middle-left; width: auto;">
+            <ui:Label text="▼" style="width: 10px;" />
+        </ui:Button>
+    </ui:VisualElement>
+</ui:UXML>

@@ -5,7 +5,7 @@
 *Unity Version：2021.3.0f1c1*
 ## Third-Party Plugins
 - **[DOTween](https://assetstore.unity.com/packages/tools/animation/dotween-hotween-v2-27676) --- for free**
-- **[xlua](https://github.com/Tencent/xLua) --- will be pulished in "NsnFramework.xlua" Branch **
+- **[xlua](https://github.com/Tencent/xLua) --- will be pulished in "NsnFramework.xlua" Branch**
 - **[Odin Inspector](https://assetstore.unity.com/packages/tools/utilities/odin-inspector-and-serializer-89041) ---- recommand,not necessary**
 
 Just a sample ui exmaple with UGUI .  

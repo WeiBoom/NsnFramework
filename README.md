@@ -3,10 +3,10 @@
 **To be continue ...**
 #
 *Unity Version：2021.3.0f1c1*
-## Dependent Third-Party Plugins
-- **[Odin Inspector](https://assetstore.unity.com/packages/tools/utilities/odin-inspector-and-serializer-89041) ---- need To pay**
+## Third-Party Plugins
 - **[DOTween](https://assetstore.unity.com/packages/tools/animation/dotween-hotween-v2-27676) --- for free**
-- **[xlua](https://github.com/Tencent/xLua) --- open source**
+- **[xlua](https://github.com/Tencent/xLua) --- will be pulished in "NsnFramework.xlua" Branch **
+- **[Odin Inspector](https://assetstore.unity.com/packages/tools/utilities/odin-inspector-and-serializer-89041) ---- recommand,not necessary**
 
 Just a sample ui exmaple with UGUI .  
 ![README_Image/Untitled%207.png](README_Image/UI_MainWindow_Small.jpg)

@@ -17,14 +17,12 @@ namespace Nsn.EditorToolKit
     
     public static class VEToolKit
     {
-        public const string m_X3UIToolKitAssetRootPath = "Assets/NsnFramework/Editor/UIToolKit/VEAssets";
-
         #region VisualElement
 
         public static VisualTreeAsset LoadEditorVEAsset(string assetName, VEAssetType assType)
         {
             string assetType = assType.ToString();
-            string path = $"{m_X3UIToolKitAssetRootPath}/{assetType}/{assetName}.{assetType}";
+            string path = $"{NEditorConst.NsnUIToolKitAssetRootPath}/{assetType}/{assetName}.{assetType}";
             var asset = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(path);
             if (asset == null)
                 Debug.LogError("[X3.UIToolKit] load editor asset failed . assetName : " + assetName);
@@ -34,7 +32,7 @@ namespace Nsn.EditorToolKit
         
         public static VisualElement LoadVETemplateAsset(string templateName)
         {
-            string path = $"{m_X3UIToolKitAssetRootPath}/uxml/{templateName}.uxml";
+            string path = $"{NEditorConst.NsnUIToolKitAssetRootPath}/uxml/{templateName}.uxml";
             VisualTreeAsset visualTreeAsset = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(path);
             VisualElement visualElement = visualTreeAsset.CloneTree();
             return visualElement;

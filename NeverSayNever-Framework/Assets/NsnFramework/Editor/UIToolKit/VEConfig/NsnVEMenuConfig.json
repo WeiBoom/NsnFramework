@@ -1,0 +1,16 @@
+
+{
+    "Values":
+    [
+        {
+            "MenuPath":"UI/UIViewConfig",
+            "MenuName":"UI配置",
+            "MenuType":"NsnUIMenuConfig"
+        },
+        {
+            "MenuPath":"Asset/Importer",
+            "MenuName":"导入",
+            "MenuType":"NsnAssetMenuConfig"
+        }
+    ]
+}

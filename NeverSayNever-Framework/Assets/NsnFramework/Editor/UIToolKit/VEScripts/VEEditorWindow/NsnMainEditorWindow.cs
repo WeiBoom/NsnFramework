@@ -30,19 +30,49 @@ namespace Nsn.EditorToolKit
 
         private VEBaseEditorWidget m_CurEditorWidget;
 
-        private VisualElement m_MenuListView;
+        private ListView m_MenuListView;
         private ScrollView m_MainScrollView;
 
         protected override void OnCreateGUI()
         {
             base.OnCreateGUI();
-
-
+            // 准备所需的数据
+            InitUIToolKitData();
+            // 初始化获取UIElement
+            InitUIElement();
+            // 初始化功能列表
             InitMenuList();
 
         }
 
+        private void InitUIToolKitData()
+        {
+            VEConfig.LoadConfig();
+        }
+
+
+        private void InitUIElement()
+        {
+            m_MenuListView = m_Root.Q<ListView>("MenuListView");
+            m_MainScrollView = m_Root.Q<ScrollView>("MainScrollView");
+        }
+
         private void InitMenuList()
+        {
+            foreach(var config in VEConfig.MenuConfigList)
+            {
+                string[] path = config.MenuPath.Split('/');
+                var foldout = new Foldout();
+                foldout.text = path[0];
+                Button button = new Button();
+                button.text = path[1];
+                foldout.Add(button);
+
+                m_MenuListView.Add(foldout);
+            }
+        }
+
+        private void AddMenuToFoldout()
         {
 
         }

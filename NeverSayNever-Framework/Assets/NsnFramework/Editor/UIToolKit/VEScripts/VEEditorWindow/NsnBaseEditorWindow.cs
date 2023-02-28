@@ -4,12 +4,30 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using UnityEngine.UIElements;
+using UnityEditor.PackageManager.UI;
 
 
 namespace Nsn.EditorToolKit
 {
-    public class VEBaseEditorWindow : EditorWindow
+    public class NsnBaseEditorWindow : EditorWindow
     {
+
+        public static void ForceClose<T>(T window) where T : NsnBaseEditorWindow
+        {
+            if (window != null)
+            {
+                try { window.Close(); }
+                catch { }
+                window = null;
+            }
+        }
+
+        public static void Display<T>(ref T window, string title) where T : NsnBaseEditorWindow
+        {
+            ForceClose(window);
+            window = GetWindow<T>(title);
+        }
+
         protected VisualElement m_Root;
 
         private void CreateGUI()
@@ -21,7 +39,7 @@ namespace Nsn.EditorToolKit
         protected virtual void OnCreateGUI()
         {
             string treeAssetName = this.GetType().Name;
-            var visualTree = VEToolKit.LoadEditorVEAsset(treeAssetName,VEAssetType.uxml);
+            var visualTree = VEToolKit.LoadVEAssetVisualTree(treeAssetName);
             VisualElement visualElement = visualTree.CloneTree();
             m_Root.Add(visualElement);
         }
@@ -35,7 +53,7 @@ namespace Nsn.EditorToolKit
         protected virtual void OnClose(){}
     }
 
-    public class VEBaseEditorWidget : ScriptableObject
+    public class NsnBaseEditorWidget : ScriptableObject
     {
         protected VisualElement m_Root;
         
@@ -51,7 +69,7 @@ namespace Nsn.EditorToolKit
 
         public virtual void OnClose()
         {
-            ScriptableObject.Destroy(this);
+            ScriptableObject.DestroyImmediate(this);
         }
     }
 }

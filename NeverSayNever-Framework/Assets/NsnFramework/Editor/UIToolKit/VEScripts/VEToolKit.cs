@@ -19,13 +19,28 @@ namespace Nsn.EditorToolKit
     {
         #region VisualElement
 
-        public static VisualTreeAsset LoadEditorVEAsset(string assetName, VEAssetType assType)
+        public static VisualTreeAsset LoadVEAssetVisualTree(string assetName)
+        {
+            var asset = LoadVEAsset<VisualTreeAsset>(assetName, VEAssetType.uxml);
+            return asset;
+        }
+
+
+        public static StyleSheet LoadVEAssetStyleSheet(string assetName)
+        {
+            var asset = LoadVEAsset<StyleSheet>(assetName, VEAssetType.uss);
+            return asset;
+        }
+
+        public static T LoadVEAsset<T>(string assetName, VEAssetType assType) where T : UnityEngine.Object
         {
             string assetType = assType.ToString();
             string path = $"{NEditorConst.NsnUIToolKitAssetRootPath}/{assetType}/{assetName}.{assetType}";
-            var asset = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(path);
+
+            T asset = AssetDatabase.LoadAssetAtPath<T>(path);
             if (asset == null)
-                Debug.LogError("[X3.UIToolKit] load editor asset failed . assetName : " + assetName);
+                Debug.LogError($"[X3.UIToolKit] load editor asset failed . path : {path}");
+
             return asset;
         }
         

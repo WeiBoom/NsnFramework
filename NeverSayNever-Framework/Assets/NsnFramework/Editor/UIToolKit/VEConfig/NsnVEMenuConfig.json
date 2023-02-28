@@ -2,15 +2,20 @@
 {
     "Values":
     [
-        {
-            "MenuPath":"UI/UIViewConfig",
-            "MenuName":"UI配置",
-            "MenuType":"NsnUIMenuConfig"
+	    {
+            "MenuPath":"Asset/Importer",
+            "MenuName":"资源导入",
+            "MenuType":"NsnAssetMenuConfig"
         },
         {
-            "MenuPath":"Asset/Importer",
-            "MenuName":"导入",
-            "MenuType":"NsnAssetMenuConfig"
+            "MenuPath":"UI/Config",
+            "MenuName":"配置",
+            "MenuType":"NsnUIMenuConfig"
+        },
+		{
+            "MenuPath":"UI/Debug",
+            "MenuName":"调试",
+            "MenuType":"NsnUIMenuConfig"
         }
     ]
 }

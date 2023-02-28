@@ -6,30 +6,18 @@ using UnityEngine.UIElements;
 
 namespace Nsn.EditorToolKit
 {
-    public class NsnMainEditorWindow : VEBaseEditorWindow
+    public class NsnMainEditorWindow : NsnBaseEditorWindow
     {
         private static NsnMainEditorWindow m_Window;
         [MenuItem("Nsn/ToolKit/工具库 &#C")]
         public static void ShowWindow()
         {
-            if(m_Window != null)
-            {
-                try
-                {
-                    m_Window.Close();
-                }
-                catch
-                {
-                }
-                m_Window = null;
-            }
-
-            m_Window = GetWindow<NsnMainEditorWindow>();
-            m_Window.titleContent = new GUIContent("Nsn 工具库(Alt + Shift + C)");
+            Display(ref m_Window, "Nsn-工具库(Alt + Shift + C)");
         }
 
-        private VEBaseEditorWidget m_CurEditorWidget;
+        private Dictionary<string, Foldout> m_MenuFoldoutDic;
 
+        private NsnBaseEditorWidget m_CurEditorWidget;
         private ListView m_MenuListView;
         private ScrollView m_MainScrollView;
 
@@ -59,22 +47,34 @@ namespace Nsn.EditorToolKit
 
         private void InitMenuList()
         {
-            foreach(var config in VEConfig.MenuConfigList)
+            m_MenuFoldoutDic = new Dictionary<string, Foldout>();
+            foreach (var config in VEConfig.MenuConfigList)
             {
                 string[] path = config.MenuPath.Split('/');
-                var foldout = new Foldout();
-                foldout.text = path[0];
+                string menuGroup = path[0];
+                Foldout foldout = GetFoldoutItem(menuGroup);
                 Button button = new Button();
                 button.text = path[1];
                 foldout.Add(button);
+            }
 
-                m_MenuListView.Add(foldout);
+            foreach (var item in m_MenuFoldoutDic.Values)
+            {
+                m_MenuListView.Add(item);
             }
         }
 
-        private void AddMenuToFoldout()
+        private Foldout GetFoldoutItem(string name)
         {
-
+            Foldout foldout = null;
+            m_MenuFoldoutDic.TryGetValue(name, out foldout);
+            if (foldout == null)
+            {
+                foldout = new Foldout();
+                m_MenuFoldoutDic.Add(name, foldout);
+            }
+            foldout.text = name;
+            return foldout;
         }
     }
 }

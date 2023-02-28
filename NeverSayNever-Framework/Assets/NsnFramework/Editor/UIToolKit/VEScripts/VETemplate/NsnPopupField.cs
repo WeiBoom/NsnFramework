@@ -6,7 +6,7 @@ namespace Nsn.EditorToolKit
     using UnityEngine;
     using UnityEngine.UIElements;
     
-    public class VEPopupField<T> : VisualElement
+    public class NsnPopupField<T> : VisualElement
     {
         private List<T> m_list;
 
@@ -26,7 +26,7 @@ namespace Nsn.EditorToolKit
             }
         }
 
-        public VEPopupField(string label, List<T> list = null, int index = 0,
+        public NsnPopupField(string label, List<T> list = null, int index = 0,
             Action<ChangeEvent<T>> onValueChanged = null)
         {
             style.flexDirection = FlexDirection.Row;
@@ -35,7 +35,7 @@ namespace Nsn.EditorToolKit
 
             m_OnValueChaned = onValueChanged;
 
-            var visualTreeAsset = VEToolKit.LoadEditorVEAsset("VEPopupField", VEAssetType.uxml);
+            var visualTreeAsset = VEToolKit.LoadVEAssetVisualTree("VEPopupField");
             var popupList = visualTreeAsset.CloneTree();
             Add(popupList);
             popupList.StretchToParentWidth();

@@ -252,10 +252,47 @@ namespace Nsn.EditorToolKit
         /// <summary>
         /// 获取当前的平台名
         /// </summary>
-        /// <returns></returns>
+        /// <returns>平台名</returns>
         public static string GetPlatformName()
         {
             return GetPlatformForAssetBundles(EditorUserBuildSettings.activeBuildTarget);
+        }
+
+        #endregion
+
+
+        #region Network
+
+        /// <summary>
+        /// 获取本地IP地址
+        /// </summary>
+        /// <returns>IP地址</returns>
+        public static string GetLocalIPAddress()
+        {
+            string ip = null;
+
+            string hostName = System.Net.Dns.GetHostName();
+            System.Net.IPAddress[] ipAddresses = System.Net.Dns.GetHostAddresses(hostName);
+            if(ipAddresses != null && ipAddresses.Length > 0)
+            {
+                System.Net.IPAddress ipAddress = ipAddresses[ipAddresses.Length - 1];
+                if(ipAddresses.Length > 1)
+                {
+                    foreach(var address in ipAddresses)
+                    {
+                        if(address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
+                        {
+                            if (address.ToString().StartsWith("10."))
+                            {
+                                ipAddress = address;
+                                break;
+                            }
+                        }
+                    }
+                }
+                ip = ipAddress.ToString();
+            }
+            return ip;
         }
 
         #endregion

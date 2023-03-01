@@ -12,7 +12,7 @@ namespace Nsn.EditorToolKit
     public class NsnBaseEditorWindow : EditorWindow
     {
 
-        public static void ForceClose<T>(T window) where T : NsnBaseEditorWindow
+        public static void ForceClose<T>(ref T window) where T : NsnBaseEditorWindow
         {
             if (window != null)
             {
@@ -24,7 +24,7 @@ namespace Nsn.EditorToolKit
 
         public static void Display<T>(ref T window, string title) where T : NsnBaseEditorWindow
         {
-            ForceClose(window);
+            ForceClose(ref window);
             window = GetWindow<T>(title);
         }
 

@@ -8,7 +8,7 @@ using UnityEngine.UIElements;
 namespace Nsn.EditorToolKit
 {
 
-    public class NsnFlowGraphView : GraphView
+    public class NsnFlowGraphView : NsnGraphView
     {
         public new class UxmlFactory : UxmlFactory<NsnFlowGraphView, UxmlTraits> { }
 
@@ -30,7 +30,6 @@ namespace Nsn.EditorToolKit
 
             StyleSheet styleSheet = VEToolKit.LoadVEAssetStyleSheet("NsnFlowGraphView");
             styleSheets.Add(styleSheet);
-
 
         }
     }

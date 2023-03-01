@@ -14,6 +14,9 @@ namespace Nsn.EditorToolKit
         private static void ShowWindow()
         {
             Display(ref m_Window, "Nsn-FlowGraph(Alt + Shift + F)");
+
+            var ip = NEditorTools.GetLocalIPAddress();
+            Debug.LogError(ip);
         }
     }
 }

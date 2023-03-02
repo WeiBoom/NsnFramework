@@ -29,6 +29,8 @@ namespace Nsn.EditorToolKit
             return GetRegularPath(projectPath);
         }
 
+
+
         #region Dictonary / File
 
         /// <summary>

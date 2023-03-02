@@ -8,7 +8,7 @@ using UnityEngine.UIElements;
 namespace Nsn.EditorToolKit
 {
 
-    public class NsnFlowGraphView : NsnGraphView
+    public class NsnFlowGraphView : NsnBaseGraphView
     {
         public new class UxmlFactory : UxmlFactory<NsnFlowGraphView, UxmlTraits> { }
 

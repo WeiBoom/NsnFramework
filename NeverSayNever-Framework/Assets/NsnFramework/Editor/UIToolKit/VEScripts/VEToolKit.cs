@@ -59,7 +59,8 @@ namespace Nsn.EditorToolKit
             T elementObj = visualElement.Q<T>(elementName);
             return elementObj;
         }
-        
+
+
         #endregion
     }
 }

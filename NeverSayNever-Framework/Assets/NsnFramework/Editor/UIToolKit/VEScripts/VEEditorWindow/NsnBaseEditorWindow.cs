@@ -11,7 +11,6 @@ namespace Nsn.EditorToolKit
 {
     public class NsnBaseEditorWindow : EditorWindow
     {
-
         public static void ForceClose<T>(ref T window) where T : NsnBaseEditorWindow
         {
             if (window != null)
@@ -36,18 +35,29 @@ namespace Nsn.EditorToolKit
             OnCreateGUI();
         }
 
+        private void OnEnable()
+        {
+            if (m_Root == null)
+                m_Root = rootVisualElement;
+            OnShow();
+        }
+
+        private void Update() => OnUpdate();
+
+        private void OnDestroy() => OnClose();
+
+
         protected virtual void OnCreateGUI()
         {
             string treeAssetName = this.GetType().Name;
             var visualTree = VEToolKit.LoadVEAssetVisualTree(treeAssetName);
             VisualElement visualElement = visualTree.CloneTree();
             m_Root.Add(visualElement);
+            visualElement.StretchToParentSize();
         }
-        
-        private void Update() => OnUpdate();
 
-        private void OnDestroy() => OnClose();
-        
+        protected virtual void OnShow() { }
+
         protected virtual void OnUpdate(){}
         
         protected virtual void OnClose(){}

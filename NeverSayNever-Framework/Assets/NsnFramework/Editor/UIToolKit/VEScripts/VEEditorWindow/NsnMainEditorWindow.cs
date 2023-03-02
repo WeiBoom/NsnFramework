@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -47,21 +49,50 @@ namespace Nsn.EditorToolKit
 
         private void InitMenuList()
         {
-            m_MenuFoldoutDic = new Dictionary<string, Foldout>();
+            var menuDataDic = new Dictionary<string, List<string>>();
             foreach (var config in VEConfig.MenuConfigList)
             {
                 string[] path = config.MenuPath.Split('/');
                 string menuGroup = path[0];
-                Foldout foldout = GetFoldoutItem(menuGroup);
-                Button button = new Button();
-                button.text = path[1];
-                foldout.Add(button);
+                menuDataDic.TryGetValue(menuGroup, out var menuList);
+                if (menuList == null)
+                {
+                    menuList = new List<string>();
+                    menuDataDic.Add(menuGroup, menuList);
+                }
+                string menuName = path[1];
+                if (!menuList.Contains(menuName))
+                {
+                    menuList.Add(menuName);
+                }
             }
 
-            foreach (var item in m_MenuFoldoutDic.Values)
+            var keyList = menuDataDic.Keys.ToList();
+            System.Func<VisualElement> makeItem = () =>
             {
-                m_MenuListView.Add(item);
-            }
+                Foldout foldout = new Foldout();
+                foldout.StretchToParentSize();
+                return foldout;
+            };
+            System.Action<VisualElement, int> bindItem = (e, i) =>
+            {
+                string key = keyList[i];
+                Foldout foldout = e as Foldout;
+                foldout.text = keyList[i];
+                var itemList = menuDataDic[key];
+                foreach(var item in itemList)
+                {
+                    Button button= new Button() { text = item };
+                    foldout.Add(button);
+                }
+            };
+            m_MenuListView.itemsSource = keyList;
+            m_MenuListView.bindItem = bindItem;
+            m_MenuListView.makeItem = makeItem;
+            //foreach (var item in m_MenuFoldoutDic.Values)
+            //{
+            //    m_MenuListView.Add(item);
+            //}
         }
 
         private Foldout GetFoldoutItem(string name)

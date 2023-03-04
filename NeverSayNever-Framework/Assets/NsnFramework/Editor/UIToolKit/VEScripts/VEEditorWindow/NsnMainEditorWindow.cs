@@ -14,13 +14,13 @@ namespace Nsn.EditorToolKit
         [MenuItem("Nsn/ToolKit/工具库 &#C")]
         public static void ShowWindow()
         {
-            Display(ref m_Window, "Nsn-工具库(Alt + Shift + C)");
+            Display(ref m_Window, "Nsn-ToolKit(Alt+Shift+C)");
         }
 
-        private Dictionary<string, Foldout> m_MenuFoldoutDic;
+        private Dictionary<string, List<string>> m_MenuDataDic;
 
         private NsnBaseEditorWidget m_CurEditorWidget;
-        private ListView m_MenuListView;
+        private ScrollView m_MenuScrollVew;
         private ScrollView m_MainScrollView;
 
         protected override void OnCreateGUI()
@@ -37,28 +37,19 @@ namespace Nsn.EditorToolKit
 
         private void InitUIToolKitData()
         {
+            // 初始化编辑器配置信息
             VEConfig.LoadConfig();
-        }
-
-
-        private void InitUIElement()
-        {
-            m_MenuListView = m_Root.Q<ListView>("MenuListView");
-            m_MainScrollView = m_Root.Q<ScrollView>("MainScrollView");
-        }
-
-        private void InitMenuList()
-        {
-            var menuDataDic = new Dictionary<string, List<string>>();
+            // 初始化左侧menuList的数据
+            m_MenuDataDic = new Dictionary<string, List<string>>();
             foreach (var config in VEConfig.MenuConfigList)
             {
                 string[] path = config.MenuPath.Split('/');
                 string menuGroup = path[0];
-                menuDataDic.TryGetValue(menuGroup, out var menuList);
+                m_MenuDataDic.TryGetValue(menuGroup, out var menuList);
                 if (menuList == null)
                 {
                     menuList = new List<string>();
-                    menuDataDic.Add(menuGroup, menuList);
+                    m_MenuDataDic.Add(menuGroup, menuList);
                 }
                 string menuName = path[1];
                 if (!menuList.Contains(menuName))
@@ -66,46 +57,29 @@ namespace Nsn.EditorToolKit
                     menuList.Add(menuName);
                 }
             }
-
-            var keyList = menuDataDic.Keys.ToList();
-            System.Func<VisualElement> makeItem = () =>
-            {
-                Foldout foldout = new Foldout();
-                foldout.StretchToParentSize();
-                return foldout;
-            };
-            System.Action<VisualElement, int> bindItem = (e, i) =>
-            {
-                string key = keyList[i];
-                Foldout foldout = e as Foldout;
-                foldout.text = keyList[i];
-                var itemList = menuDataDic[key];
-                foreach(var item in itemList)
-                {
-                    Button button= new Button() { text = item };
-                    foldout.Add(button);
-                }
-            };
-            m_MenuListView.itemsSource = keyList;
-            m_MenuListView.bindItem = bindItem;
-            m_MenuListView.makeItem = makeItem;
-            //foreach (var item in m_MenuFoldoutDic.Values)
-            //{
-            //    m_MenuListView.Add(item);
-            //}
         }
 
-        private Foldout GetFoldoutItem(string name)
+        private void InitUIElement()
         {
-            Foldout foldout = null;
-            m_MenuFoldoutDic.TryGetValue(name, out foldout);
-            if (foldout == null)
+            m_MenuScrollVew = m_Root.Q<ScrollView>("MenuScrollView");
+            m_MainScrollView = m_Root.Q<ScrollView>("MainScrollView");
+        }
+
+        private void InitMenuList()
+        {
+            var keyList = m_MenuDataDic.Keys.ToList();
+            foreach (var key in keyList)
             {
-                foldout = new Foldout();
-                m_MenuFoldoutDic.Add(name, foldout);
+                Foldout foldout = new Foldout() { text = key};
+                var itemList = m_MenuDataDic[key];
+                foreach(var item in itemList)
+                {
+                    Button button = new Button() { text = item };
+                    foldout.Add(button);
+                }
+                m_MenuScrollVew.Add(foldout);
             }
-            foldout.text = name;
-            return foldout;
+            m_MainScrollView.contentContainer.StretchToParentSize();
         }
     }
 }

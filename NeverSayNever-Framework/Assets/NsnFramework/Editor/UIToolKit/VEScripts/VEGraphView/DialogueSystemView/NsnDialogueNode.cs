@@ -26,8 +26,11 @@ namespace Nsn.EditorToolKit
 
         public string TextContent { get; set; }
 
-        public NsnDialogueGroup DialogueGroup { get; set; } 
+        public DialogueNodeType DialogueNodeType { get; set; }
 
+        public NsnDialogueGroup Group { get; set; }
+
+        public List<NsnDialogueChoiceSaveData> Choices { get; set; }
 
         public override void BuildContextualMenu(ContextualMenuPopulateEvent evt)
         {
@@ -43,7 +46,8 @@ namespace Nsn.EditorToolKit
 
             DialogueName = nodeName;
             TextContent = "Dialogue Content";
-            
+            Choices = new List<NsnDialogueChoiceSaveData>();
+
             m_DialogueGraphView = graphView;
             m_DefaultBackgroundColor = new Color(29f / 255f, 29f / 255f, 30f / 255f);
 
@@ -84,7 +88,7 @@ namespace Nsn.EditorToolKit
                         --m_DialogueGraphView.NameErrorAmount;
                 }
 
-                if (DialogueGroup == null)
+                if (Group == null)
                 {
                     m_DialogueGraphView.RemoveUngroupedNode(this);
                     DialogueName = target.value;
@@ -92,8 +96,8 @@ namespace Nsn.EditorToolKit
                 }
                 else
                 {
-                    NsnDialogueGroup group = DialogueGroup;
-                    m_DialogueGraphView.RemoveGroupedNode(this, DialogueGroup);
+                    NsnDialogueGroup group = Group;
+                    m_DialogueGraphView.RemoveGroupedNode(this, Group);
                     DialogueName = target.value;
                     m_DialogueGraphView.AddGroupedNode(this, group);
                 }
@@ -102,8 +106,7 @@ namespace Nsn.EditorToolKit
 
         private void DrawPorts()
         {
-            Port inputPort = this.InstantiatePort(Orientation.Horizontal, Direction.Input, Port.Capacity.Multi, typeof(bool));
-            inputPort.name = "Dialogue Connection";
+            Port inputPort = CreatePort("Dialogue Connection", Orientation.Horizontal, Direction.Input, Port.Capacity.Multi);
             inputContainer.Add(inputPort);
         }
 
@@ -125,6 +128,13 @@ namespace Nsn.EditorToolKit
             contentTestFoldout.Add(contentTextField);
             customDataContainer.Add(contentTestFoldout);
             extensionContainer.Add(customDataContainer);
+        }
+
+        protected Port CreatePort(string portName = "", Orientation orientation = Orientation.Horizontal, Direction direction = Direction.Output, Port.Capacity capacity = Port.Capacity.Single)
+        {
+            Port port = this.InstantiatePort(orientation, direction, capacity, typeof(bool));
+            port.name = portName;
+            return port;
         }
 
 
@@ -154,7 +164,9 @@ namespace Nsn.EditorToolKit
 
         #region Style
 
+        public void SetErrorStyle(Color color) => mainContainer.style.backgroundColor = color;
 
+        public void ResetErrorStyle() => mainContainer.style.backgroundColor = m_DefaultBackgroundColor;
 
         #endregion
 

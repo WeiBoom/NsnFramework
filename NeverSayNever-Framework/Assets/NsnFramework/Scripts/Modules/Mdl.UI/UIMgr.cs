@@ -31,9 +31,6 @@ namespace Nsn
 
     public class UIMgr : IUIMgr
     {
-        // dependent mgr
-        private IResMgr mResMgr;
-
         private Dictionary<int ,UIViewInfo> mViewInfos;
         private Dictionary<string,UIViewInfo> mViewInfosName2ID;
 
@@ -50,8 +47,6 @@ namespace Nsn
 
             mViewStack = new UIViewStack();
             mViewTaskQueue = new UIViewTaskQueue();
-
-            mResMgr = Framework.GetManager<IResMgr>();
         }
 
         public void OnDisposed()
@@ -68,50 +63,59 @@ namespace Nsn
 
         public void OnUpdate(float deltaTime)
         {
-            if(mCurTask == null || mCurTask == UIViewTask.Empty)
+            if(mCurTask.IsEmpty())
             {
                 mCurTask = mViewTaskQueue.Dequeue();
             }
             if (mCurTask != null && mCurTask != UIViewTask.Empty)
             {
-                mCurTask.Update();
+                mCurTask.Tick();
             }
         }
 
-        public void Open(string view)
+        public void Open(string view, params object[] userData)
         {
-            if(mViewStack.Contains(view))
-            {
-                mViewStack.Pop();
-            }
-
-
+            // 查看当前是否有正在进行的任务
             UIViewTask task = mViewTaskQueue.Get(view);
-            // 当前没有正在加载的UI
-            if(task.IsEmpty())
+            if (!task.IsEmpty())
             {
-                AddTaskToQueue(view);
-            }
-            else
-            {
-                // 如果当前UI正在关闭，又打算打开，那么停止关闭的操作
+                // Situation 1 当前UI已经有正在执行当然Task
                 if (task.TaskType == UIViewTaskType.Close)
-                    NsnLog.Error($"[NsnFramework], UIMdl.Open , {view} is closing but try open it");
-                task.TaskType = UIViewTaskType.Open;
+                {
+                    NsnLog.Warning($"[NsnFramework], UIMgr.Open , {view} is closing but try open it");
+                    task.Stop();
+                    mViewTaskQueue.Remove(task.ViewName);
+                }
+                else
+                {
+                    task.Params = userData;
+                    return;
+                }
+            }
+            
+            // Situation 2 . UI界面已经打开
+            UIViewItem viewItem = mViewStack.Get(view);
+            if(viewItem.IsPrepared())
+            {
+                // 出栈再入栈、修改UI栈的顺序,并更新数据
+                mViewStack.Pop(viewItem);
+                mViewStack.Push(viewItem);
+                viewItem.OnRefresh(userData);
+                return;
             }
 
+            // Situation 3 . 当前没有UITask
+            task = AddTaskToQueue(view);
+            task.Params = userData;
+            
+            // Situation 4 . 只有一个task则当前帧直接执行
             if(mViewTaskQueue.Count == 1)
-            {
                 ExecuteTask(task);
-            }
         }
 
         public void Close(string view)
         {
-            if(mViewTaskQueue.Contains(view))
-            {
-                mViewTaskQueue.Remove(view);
-            }
+            // todo
         }
 
         public bool IsOpened(string view)
@@ -120,7 +124,6 @@ namespace Nsn
                 return true;
             return false;
         }
-
 
         private UIViewTask AddTaskToQueue(string view)
         {
@@ -133,6 +136,7 @@ namespace Nsn
                     ViewName = viewInfo.Name,
                     ViewID = viewInfo.ID,
                 };
+                task.RegisterCompleteCallback(OnTaskComplete);
                 mViewTaskQueue.Enqueue(task);
                 return task;
             }
@@ -150,19 +154,13 @@ namespace Nsn
                 NsnLog.Error($"task [{task.ViewID}] is running!");
                 return;
             }
-            task.Run();
-
-            // step1 : load ui asset
-            //mResMgr.LoadUIAsset(task.ViewName, OnUIAssetLoadCompleted);
+            task.Tick();
         }
 
-        private void OnUIAssetLoadCompleted(object obj)
+        private void OnTaskComplete(UIViewItem viewItem)
         {
-            GameObject uiObj = (GameObject)obj;
-            UIView uiView = uiObj.GetComponent<UIView>();
-            mViewStack.Add(uiView);
+            mViewStack.Push(viewItem);
         }
-
     }
 
 

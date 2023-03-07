@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -26,57 +27,76 @@ namespace Nsn
             }
         }
 
-        public UIViewItem Add(UIView view,int viewID = 0)
+        public void Add(UIViewItem viewItem)
         {
-            if (view == null) return UIViewItem.Empty;
-
-            UIViewItem item = new UIViewItem()
-            {
-                ViewName = view.ViewInfo.ViewName,
-                ViewID = viewID,
-                View = view,
-            };
-            m_ViewList.Add(item);
-            return item;
+            m_ViewList.Add(viewItem);
         }
 
-        public UIViewItem Remove(UIView view)
+
+        public void Remove(string viewName)
         {
-            if(view == null) return UIViewItem.Empty;
+            if (!string.IsNullOrEmpty(viewName))
+                Pop(viewName);
+        }
+        
+        public void Remove(UIView view)
+        {
+            if (view != null)
+                Remove(view.ViewInfo.ViewName);
+        }
+
+        private int GetViewStackIndex(string viewName)
+        {
             for (int i = m_ViewList.Count - 1; i >= 0; i--)
             {
-                if (m_ViewList[i].View == view)
+                if (m_ViewList[i].ViewName == viewName)
                 {
-                    UIViewItem viewItem = m_ViewList[i];
-                    m_ViewList.RemoveAt(i);
-                    return viewItem;
+                    return i;
                 }
             }
-            return UIViewItem.Empty;
+            return -1;
+        }
+        
+        public UIViewItem Get(string viewName)
+        {
+            int viewIndex = GetViewStackIndex(viewName);
+            UIViewItem viewItem = viewIndex < 0 ? UIViewItem.Empty : m_ViewList[viewIndex];
+            return viewItem;
         }
 
-        public UIViewItem Pop()
+        public UIViewItem Pop(UIViewItem viewItem)
         {
-            if (m_ViewList.Count > 0)
+            if (viewItem.IsPrepared())
+                return UIViewItem.Empty;
+            return Pop(viewItem.ViewName);
+        }
+        
+        private UIViewItem Pop(string viewName)
+        {
+            int viewIndex = GetViewStackIndex(viewName);
+            if (viewIndex > 0)
             {
-                int index = m_ViewList.Count - 1;
-                UIViewItem viewItem = m_ViewList[index];
-                m_ViewList.RemoveAt(index);
+                UIViewItem viewItem = m_ViewList[viewIndex];
+                m_ViewList.RemoveAt(viewIndex);
                 return viewItem;
             }
             return UIViewItem.Empty;
         }
 
-        public UIViewItem Pop(string view)
+        public void Push(UIViewItem viewItem)
         {
-            if (m_ViewList.Count > 0)
-            {
-                int index = m_ViewList.Count - 1;
-                UIViewItem viewItem = m_ViewList[index];
-                m_ViewList.RemoveAt(index);
-                return viewItem;
-            }
-            return UIViewItem.Empty;
+            if (!viewItem.IsPrepared())
+                throw new Exception("Can't push empty UIViewItem!");
+            if(Contains(viewItem.ViewName))
+                throw new Exception($"{viewItem.ViewName} has exist!");
+
+            int insertIndex = -1;
+            
+            // todo 根据 UILayer，决定当前可以插入到的索引位置
+
+            // 空栈的情况下，默认为0，插入到首位
+            insertIndex = Mathf.Max(0, insertIndex);
+            m_ViewList.Insert(insertIndex, viewItem);
         }
 
         public bool RemoveAt(int index)
@@ -105,16 +125,6 @@ namespace Nsn
             foreach (UIViewItem item in m_ViewList)
             {
                 if (item.ViewName.Equals(viewName))
-                    return true;
-            }
-            return false;
-        }
-
-        public bool Contains(UIView view)
-        {
-            foreach (UIViewItem item in m_ViewList)
-            {
-                if (item.View == view)
                     return true;
             }
             return false;

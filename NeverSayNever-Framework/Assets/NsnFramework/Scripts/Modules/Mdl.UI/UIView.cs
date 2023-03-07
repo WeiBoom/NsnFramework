@@ -7,6 +7,7 @@ namespace Nsn
     public class UIView : UIBase
     {
         public UIViewAttribute ViewInfo { get; set; }
+        
     }
 
 }

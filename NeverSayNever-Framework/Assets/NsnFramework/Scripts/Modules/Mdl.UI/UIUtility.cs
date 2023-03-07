@@ -44,5 +44,19 @@ namespace Nsn
             
             return default(T);
         }
+
+
+        #region Extension
+
+        public static bool IsPrepared(this UIViewItem viewItem)
+        {
+            if (viewItem == null || string.IsNullOrEmpty(viewItem.ViewName) || viewItem.ViewID == 0)
+                return false;
+            if (viewItem.ViewObj == null)
+                return false;
+            return true;
+        }
+
+        #endregion
     }
 }

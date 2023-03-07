@@ -39,7 +39,7 @@ namespace Nsn.EditorToolKit
 
             T asset = AssetDatabase.LoadAssetAtPath<T>(path);
             if (asset == null)
-                Debug.LogError($"[X3.UIToolKit] load editor asset failed . path : {path}");
+                Debug.LogError($"[Nsn] load editor asset failed . path : {path}");
 
             return asset;
         }

@@ -72,10 +72,10 @@ namespace Nsn.EditorToolKit
             {
                 Foldout foldout = new Foldout() { text = key};
                 var itemList = m_MenuDataDic[key];
-                foreach(var item in itemList)
+                foreach(var item in itemList)   
                 {
                     Button button = new Button() { text = item };
-                    foldout.Add(button);
+                    foldout.Add(button);  
                 }
                 m_MenuScrollVew.Add(foldout);
             }

@@ -18,14 +18,6 @@ namespace Nsn
         public bool Completed;
         public System.Object[] Params;
 
-        public void Stop()
-        {
-            // TODO
-            Running = false;
-            Completed = true;
-        }
-
-
         public static UIViewTask Empty => default(UIViewTask);
 
         public override int GetHashCode()
@@ -43,7 +35,7 @@ namespace Nsn
             return false;
         }
 
-        public static bool operator == (UIViewTask left , UIViewTask right)
+        public static bool operator ==(UIViewTask left, UIViewTask right)
         {
             return left.Equals(right);
         }
@@ -53,22 +45,26 @@ namespace Nsn
             return !left.Equals(right);
         }
 
+        public void Stop()
+        {
+            Running = false;
+            Completed = true;
+        }
+
+        public void Run()
+        {
+            if (Running || Completed)
+                return;
+            Completed = false;
+            Running = true;
+        }
+
         public void Update()
         {
-            if(!Running)
-                Running = true;
             if (Running)
             {
 
             }
-        }
-    }
-
-    public static class UIVireTaskExtent
-    {
-        public static bool IsEmpty(this UIViewTask task)
-        {
-            return task == null || task == UIViewTask.Empty;
         }
     }
 
@@ -161,6 +157,13 @@ namespace Nsn
             tasks.RemoveAt(index);
             return task;
         }
+    }
 
+    public static class UIVireTaskExtent
+    {
+        public static bool IsEmpty(this UIViewTask task)
+        {
+            return task == null || task == UIViewTask.Empty;
+        }
     }
 }

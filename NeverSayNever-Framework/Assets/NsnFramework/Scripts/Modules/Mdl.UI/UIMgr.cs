@@ -80,13 +80,21 @@ namespace Nsn
 
         public void Open(string view)
         {
+            if(mViewStack.Contains(view))
+            {
+                mViewStack.Pop();
+            }
+
+
             UIViewTask task = mViewTaskQueue.Get(view);
-            if(task == UIViewTask.Empty)
+            // 当前没有正在加载的UI
+            if(task.IsEmpty())
             {
                 AddTaskToQueue(view);
             }
             else
             {
+                // 如果当前UI正在关闭，又打算打开，那么停止关闭的操作
                 if (task.TaskType == UIViewTaskType.Close)
                     NsnLog.Error($"[NsnFramework], UIMdl.Open , {view} is closing but try open it");
                 task.TaskType = UIViewTaskType.Open;
@@ -104,7 +112,6 @@ namespace Nsn
             {
                 mViewTaskQueue.Remove(view);
             }
-
         }
 
         public bool IsOpened(string view)
@@ -143,13 +150,10 @@ namespace Nsn
                 NsnLog.Error($"task [{task.ViewID}] is running!");
                 return;
             }
-            task.Running = true;
-
-            //mResMgr.LoadAsset<GameObject>(task.ViewName);
+            task.Run();
 
             // step1 : load ui asset
             //mResMgr.LoadUIAsset(task.ViewName, OnUIAssetLoadCompleted);
-
         }
 
         private void OnUIAssetLoadCompleted(object obj)
@@ -157,7 +161,6 @@ namespace Nsn
             GameObject uiObj = (GameObject)obj;
             UIView uiView = uiObj.GetComponent<UIView>();
             mViewStack.Add(uiView);
-
         }
 
     }

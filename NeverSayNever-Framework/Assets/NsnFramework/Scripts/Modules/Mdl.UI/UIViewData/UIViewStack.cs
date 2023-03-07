@@ -67,6 +67,18 @@ namespace Nsn
             return UIViewItem.Empty;
         }
 
+        public UIViewItem Pop(string view)
+        {
+            if (m_ViewList.Count > 0)
+            {
+                int index = m_ViewList.Count - 1;
+                UIViewItem viewItem = m_ViewList[index];
+                m_ViewList.RemoveAt(index);
+                return viewItem;
+            }
+            return UIViewItem.Empty;
+        }
+
         public bool RemoveAt(int index)
         {
             if (index < 0 || index >= m_ViewList.Count)

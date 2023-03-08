@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using UnityEngine;
 
 namespace Nsn
 {
@@ -9,16 +10,27 @@ namespace Nsn
         Close,
     }
 
+    public enum UIViewTaskStatus
+    {
+        None,
+        Running,
+        Complete,
+        End,
+    }
+
     public struct UIViewTask
     {
         public UIViewTaskType TaskType;
         public string ViewName;
         public int ViewID;
-        public bool Running;
-        public bool Completed;
-        public System.Object[] Params;
+        public object[] Params;
 
-        public static UIViewTask Empty => default(UIViewTask);
+        private UIViewTaskStatus m_Status;
+        public UIViewTaskStatus Status => m_Status;
+
+        private System.Action<UIViewItem> m_TaskCompleteCallback;
+        
+        public static UIViewTask Empty => default;
 
         public override int GetHashCode()
         {
@@ -47,24 +59,42 @@ namespace Nsn
 
         public void Stop()
         {
-            Running = false;
-            Completed = true;
+            m_Status = UIViewTaskStatus.End;
         }
 
-        public void Run()
+        public void Tick()
         {
-            if (Running || Completed)
-                return;
-            Completed = false;
-            Running = true;
-        }
-
-        public void Update()
-        {
-            if (Running)
+            if (m_Status == UIViewTaskStatus.None)
+            {
+                m_Status = UIViewTaskStatus.Running;
+                Framework.GetManager<IResMgr>().LoadAsset<GameObject>(
+                    ViewName, OnComplete);
+            }
+            
+            if (m_Status == UIViewTaskStatus.Running)
             {
 
             }
+
+            if (m_Status == UIViewTaskStatus.Complete)
+            {
+                m_Status = UIViewTaskStatus.End;
+            }
+        }
+
+        private void OnComplete(object obj)
+        {     
+            m_Status = UIViewTaskStatus.Complete;       
+
+            UIViewItem viewItem = new UIViewItem(this.ViewName, this.ViewID);
+            viewItem.OnCreate((GameObject)obj);
+            viewItem.OnRefresh(this.Params);
+            m_TaskCompleteCallback?.Invoke(viewItem);
+        }
+
+        public void RegisterCompleteCallback(System.Action<UIViewItem> callback)
+        {
+            m_TaskCompleteCallback = callback;
         }
     }
 
@@ -159,11 +189,11 @@ namespace Nsn
         }
     }
 
-    public static class UIVireTaskExtent
+    public static class UIViewTaskExtent
     {
         public static bool IsEmpty(this UIViewTask task)
         {
-            return task == null || task == UIViewTask.Empty;
+            return task == UIViewTask.Empty;
         }
     }
 }

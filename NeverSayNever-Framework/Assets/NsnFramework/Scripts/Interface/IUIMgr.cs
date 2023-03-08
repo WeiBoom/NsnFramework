@@ -6,7 +6,7 @@ namespace Nsn
 {
     public interface IUIMgr : IManager
     {
-        void Open(string view);
+        void Open(string view, params object[] args);
 
         void Close(string view);
 

@@ -25,7 +25,7 @@ namespace Nsn
         public UIViewInfo(UIViewConfig config)
         {
             this.config = config;
-            // TODO , Í¨¹ýconfig ³õÊ¼»¯AttributeÊý¾Ý
+            // TODO , Í¨ï¿½ï¿½config ï¿½ï¿½Ê¼ï¿½ï¿½Attributeï¿½ï¿½ï¿½ï¿½
         }
     }
 
@@ -75,11 +75,11 @@ namespace Nsn
 
         public void Open(string view, params object[] userData)
         {
-            // ²é¿´µ±Ç°ÊÇ·ñÓÐÕýÔÚ½øÐÐµÄÈÎÎñ
+            // ï¿½é¿´ï¿½ï¿½Ç°ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú½ï¿½ï¿½Ðµï¿½ï¿½ï¿½ï¿½ï¿½
             UIViewTask task = mViewTaskQueue.Get(view);
             if (!task.IsEmpty())
             {
-                // Situation 1 µ±Ç°UIÒÑ¾­ÓÐÕýÔÚÖ´ÐÐµ±È»Task
+                // Situation 1 ï¿½ï¿½Ç°UIï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½Ðµï¿½È»Task
                 if (task.TaskType == UIViewTaskType.Close)
                 {
                     NsnLog.Warning($"[NsnFramework], UIMgr.Open , {view} is closing but try open it");
@@ -93,22 +93,22 @@ namespace Nsn
                 }
             }
             
-            // Situation 2 . UI½çÃæÒÑ¾­´ò¿ª
+            // Situation 2 . UIï¿½ï¿½ï¿½ï¿½ï¿½Ñ¾ï¿½ï¿½ï¿½
             UIViewItem viewItem = mViewStack.Get(view);
             if(viewItem.IsPrepared())
             {
-                // ³öÕ»ÔÙÈëÕ»¡¢ÐÞ¸ÄUIÕ»µÄË³Ðò,²¢¸üÐÂÊý¾Ý
+                // ï¿½ï¿½Õ»ï¿½ï¿½ï¿½ï¿½Õ»ï¿½ï¿½ï¿½Þ¸ï¿½UIÕ»ï¿½ï¿½Ë³ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                 mViewStack.Pop(viewItem);
                 mViewStack.Push(viewItem);
                 viewItem.OnRefresh(userData);
                 return;
             }
 
-            // Situation 3 . µ±Ç°Ã»ÓÐUITask
+            // Situation 3 . ï¿½ï¿½Ç°Ã»ï¿½ï¿½UITask
             task = AddTaskToQueue(view);
             task.Params = userData;
             
-            // Situation 4 . Ö»ÓÐÒ»¸ötaskÔòµ±Ç°Ö¡Ö±½ÓÖ´ÐÐ
+            // Situation 4 . Ö»ï¿½ï¿½Ò»ï¿½ï¿½taskï¿½ï¿½Ç°Ö¡Ö±ï¿½ï¿½Ö´ï¿½ï¿½
             if(mViewTaskQueue.Count == 1)
                 ExecuteTask(task);
         }
@@ -149,7 +149,7 @@ namespace Nsn
 
         private void ExecuteTask(UIViewTask task)
         {
-            if(task.Running || task.Completed)
+            if(task.Status != UIViewTaskStatus.None)
             {
                 NsnLog.Error($"task [{task.ViewID}] is running!");
                 return;

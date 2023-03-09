@@ -39,10 +39,10 @@ namespace Nsn
                 Pop(viewName);
         }
         
-        public void Remove(UIView view)
+        public void Remove(UIViewItem view)
         {
             if (view != null)
-                Remove(view.ViewInfo.ViewName);
+                Remove(view.ViewName);
         }
 
         private int GetViewStackIndex(string viewName)
@@ -92,8 +92,20 @@ namespace Nsn
 
             int insertIndex = -1;
             
-            // todo 根据 UILayer，决定当前可以插入到的索引位置
+            for (int i = 0; i < m_ViewList.Count; i++)
+            {
+                if (m_ViewList[i].Layer == viewItem.Layer)
+                    insertIndex = i + 1;
+            }
 
+            if (insertIndex == -1)
+            {
+                for (int i = 0; i < m_ViewList.Count; i++)
+                {
+                    if (viewItem.Layer > m_ViewList[i].Layer)
+                        insertIndex = i + 1;
+                }
+            }
             // 空栈的情况下，默认为0，插入到首位
             insertIndex = Mathf.Max(0, insertIndex);
             m_ViewList.Insert(insertIndex, viewItem);

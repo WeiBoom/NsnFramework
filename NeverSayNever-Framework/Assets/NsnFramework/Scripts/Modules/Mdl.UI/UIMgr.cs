@@ -25,47 +25,47 @@ namespace Nsn
         public UIViewInfo(UIViewConfig config)
         {
             this.config = config;
-            // TODO , ͨ��config ��ʼ��Attribute����
         }
     }
 
     public class UIMgr : IUIMgr
     {
-        private Dictionary<int ,UIViewInfo> mViewInfos;
-        private Dictionary<string,UIViewInfo> mViewInfosName2ID;
+        private UIRoot m_UIRoot;
+        private UIViewStack m_UIViewStack;
+        private UIViewTaskQueue m_UIViewTaskQueue;
 
-        private UIRoot mUIRoot;
-        private UIViewStack mViewStack;
-        private UIViewTaskQueue mViewTaskQueue;
+        private Dictionary<string, UIViewInfo> m_UIViewInfoDic;
 
         private UIViewTask mCurTask;
 
         public void OnInitialized(params object[] args)
         {
-            mViewInfos = new Dictionary<int ,UIViewInfo>();
-            mViewInfosName2ID = new Dictionary<string,UIViewInfo>();
+            m_UIViewInfoDic = new Dictionary<string, UIViewInfo>();
+            m_UIViewStack = new UIViewStack();
+            m_UIViewTaskQueue = new UIViewTaskQueue();
 
-            mViewStack = new UIViewStack();
-            mViewTaskQueue = new UIViewTaskQueue();
+            // todo 
+            // 1、UI模块初始化后，需要加载UIViewInfo，初始化各项配置的UI信息
+            // 2、配合UIMgr，需要先在工具库新增UI配置相关的工具
         }
 
         public void OnDisposed()
         {
-            mViewInfos.Clear();
-            mViewInfosName2ID.Clear();
+            m_UIViewInfoDic.Clear();
+            m_UIViewInfoDic = null;
+            
+            m_UIViewStack.Clear();
+            m_UIViewStack = null;
 
-            mViewInfos = null;
-            mViewInfosName2ID = null;
-
-            mViewStack.Clear();
-            mViewTaskQueue.Clear();
+            m_UIViewTaskQueue.Clear();
+            m_UIViewTaskQueue = null;
         }
 
         public void OnUpdate(float deltaTime)
         {
             if(mCurTask.IsEmpty())
             {
-                mCurTask = mViewTaskQueue.Dequeue();
+                mCurTask = m_UIViewTaskQueue.Dequeue();
             }
             if (mCurTask != null && mCurTask != UIViewTask.Empty)
             {
@@ -75,59 +75,70 @@ namespace Nsn
 
         public void Open(string view, params object[] userData)
         {
-            // �鿴��ǰ�Ƿ������ڽ��е�����
-            UIViewTask task = mViewTaskQueue.Get(view);
+            UIViewTask task = m_UIViewTaskQueue.Get(view);
+            // Situation 1 当前存在加载任务
             if (!task.IsEmpty())
             {
-                // Situation 1 ��ǰUI�Ѿ�������ִ�е�ȻTask
+                // Situation 1.1 task正在执行关闭操作,则停止,并移除队列中
                 if (task.TaskType == UIViewTaskType.Close)
                 {
                     NsnLog.Warning($"[NsnFramework], UIMgr.Open , {view} is closing but try open it");
                     task.Stop();
-                    mViewTaskQueue.Remove(task.ViewName);
+                    m_UIViewTaskQueue.Remove(task.ViewName);
                 }
                 else
                 {
+                    // Situation 1.2 更新task数据, 不做其他任何处理
+                    NsnLog.Warning($"[NsnFramework], UIMgr.Open , {view} is opening, just update userdata");
                     task.Params = userData;
                     return;
                 }
             }
             
-            // Situation 2 . UI�����Ѿ���
-            UIViewItem viewItem = mViewStack.Get(view);
+            // Situation 2 . 已经存在UI Item
+            UIViewItem viewItem = m_UIViewStack.Get(view);
             if(viewItem.IsPrepared())
             {
-                // ��ջ����ջ���޸�UIջ��˳��,����������
-                mViewStack.Pop(viewItem);
-                mViewStack.Push(viewItem);
+                m_UIViewStack.Pop(viewItem);
+                m_UIViewStack.Push(viewItem);
                 viewItem.OnRefresh(userData);
                 return;
             }
 
-            // Situation 3 . ��ǰû��UITask
+            // Situation 3 . 不存在UI，重新创建加载task
             task = AddTaskToQueue(view);
+            if (task.IsEmpty())
+                return;
+
             task.Params = userData;
             
-            // Situation 4 . ֻ��һ��task��ǰֱ֡��ִ��
-            if(mViewTaskQueue.Count == 1)
+            // Situation 4 . ֻ如果只有一个任务，则立即执行
+            if(m_UIViewTaskQueue.Count == 1)
                 ExecuteTask(task);
         }
 
         public void Close(string view)
         {
-            // todo
+            UIViewItem viewItem = m_UIViewStack.Get(view);
+            if (!viewItem.IsPrepared())
+                return;
+
+            m_UIViewStack.Remove(viewItem);
+            viewItem.OnClose();
+            
         }
 
         public bool IsOpened(string view)
         {
-            if(mViewStack.Contains(view))
+            if(m_UIViewStack.Contains(view))
                 return true;
             return false;
         }
 
+
         private UIViewTask AddTaskToQueue(string view)
         {
-            mViewInfosName2ID.TryGetValue(view, out UIViewInfo viewInfo);
+            m_UIViewInfoDic.TryGetValue(view, out UIViewInfo viewInfo);
             if (viewInfo != null)
             {
                 UIViewTask task = new UIViewTask()
@@ -137,7 +148,7 @@ namespace Nsn
                     ViewID = viewInfo.ID,
                 };
                 task.RegisterCompleteCallback(OnTaskComplete);
-                mViewTaskQueue.Enqueue(task);
+                m_UIViewTaskQueue.Enqueue(task);
                 return task;
             }
             else
@@ -159,9 +170,8 @@ namespace Nsn
 
         private void OnTaskComplete(UIViewItem viewItem)
         {
-            mViewStack.Push(viewItem);
+            m_UIViewStack.Push(viewItem);
         }
     }
-
 
 }

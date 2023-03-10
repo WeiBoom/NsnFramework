@@ -20,6 +20,7 @@ namespace Nsn.EditorToolKit
 
         // Visual Element
         private NsnDialogueEditorWindow m_DialogueEditorWindow;
+        private NsnDialogueSearchEditorWindow m_DialogueSearchEditorWindow;
         private MiniMap m_MiniMap;
 
         private int m_NameErrorAmount = 0;
@@ -46,11 +47,35 @@ namespace Nsn.EditorToolKit
 
             AddManipulators();
             AddGridBackground();
+            AddSearchWindow();
             AddMiniMap();
 
             AddSytleSheets();
             AddMiniMapStyles();
+
+            OnElementsDeleted();
+            OnGroupElementsAdded();
+            OnGroupElementsRemoved();
+            OnGroupRenamed();
+            OnGraphViewChanged();
         }
+
+        public override List<Port> GetCompatiblePorts(Port startPort, NodeAdapter nodeAdapter)
+        {
+            List<Port> compatiblePorts = new List<Port>();
+            ports.ForEach(port =>
+            {
+                if (startPort == port)
+                    return;
+                if (startPort.node == port.node)
+                    return;
+                if (startPort.direction == port.direction)
+                    return;
+                compatiblePorts.Add(port);
+            });
+            return compatiblePorts;
+        }
+
 
         private void AddManipulators()
         {
@@ -70,6 +95,14 @@ namespace Nsn.EditorToolKit
             GridBackground gridBackground = new GridBackground();
             gridBackground.StretchToParentSize();
             Insert(0, gridBackground);
+        }
+
+        private void AddSearchWindow()
+        {
+            if (m_DialogueSearchEditorWindow == null)
+                m_DialogueSearchEditorWindow = ScriptableObject.CreateInstance<NsnDialogueSearchEditorWindow>();
+            m_DialogueSearchEditorWindow.Initialize(this);
+            nodeCreationRequest = context => SearchWindow.Open(new SearchWindowContext(context.screenMousePosition), m_DialogueSearchEditorWindow);
         }
 
         private void AddMiniMap()
@@ -132,17 +165,68 @@ namespace Nsn.EditorToolKit
 
         public void AddUngroupedNode(NsnDialogueNode node)
         {
-            // todo
+            string nodeName = node.DialogueName.ToLower();
+
+            if(!m_UngroupedNodes.ContainsKey(nodeName))
+            {
+                NsnDialogueNodeErrorData nodeErrorData = new NsnDialogueNodeErrorData();
+                nodeErrorData.Nodes.Add(node);
+                m_UngroupedNodes.Add(nodeName, nodeErrorData);
+                return;
+            }
+
+            var ungroupedNodesList = m_UngroupedNodes[nodeName].Nodes;
+            ungroupedNodesList.Add(node);
+
+            Color errorColor = m_UngroupedNodes[nodeName].ErrorData.Color;
+            node.SetErrorStyle(errorColor);
+
+            if(ungroupedNodesList.Count == 2)
+            {
+                ++NameErrorAmount;
+                ungroupedNodesList[0].SetErrorStyle(errorColor);
+            }
         }
 
         public void RemoveGroupedNode(NsnDialogueNode node, NsnDialogueGroup group)
         {
-            // todo
+            string nodeName = node.DialogueName.ToLower();
+            node.Group = null;
+
+            List<NsnDialogueNode> groupedNodeList = m_GroupedNodes[group][nodeName].Nodes;
+            groupedNodeList.Remove(node);
+            node.ResetErrorStyle();
+
+            if (groupedNodeList.Count == 1)
+            {
+                --NameErrorAmount;
+                groupedNodeList[0].ResetErrorStyle();
+            }
+            else if(groupedNodeList.Count == 0)
+            {
+                m_GroupedNodes[group].Remove(nodeName);
+                if(m_GroupedNodes[group].Count == 0)
+                    m_GroupedNodes.Remove(group);
+            }
         }
 
         public void RemoveUngroupedNode(NsnDialogueNode node)
         {
-            // todo
+            string nodeName = node.DialogueName.ToLower();
+            List<NsnDialogueNode> groupedNodeList = m_UngroupedNodes[nodeName].Nodes;
+
+            groupedNodeList.Remove(node);
+            node.ResetErrorStyle();
+
+            if(groupedNodeList.Count == 1)
+            {
+                --NameErrorAmount;
+                groupedNodeList[0].ResetErrorStyle();
+            }
+            else if (groupedNodeList.Count == 0)
+            {
+                m_UngroupedNodes.Remove(nodeName);
+            }
         }
 
         private void AddGroup(NsnDialogueGroup group)
@@ -170,6 +254,182 @@ namespace Nsn.EditorToolKit
                 groupsList[0].SetErrorStyle(errorColor);
             }
         }
+
+        private void RemoveGroup(NsnDialogueGroup group)
+        {
+            string oldGroupName = group.PreTitle.ToLower();
+            List<NsnDialogueGroup> groupsList = m_Groups[oldGroupName].Groups;
+            groupsList.Remove(group);
+
+            group.ResetStyle();
+            if(groupsList.Count == 1)
+            {
+                --NameErrorAmount;
+                groupsList[0].ResetStyle();
+                return;
+            }
+            else if(groupsList.Count == 0)
+            {
+                m_Groups.Remove(oldGroupName);
+            }
+        }
+
+        private void OnElementsDeleted()
+        {
+            deleteSelection = (operationName, askUser) => {
+                Type groupType = typeof(NsnDialogueGroup);
+                Type edgeType = typeof(Edge);
+
+                List<NsnDialogueGroup> groupsToDelete = new List<NsnDialogueGroup>();
+                List<NsnDialogueNode> nodesToDelete = new List<NsnDialogueNode>();
+                List<Edge> edgesToDelete = new List<Edge>();
+
+                foreach(GraphElement element in selection)
+                {
+                    if (element is NsnDialogueNode node)
+                    {
+                        nodesToDelete.Add(node);
+                    }
+                    else if (element.GetType() == edgeType)
+                    {
+                        Edge edge = (Edge)element;
+                        edgesToDelete.Add(edge);
+                    }
+                    else if (element.GetType() == groupType)
+                    {
+                        NsnDialogueGroup group = (NsnDialogueGroup)element;
+                        groupsToDelete.Add(group);
+                    }
+                }
+
+                // delete group
+                foreach (var group in groupsToDelete)
+                {
+                    List<NsnDialogueNode> groupNodes = new List<NsnDialogueNode>();
+                    foreach(GraphElement element in group.containedElements)
+                    {
+                        if (!(element is NsnDialogueNode))
+                            continue;
+                        NsnDialogueNode node = (NsnDialogueNode)element;
+                        groupNodes.Add(node);
+                    }
+
+                    group.RemoveElements(groupNodes);
+                    RemoveGroup(group);
+                    RemoveElement(group);
+                }
+                // delete edge
+                DeleteElements(edgesToDelete);
+                // delete node
+                foreach (var nodeToDelete in nodesToDelete)
+                {
+                    if (nodeToDelete.Group != null)
+                    {
+                        nodeToDelete.Group.RemoveElement(nodeToDelete);
+                    }
+
+                    RemoveUngroupedNode(nodeToDelete);
+                    nodeToDelete.DisconnectAllPorts();
+                    RemoveElement(nodeToDelete);
+                }
+            };
+
+        }
+
+        private void OnGroupElementsAdded()
+        {
+            elementsAddedToGroup = (group, elements) =>
+            {
+                foreach (GraphElement element in elements)
+                {
+                    if (!(element is NsnDialogueNode))
+                    {
+                        continue;
+                    }
+
+                    NsnDialogueGroup dialogueGroup = (NsnDialogueGroup)group;
+                    NsnDialogueNode node = (NsnDialogueNode)element;
+
+                    RemoveUngroupedNode(node);
+                    AddGroupedNode(node, dialogueGroup);
+                }
+            };
+        }
+
+        private void OnGroupElementsRemoved()
+        {
+            elementsRemovedFromGroup = (group, elements) =>
+            {
+                foreach (GraphElement element in elements)
+                {
+                    if (!(element is NsnDialogueNode))
+                        continue;
+
+                    NsnDialogueGroup dialogueGroup = (NsnDialogueGroup)group;
+                    NsnDialogueNode node = (NsnDialogueNode)element;
+
+                    RemoveGroupedNode(node, dialogueGroup);
+                    AddUngroupedNode(node);
+                }
+            };
+        }
+
+        private void OnGroupRenamed()
+        {
+            groupTitleChanged = (group, newTitle) =>
+            {
+                NsnDialogueGroup dialogueGroup = (NsnDialogueGroup)group;
+                dialogueGroup.title = newTitle;//newTitle.RemoveWhitespaces().RemoveSpecialCharacters();
+
+                if (string.IsNullOrEmpty(dialogueGroup.title))
+                {
+                    if (!string.IsNullOrEmpty(dialogueGroup.PreTitle))
+                        ++NameErrorAmount;
+                }
+                else
+                {
+                    if (string.IsNullOrEmpty(dialogueGroup.PreTitle))
+                        --NameErrorAmount;
+                }
+
+                RemoveGroup(dialogueGroup);
+                dialogueGroup.PreTitle = dialogueGroup.title;
+                AddGroup(dialogueGroup);
+            };
+        }
+
+        private void OnGraphViewChanged()
+        {
+            graphViewChanged = (changes) =>
+            {
+                if (changes.edgesToCreate != null)
+                {
+                    foreach (Edge edge in changes.edgesToCreate)
+                    {
+                        NsnDialogueNode nextNode = (NsnDialogueNode)edge.input.node;
+                        NsnDialogueChoiceSaveData choiceData = (NsnDialogueChoiceSaveData)edge.output.userData;
+                        choiceData.NodeID = nextNode.ID;
+                    }
+                }
+
+                if (changes.elementsToRemove != null)
+                {
+                    Type edgeType = typeof(Edge);
+                    foreach (GraphElement element in changes.elementsToRemove)
+                    {
+                        if (element.GetType() != edgeType)
+                            continue;
+
+                        Edge edge = (Edge)element;
+                        NsnDialogueChoiceSaveData choiceData = (NsnDialogueChoiceSaveData)edge.output.userData;
+                        choiceData.NodeID = "";
+                    }
+                }
+
+                return changes;
+            };
+        }
+
 
         private IManipulator CreateNodeContextualMenu(string actionTitle, DialogueNodeType dialogueType)
         {
@@ -240,6 +500,23 @@ namespace Nsn.EditorToolKit
             Vector2 localMousePosition = contentViewContainer.WorldToLocal(worldMousePosition);
             return localMousePosition;
         }
+
+        public void ClearGraph()
+        {
+            graphElements.ForEach(graphElement => RemoveElement(graphElement));
+
+            m_Groups.Clear();
+            m_GroupedNodes.Clear();
+            m_UngroupedNodes.Clear();
+
+            NameErrorAmount = 0;
+        }
+
+        public void ToggleMiniMap()
+        {
+            m_MiniMap.visible = !m_MiniMap.visible;
+        }
+
     }
 }
 

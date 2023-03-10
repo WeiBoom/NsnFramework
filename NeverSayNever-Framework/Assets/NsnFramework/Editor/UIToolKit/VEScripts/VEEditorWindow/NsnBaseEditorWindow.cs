@@ -47,7 +47,15 @@ namespace Nsn.EditorToolKit
         private void OnDestroy() => OnClose();
 
 
-        protected virtual void OnCreateGUI()
+        protected virtual void OnCreateGUI() { }
+
+        protected virtual void OnShow() { }
+
+        protected virtual void OnUpdate(){}
+        
+        protected virtual void OnClose(){}
+
+        protected void AddWindowVEAssetToRoot()
         {
             string treeAssetName = this.GetType().Name;
             var visualTree = VEToolKit.LoadVEAssetVisualTree(treeAssetName);
@@ -55,12 +63,6 @@ namespace Nsn.EditorToolKit
             m_Root.Add(visualElement);
             visualElement.StretchToParentSize();
         }
-
-        protected virtual void OnShow() { }
-
-        protected virtual void OnUpdate(){}
-        
-        protected virtual void OnClose(){}
     }
 
     public class NsnBaseEditorWidget : ScriptableObject

@@ -25,14 +25,14 @@ namespace Nsn.EditorToolKit
 
         protected override void OnCreateGUI()
         {
-            base.OnCreateGUI();
+            AddWindowVEAssetToRoot();
+
             // 准备所需的数据
             InitUIToolKitData();
             // 初始化获取UIElement
             InitUIElement();
             // 初始化功能列表
             InitMenuList();
-
         }
 
         private void InitUIToolKitData()

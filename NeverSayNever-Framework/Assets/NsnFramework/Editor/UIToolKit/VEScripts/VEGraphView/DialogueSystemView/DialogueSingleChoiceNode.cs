@@ -27,6 +27,7 @@ namespace Nsn.EditorToolKit
             foreach(var choice in Choices)
             {
                 Port port = CreatePort(choice.Content);
+                port.portName = "Output";
                 port.userData = choice;
                 outputContainer.Add(port);
             }

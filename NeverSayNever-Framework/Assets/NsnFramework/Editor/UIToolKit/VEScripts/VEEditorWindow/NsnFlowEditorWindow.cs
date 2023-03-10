@@ -23,9 +23,9 @@ namespace Nsn.EditorToolKit
 
         protected override void OnCreateGUI()
         {
-            base.OnCreateGUI();
-            InitElements();
+            AddWindowVEAssetToRoot();
 
+            InitElements();
             m_Root.StretchToParentSize();
             m_Content.StretchToParentSize();
         }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor.Experimental.GraphView;
 using UnityEditor.UIElements;
 using UnityEngine;
@@ -60,11 +61,11 @@ namespace Nsn.EditorToolKit
         public virtual void OnDraw()
         {
             DrawTitle();
-            DrawPorts();
+            DrawInputPort();
             DrawExtensionContainer();
         }
 
-        private void DrawTitle()
+        protected void DrawTitle()
         {
             TextField dialogueNameTF = new TextField() { value = DialogueName };
 
@@ -102,31 +103,33 @@ namespace Nsn.EditorToolKit
                     m_DialogueGraphView.AddGroupedNode(this, group);
                 }
             });
+
+            titleContainer.Insert(0, dialogueNameTF);
         }
 
-        private void DrawPorts()
+        protected void DrawInputPort()
         {
             Port inputPort = CreatePort("Dialogue Connection", Orientation.Horizontal, Direction.Input, Port.Capacity.Multi);
+            inputPort.portName = "Input";
             inputContainer.Add(inputPort);
         }
 
-        private void DrawExtensionContainer()
+        protected void DrawExtensionContainer()
         {
             VisualElement customDataContainer = new VisualElement();
-
             customDataContainer.AddToClassList("ds-node__custom-data-container");
 
-            Foldout contentTestFoldout = new Foldout()
-            {
-                text = title,
-            };
+            Foldout contentTestFoldout = new Foldout() { text = title };
 
-            TextField contentTextField = new TextField() { value = "Dialogue Text" };
+            TextField contentTextField = new TextField() { value = TextContent };
+            contentTextField.RegisterValueChangedCallback(ce => { TextContent = ce.newValue; });
             contentTextField.AddToClassList("ds-node__text-field");
             contentTextField.AddToClassList("ds-node__quote-text-field");
 
             contentTestFoldout.Add(contentTextField);
+
             customDataContainer.Add(contentTestFoldout);
+            
             extensionContainer.Add(customDataContainer);
         }
 
@@ -139,6 +142,12 @@ namespace Nsn.EditorToolKit
 
 
         #region Ports
+
+        public bool IsStartingNode()
+        {
+            Port inputPort = (Port)inputContainer.Children().First();
+            return !inputPort.connected;
+        }
 
         private void DisconnectInputPorts()
         {
@@ -158,6 +167,12 @@ namespace Nsn.EditorToolKit
                     continue;
                 m_DialogueGraphView.DeleteElements(port.connections);
             }
+        }
+
+        public void DisconnectAllPorts()
+        {
+            DisconnectInputPorts();
+            DisconnectOutputPorts();
         }
 
         #endregion

@@ -30,9 +30,10 @@ namespace Nsn.EditorToolKit
             Button addChoiceButton = new Button(() =>
             {
                 var data = new NsnDialogueChoiceSaveData() { Content = "New Choice" };
+                Choices.Add(data);
                 var port = CreateChoicePort(data);
                 outputContainer.Add(port);
-            }) { name = "Add Choice" };
+            }) { text = "Add Choice" };
 
             addChoiceButton.AddToClassList("ds-node__button");
             mainContainer.Add(addChoiceButton);
@@ -65,7 +66,7 @@ namespace Nsn.EditorToolKit
                 Choices.Remove(choiceData);
 
                 m_DialogueGraphView.RemoveElement(choicePort);
-            }){ name = "X" };
+            }){ text = "X" };
 
             deleteChoiceButton.AddToClassList("ds-node__button");
 
@@ -77,7 +78,6 @@ namespace Nsn.EditorToolKit
 
             choicePort.Add(choiceTextField);
             choicePort.Add(deleteChoiceButton);
-
             return choicePort;
         }
     }

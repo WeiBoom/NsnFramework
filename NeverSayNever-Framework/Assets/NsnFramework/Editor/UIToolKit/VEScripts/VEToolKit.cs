@@ -35,7 +35,7 @@ namespace Nsn.EditorToolKit
         public static T LoadVEAsset<T>(string assetName, VEAssetType assType) where T : UnityEngine.Object
         {
             string assetType = assType.ToString();
-            string path = $"{NEditorConst.NsnUIToolKitAssetRootPath}/{assetType}/{assetName}.{assetType}";
+            string path = $"{NEditorConst.NsnToolKitAssetRootPath}/{assetType}/{assetName}.{assetType}";
 
             T asset = AssetDatabase.LoadAssetAtPath<T>(path);
             if (asset == null)
@@ -47,7 +47,7 @@ namespace Nsn.EditorToolKit
         
         public static VisualElement LoadVETemplateAsset(string templateName)
         {
-            string path = $"{NEditorConst.NsnUIToolKitAssetRootPath}/uxml/{templateName}.uxml";
+            string path = $"{NEditorConst.NsnToolKitAssetRootPath}/uxml/{templateName}.uxml";
             VisualTreeAsset visualTreeAsset = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(path);
             VisualElement visualElement = visualTreeAsset.CloneTree();
             return visualElement;

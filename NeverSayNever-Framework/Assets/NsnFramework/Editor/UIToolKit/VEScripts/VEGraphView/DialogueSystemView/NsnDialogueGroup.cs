@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace Nsn.EditorToolKit
 {
@@ -24,6 +25,13 @@ namespace Nsn.EditorToolKit
 
             m_DefaultBorderColor = contentContainer.style.borderBottomColor.value;
             m_DefaultBorderWidth = contentContainer.style.borderBottomWidth.value;
+
+            float bgColorV = 100 / 255f;
+            contentContainer.style.backgroundColor = new Color(bgColorV, bgColorV, bgColorV, 0.5f);
+
+            var titleContainer = contentContainer.Q<VisualElement>("titleContainer");
+            float bgTitleColorV = 39 / 255f;
+            titleContainer.style.backgroundColor = new Color(bgTitleColorV, bgTitleColorV, bgTitleColorV, 1);
         }
 
 

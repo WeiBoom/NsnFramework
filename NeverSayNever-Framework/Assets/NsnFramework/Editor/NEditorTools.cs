@@ -80,15 +80,15 @@ namespace Nsn.EditorToolKit
         /// <summary>
         /// 创建文件夹
         /// </summary>
-        /// <param name="folderPath"></param>
-        public static void CreateDirectory(string folderPath)
+        /// <param name="folderPath">文件夹全路径</param>
+        public static void CreateFolder(string folderPath)
         {
             if (string.IsNullOrEmpty(folderPath))
             {
                 Debug.LogError("所需创建的文件夹路径为空");
                 return;
             }
-            
+
             if (!Directory.Exists(folderPath))
             {
                 Debug.Log($"创建文件！ 路径：{folderPath}");
@@ -98,6 +98,39 @@ namespace Nsn.EditorToolKit
             {
                 Debug.LogWarning($"文件夹已经存在！ 路径：{folderPath}");
             }
+        }
+
+
+        /// <summary>
+        /// 在工程目录下创建文件夹
+        /// </summary>
+        /// <param name="parentFolderPath">目标文件夹父目录</param>
+        /// <param name="newFolderName">目标文件夹名</param>
+        /// <returns></returns>
+        public static string CreateProjFolder(string parentFolderPath, string newFolderName)
+        {
+            if (AssetDatabase.IsValidFolder($"{parentFolderPath}/{newFolderName}"))
+                return string.Empty;
+            return AssetDatabase.CreateFolder(parentFolderPath, newFolderName);
+        }
+
+
+        public static T CreateAsset<T>(string path, string assetName) where T : ScriptableObject
+        {
+            string fullPath = $"{path}/{assetName}.asset";
+            T asset = LoadAsset<T>(path, assetName);
+            if (asset == null)
+            {
+                asset = ScriptableObject.CreateInstance<T>();
+                AssetDatabase.CreateAsset(asset, fullPath);
+            }
+            return asset;
+        }
+
+        public static T LoadAsset<T>(string path, string assetName) where T : ScriptableObject
+        {
+            string fullPath = $"{path}/{assetName}.asset";
+            return AssetDatabase.LoadAssetAtPath<T>(fullPath);
         }
 
         /// <summary>

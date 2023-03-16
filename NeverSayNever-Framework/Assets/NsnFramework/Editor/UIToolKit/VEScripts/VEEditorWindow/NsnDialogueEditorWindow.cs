@@ -28,8 +28,8 @@ namespace Nsn.EditorToolKit
 
         protected override void OnCreateGUI()
         {
-            AddDialogueGraphView();
             AddToolBar();
+            AddDialogueGraphView();
 
             var styleSheet = VEToolKit.LoadVEAssetStyleSheet("NsnDialogueVariables");
             m_Root.styleSheets.Add(styleSheet);
@@ -91,7 +91,9 @@ namespace Nsn.EditorToolKit
                 return;
             }
 
+            VEToolKit
             // todo
+            NEditorConst.
         }
 
         private void Load()

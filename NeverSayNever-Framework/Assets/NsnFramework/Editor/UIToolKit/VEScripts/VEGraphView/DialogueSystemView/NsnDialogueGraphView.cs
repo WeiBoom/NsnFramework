@@ -28,7 +28,7 @@ namespace Nsn.EditorToolKit
         {
             get { return m_NameErrorAmount; }
             set { 
-                m_NameErrorAmount = value;
+                m_NameErrorAmount = value; 
                 // m_NameErrorAmount 是递增的,只要曾大于1，就设为false，不用一直刷新
                 if(NameErrorAmount == 0)
                     m_DialogueEditorWindow.EnableSaving(true);

@@ -34,7 +34,7 @@ namespace Nsn.EditorToolKit
             else
                 MenuConfigList.Clear();
 
-            string menuConfigPath = $"{NEditorConst.NsnUIToolKitConfigPath}/NsnVEMenuConfig.json";
+            string menuConfigPath = $"{NEditorConst.NsnToolKitConfigPath}/NsnVEMenuConfig.json";
 
             if(System.IO.File.Exists(menuConfigPath))
             {

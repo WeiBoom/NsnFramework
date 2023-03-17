@@ -28,18 +28,19 @@ namespace Nsn.EditorToolKit
 
         protected override void OnCreateGUI()
         {
-            AddToolBar();
+            // 先添加graphview ，再添加toolbar ，否则 toolbar会被graphview盖住
             AddDialogueGraphView();
+            AddToolBar();
 
-            var styleSheet = VEToolKit.LoadVEAssetStyleSheet("NsnDialogueVariables");
+            var styleSheet = VEToolKit.LoadVEAssetStyleSheet(NEditorConst.NsnStyleSheet_Variables);
             m_Root.styleSheets.Add(styleSheet);
         }
 
         private void AddDialogueGraphView()
         {
             m_DialogueGraphView = new NsnDialogueGraphView(this);
-            m_DialogueGraphView.StretchToParentSize();
             m_Root.Add(m_DialogueGraphView);
+            m_DialogueGraphView.StretchToParentSize();
         }
 
         private void AddToolBar()
@@ -50,20 +51,15 @@ namespace Nsn.EditorToolKit
                 m_FileNameTextField.value = ve.newValue;
             });
 
-            m_SaveBtn = new Button() { text = "Save" };
-            m_SaveBtn.RegisterValueChangedCallback(ce => { Save(); });
+            m_SaveBtn = VEToolKit.CreateButton("Save", Save);
 
-            Button loadBtn = new Button() { text = "Load" };
-            loadBtn.RegisterValueChangedCallback(ce => { Load(); });
+            Button loadBtn = VEToolKit.CreateButton("Load", Load);
 
-            Button clearBtn = new Button() { text = "Clear" };
-            loadBtn.RegisterValueChangedCallback(ce => { Clear(); });
+            Button clearBtn = VEToolKit.CreateButton("Clear", Clear);
 
-            Button resetBtn = new Button() { text = "Reset" };
-            loadBtn.RegisterValueChangedCallback(ce => { ResetGraph(); });
+            Button resetBtn = VEToolKit.CreateButton("Reset", ResetGraph);
 
-            m_MiniMapBtn = new Button() { text = "MiniMap" };
-            m_MiniMapBtn.RegisterValueChangedCallback(ce => { ToggleMiniMap(); });
+            m_MiniMapBtn = VEToolKit.CreateButton("MiniMap", ToggleMiniMap);
 
             toolbar.Add(m_FileNameTextField);
             toolbar.Add(m_SaveBtn);
@@ -72,7 +68,7 @@ namespace Nsn.EditorToolKit
             toolbar.Add(resetBtn);
             toolbar.Add(m_MiniMapBtn);
 
-            var styleSheet = VEToolKit.LoadVEAssetStyleSheet("NsnDialogueToolbarStyles");
+            var styleSheet = VEToolKit.LoadVEAssetStyleSheet(NEditorConst.NsnStyleSheet_ToolbarStyles);
             toolbar.styleSheets.Add(styleSheet);
 
             m_Root.Add(toolbar);
@@ -90,10 +86,7 @@ namespace Nsn.EditorToolKit
                 EditorUtility.DisplayDialog("Invalid file name.", "Please ensure the file name you've typed in is valid.", "Roger!");
                 return;
             }
-
-            VEToolKit
             // todo
-            NEditorConst.
         }
 
         private void Load()

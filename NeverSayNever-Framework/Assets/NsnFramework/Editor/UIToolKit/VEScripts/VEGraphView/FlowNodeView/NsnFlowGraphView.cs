@@ -28,7 +28,7 @@ namespace Nsn.EditorToolKit
             // 自由选择工具
             this.AddManipulator(new FreehandSelector());
 
-            StyleSheet styleSheet = VEToolKit.LoadVEAssetStyleSheet("NsnFlowGraphView");
+            StyleSheet styleSheet = VEToolKit.LoadVEAssetStyleSheet(NEditorConst.NsnStyleSheet_FlowGraphView);
             styleSheets.Add(styleSheet);
 
         }

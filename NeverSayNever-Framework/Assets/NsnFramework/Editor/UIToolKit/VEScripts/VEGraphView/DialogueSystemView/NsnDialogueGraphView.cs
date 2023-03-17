@@ -116,10 +116,10 @@ namespace Nsn.EditorToolKit
 
         private void AddSytleSheets()
         {
-            var graphStyleSheet = VEToolKit.LoadVEAssetStyleSheet("NsnDialogueGraphView");
+            var graphStyleSheet = VEToolKit.LoadVEAssetStyleSheet(NEditorConst.NsnStyleSheet_DialogueGraphView);
             this.styleSheets.Add(graphStyleSheet);
 
-            var nodeStyleSheet = VEToolKit.LoadVEAssetStyleSheet("NsnDialogueNode");
+            var nodeStyleSheet = VEToolKit.LoadVEAssetStyleSheet(NEditorConst.NsnStyleSheet_DialogueNode);
             this.styleSheets.Add(nodeStyleSheet);
         }
 

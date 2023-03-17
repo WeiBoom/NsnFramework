@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
+using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -25,19 +26,41 @@ namespace Nsn.EditorToolKit
 
         protected override void OnCreateGUI()
         {
+            base.OnCreateGUI();
+        }
+
+
+        protected override void OnShow()
+        {
+            base.OnShow();
+
+            InitWindow();
+        }
+
+        private void InitWindow()
+        {
             AddWindowVEAssetToRoot();
+
+            InitUIElement();
 
             // 准备所需的数据
             InitUIToolKitData();
             // 初始化获取UIElement
-            InitUIElement();
             // 初始化功能列表
             InitMenuList();
+
+            AddStyles();
+        }
+
+
+        private void AddStyles()
+        {
+            var nodeStyleSheet = VEToolKit.LoadVEAssetStyleSheet(NEditorConst.NsnStyleSheet_Variables);
+            m_Root.styleSheets.Add(nodeStyleSheet);
         }
 
         private void InitUIToolKitData()
         {
-            // 初始化编辑器配置信息
             VEConfig.LoadConfig();
             // 初始化左侧menuList的数据
             m_MenuDataDic = new Dictionary<string, List<string>>();
@@ -63,6 +86,13 @@ namespace Nsn.EditorToolKit
         {
             m_MenuScrollVew = m_Root.Q<ScrollView>("MenuScrollView");
             m_MainScrollView = m_Root.Q<ScrollView>("MainScrollView");
+
+            TwoPaneSplitView twoPaneSplitView = new TwoPaneSplitView(0, 200, TwoPaneSplitViewOrientation.Horizontal);
+            twoPaneSplitView.Add(m_Root.Q<VisualElement>("NsnMainMenuListPanel"));
+            twoPaneSplitView.Add(m_Root.Q<VisualElement>("NsnMainWidgetPanel"));
+
+            m_Root.Q<VisualElement>("NsnMainContainer").Add(twoPaneSplitView);
+            twoPaneSplitView.StretchToParentSize();
         }
 
         private void InitMenuList()
@@ -74,7 +104,7 @@ namespace Nsn.EditorToolKit
                 var itemList = m_MenuDataDic[key];
                 foreach(var item in itemList)   
                 {
-                    Button button = new Button() { text = item };
+                    Button button = VEToolKit.CreateButton(item);
                     foldout.Add(button);  
                 }
                 m_MenuScrollVew.Add(foldout);

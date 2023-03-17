@@ -5,6 +5,7 @@ using System;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
+using UnityEditor.Experimental.GraphView;
 
 namespace Nsn.EditorToolKit
 {
@@ -17,7 +18,14 @@ namespace Nsn.EditorToolKit
     
     public static class VEToolKit
     {
-        #region VisualElement
+
+        #region Load VisualElement Asset
+
+        public static string GetVEAssetPath(VEAssetType assetType, string assetName)
+        {
+            string path = $"{NEditorConst.NsnToolKitAssetRootPath}/{assetType}/{assetName}.{assetType}";
+            return path;
+        }
 
         public static VisualTreeAsset LoadVEAssetVisualTree(string assetName)
         {
@@ -34,13 +42,20 @@ namespace Nsn.EditorToolKit
 
         public static T LoadVEAsset<T>(string assetName, VEAssetType assType) where T : UnityEngine.Object
         {
-            string assetType = assType.ToString();
-            string path = $"{NEditorConst.NsnToolKitAssetRootPath}/{assetType}/{assetName}.{assetType}";
-
+            //string assetType = assType.ToString();
+            string path = GetVEAssetPath(assType, assetName);//$"{NEditorConst.NsnToolKitAssetRootPath}/{assetType}/{assetName}.{assetType}";
             T asset = AssetDatabase.LoadAssetAtPath<T>(path);
             if (asset == null)
                 Debug.LogError($"[Nsn] load editor asset failed . path : {path}");
 
+            return asset;
+        }
+
+        public static T LoadVEAsset<T>(string path) where T : UnityEngine.Object
+        {
+            T asset = AssetDatabase.LoadAssetAtPath<T>(path);
+            if (asset == null)
+                Debug.LogError($"[Nsn] load editor asset failed . path : {path}");
             return asset;
         }
         
@@ -60,6 +75,61 @@ namespace Nsn.EditorToolKit
             return elementObj;
         }
 
+
+        #endregion
+
+        #region Create VisualElement
+
+        public static Button CreateButton(string text, Action onClick = null)
+        {
+            Button button = new Button(onClick)
+            {
+                text = text
+            };
+
+            return button;
+        }
+
+        public static Foldout CreateFoldout(string title, bool collapsed = false)
+        {
+            Foldout foldout = new Foldout()
+            {
+                text = title,
+                value = !collapsed
+            };
+
+            return foldout;
+        }
+
+        public static Port CreatePort(this NsnBaseNode node, string portName = "", Orientation orientation = Orientation.Horizontal, Direction direction = Direction.Output, Port.Capacity capacity = Port.Capacity.Single)
+        {
+            Port port = node.InstantiatePort(orientation, direction, capacity, typeof(bool));
+            port.portName = portName;
+
+            return port;
+        }
+
+        public static TextField CreateTextField(string value = null, string label = null, EventCallback<ChangeEvent<string>> onValueChanged = null)
+        {
+            TextField textField = new TextField()
+            {
+                value = value,
+                label = label
+            };
+
+            if (onValueChanged != null)
+                textField.RegisterValueChangedCallback(onValueChanged);
+
+            return textField;
+        }
+
+        public static TextField CreateTextArea(string value = null, string label = null, EventCallback<ChangeEvent<string>> onValueChanged = null)
+        {
+            TextField textArea = CreateTextField(value, label, onValueChanged);
+            textArea.multiline = true;
+
+            return textArea;
+        }
 
         #endregion
     }

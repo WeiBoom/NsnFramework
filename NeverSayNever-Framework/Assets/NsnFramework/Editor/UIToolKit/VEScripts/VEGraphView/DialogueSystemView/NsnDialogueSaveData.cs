@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEditor.PackageManager.Requests;
 using UnityEngine;
 
 namespace Nsn.EditorToolKit
@@ -47,7 +48,7 @@ namespace Nsn.EditorToolKit
         public Dictionary<string, NsnDialogueGroup> loadedGroups;
         public Dictionary<string, NsnDialogueNode> loadedNodes;
 
-        public NsnDialogueGraphSaveData(NsnDialogueGraphView dialogueGraph,string graphName)
+        public NsnDialogueGraphSaveData(NsnDialogueGraphView dialogueGraph, string graphName)
         {
             graphView = dialogueGraph;
             graphFileName = graphName;
@@ -70,7 +71,7 @@ namespace Nsn.EditorToolKit
         [field: SerializeField] public string DialogueName { get; set; }
         [field: SerializeField][field: TextArea()] public string Text { get; set; }
         [field: SerializeField] public List<NsnDialogueChoiceSaveData> Choices { get; set; }
-        [field: SerializeField] public DialogueNodeType DialogueType{ get; set; }
+        [field: SerializeField] public DialogueNodeType DialogueType { get; set; }
         [field: SerializeField] public bool IsStartingDialogue { get; set; }
 
         public void Initialize(string dialogueName, string text, List<NsnDialogueChoiceSaveData> choices, DialogueNodeType dialogueType, bool isStartingDialogue)
@@ -112,7 +113,62 @@ namespace Nsn.EditorToolKit
     }
 
 
+    public class NsnDialogueContainerSO : ScriptableObject
+    {
+        [field: SerializeField] public string FileName { get; set; }
+        [field: SerializeField] public SerializableDictionary<NsnDialogueGroupSO, List<NsnDialogueNodeSO>> DialogueGroups { get; set; }
+        [field: SerializeField] public List<NsnDialogueNodeSO> UngroupedDialogues { get; set; }
+
+        public void Initialize(string fileName)
+        {
+            FileName = FileName;
+
+            DialogueGroups = new SerializableDictionary<NsnDialogueGroupSO, List<NsnDialogueNodeSO>>();
+
+            UngroupedDialogues = new List<NsnDialogueNodeSO>();
+        }
+
+        public List<string> GetDialogueGroupNames()
+        {
+            List<string> dialogueGrouoNames = new List<string> { };
+            foreach (var dialogueGroup in DialogueGroups.Keys)
+            {
+                dialogueGrouoNames.Add(dialogueGroup.GroupName);
+            }
+            return dialogueGrouoNames;
+        }
+
+        public List<string> GetGroupedDialogueNames(NsnDialogueGroupSO dialogueGroup, bool startingDialoguesOnly)
+        {
+            List<NsnDialogueNodeSO> groupedDialogues = DialogueGroups[dialogueGroup];
+            List<string> groupedDialogueNames = new List<string>();
+
+            foreach(var groupedDialogue in groupedDialogues)
+            {
+                if (startingDialoguesOnly && !groupedDialogue.IsStartingDialogue)
+                    continue;
+                groupedDialogueNames.Add(groupedDialogue.DialogueName);
+            }
+
+            return groupedDialogueNames;
+        }
 
 
+        public List<string> GetUngroupedDialogueNames(bool startingDialoguesOnly)
+        {
+            List<string> ungroupedDialogueNames = new List<string>();
+
+            foreach (var ungroupedDialogue in UngroupedDialogues)
+            {
+                if (startingDialoguesOnly && !ungroupedDialogue.IsStartingDialogue)
+                    continue;
+                ungroupedDialogueNames.Add(ungroupedDialogue.DialogueName);
+            }
+
+            return ungroupedDialogueNames;
+        }
+    }
 }
+
+
 

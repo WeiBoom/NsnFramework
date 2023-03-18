@@ -86,6 +86,8 @@ namespace Nsn.EditorToolKit
                 EditorUtility.DisplayDialog("Invalid file name.", "Please ensure the file name you've typed in is valid.", "Roger!");
                 return;
             }
+
+            NsnDialogueUtility.SaveDialogueGraphView();
             // todo
         }
 

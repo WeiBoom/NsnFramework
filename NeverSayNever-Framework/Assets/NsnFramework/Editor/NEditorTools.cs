@@ -36,7 +36,7 @@ namespace Nsn.EditorToolKit
         /// <summary>
         /// 打开指定路径的文件夹
         /// </summary>
-        /// <param name="folerPath"></param>
+        /// <param name="folerPath">文件夹路径</param>
         public static void OpenFolder(string folerPath)
         {
             #if UNITY_EDITOR_WIN
@@ -114,25 +114,6 @@ namespace Nsn.EditorToolKit
             return AssetDatabase.CreateFolder(parentFolderPath, newFolderName);
         }
 
-
-        public static T CreateAsset<T>(string path, string assetName) where T : ScriptableObject
-        {
-            string fullPath = $"{path}/{assetName}.asset";
-            T asset = LoadAsset<T>(path, assetName);
-            if (asset == null)
-            {
-                asset = ScriptableObject.CreateInstance<T>();
-                AssetDatabase.CreateAsset(asset, fullPath);
-            }
-            return asset;
-        }
-
-        public static T LoadAsset<T>(string path, string assetName) where T : ScriptableObject
-        {
-            string fullPath = $"{path}/{assetName}.asset";
-            return AssetDatabase.LoadAssetAtPath<T>(fullPath);
-        }
-
         /// <summary>
         /// 拷贝文件夹（包括子所有子目录文件）
         /// </summary>
@@ -196,7 +177,7 @@ namespace Nsn.EditorToolKit
         /// <summary>
         /// 删除文件
         /// </summary>
-        /// <param name="filePath"></param>
+        /// <param name="filePath">文件全路径</param>
         public static void DeleteFile(string filePath)
         {
             var fileName = GetRegularPath(filePath);
@@ -207,7 +188,7 @@ namespace Nsn.EditorToolKit
         /// <summary>
         /// 清空指定目录下的所有文件
         /// </summary>
-        /// <param name="directoryPath"></param>
+        /// <param name="directoryPath">指定的文件夹路径</param>
         public static void ClearFiles(string directoryPath)
         {
             // 获取目录下所有的文件
@@ -240,11 +221,41 @@ namespace Nsn.EditorToolKit
                 Directory.Delete(childDirectory);
             }
         }
-        
+
         #endregion
-        
+
+        #region AssetDatabase
+
+        public static T CreateAsset<T>(string path, string assetName) where T : ScriptableObject
+        {
+            string fullPath = $"{path}/{assetName}.asset";
+            T asset = LoadAsset<T>(path, assetName);
+            if (asset == null)
+            {
+                asset = ScriptableObject.CreateInstance<T>();
+                AssetDatabase.CreateAsset(asset, fullPath);
+            }
+            return asset;
+        }
+
+        public static T LoadAsset<T>(string path, string assetName) where T : ScriptableObject
+        {
+            string fullPath = $"{path}/{assetName}.asset";
+            return AssetDatabase.LoadAssetAtPath<T>(fullPath);
+        }
+
+        public static void SaveAsset(UnityEngine.Object asset)
+        {
+            EditorUtility.SetDirty(asset);
+
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+        }
+
+        #endregion
+
         #region Time
-        
+
         /// <summary>
         /// 获取当前的时间戳
         /// </summary>

@@ -100,7 +100,6 @@ namespace Nsn.EditorToolKit
             }
         }
 
-
         /// <summary>
         /// 在工程目录下创建文件夹
         /// </summary>
@@ -112,6 +111,16 @@ namespace Nsn.EditorToolKit
             if (AssetDatabase.IsValidFolder($"{parentFolderPath}/{newFolderName}"))
                 return string.Empty;
             return AssetDatabase.CreateFolder(parentFolderPath, newFolderName);
+        }
+
+        /// <summary>
+        /// 移除工程目录下的文件夹
+        /// </summary>
+        /// <param name="path"></param>
+        public static void RemoveProjFolder(string path)
+        {
+            FileUtil.DeleteFileOrDirectory($"{path}.meta");
+            FileUtil.DeleteFileOrDirectory($"{path}/");
         }
 
         /// <summary>

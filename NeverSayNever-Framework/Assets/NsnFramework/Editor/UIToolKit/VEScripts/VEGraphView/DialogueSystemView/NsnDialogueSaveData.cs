@@ -5,6 +5,14 @@ using UnityEngine;
 
 namespace Nsn.EditorToolKit
 {
+
+    public class NsnDialogueChoiceData
+    {
+        [field: SerializeField] public string Text { get; set; }
+        [field: SerializeField] public NsnDialogueNodeSO NextDialogue { get; set; }
+
+    }
+
     public class NsnDialogueChoiceSaveData
     {
         [field: SerializeField] public string Content { get; set; }
@@ -70,11 +78,11 @@ namespace Nsn.EditorToolKit
     {
         [field: SerializeField] public string DialogueName { get; set; }
         [field: SerializeField][field: TextArea()] public string Text { get; set; }
-        [field: SerializeField] public List<NsnDialogueChoiceSaveData> Choices { get; set; }
+        [field: SerializeField] public List<NsnDialogueChoiceData> Choices { get; set; }
         [field: SerializeField] public DialogueNodeType DialogueType { get; set; }
         [field: SerializeField] public bool IsStartingDialogue { get; set; }
 
-        public void Initialize(string dialogueName, string text, List<NsnDialogueChoiceSaveData> choices, DialogueNodeType dialogueType, bool isStartingDialogue)
+        public void Initialize(string dialogueName, string text, List<NsnDialogueChoiceData> choices, DialogueNodeType dialogueType, bool isStartingDialogue)
         {
             DialogueName = dialogueName;
             Text = text;

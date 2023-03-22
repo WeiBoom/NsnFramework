@@ -87,8 +87,7 @@ namespace Nsn.EditorToolKit
                 return;
             }
 
-            NsnDialogueUtility.SaveDialogueGraphView();
-            // todo
+            NsnDialogueUtility.SaveDialogue(m_DialogueGraphView, m_FileNameTextField.text);
         }
 
         private void Load()

@@ -50,41 +50,41 @@ namespace Nsn
             }
         }
 
-        private static Dictionary<long, CoroutineTask> _coroutineDic;
+        private static Dictionary<long, CoroutineTask> m_CoroutineDic;
 
         private long _taskCounter;
 
         public override void OnInitialize()
         {
-            _coroutineDic = new Dictionary<long, CoroutineTask>();
+            m_CoroutineDic = new Dictionary<long, CoroutineTask>();
         }
 
         private void OnDestroy() => OnDispose();
         
         public override void OnDispose()
         {
-            if (_coroutineDic == null)
+            if (m_CoroutineDic == null)
                 return;
-            foreach (var task in _coroutineDic.Values)
+            foreach (var task in m_CoroutineDic.Values)
             {
                 task.Running = false;
             }
 
-            _coroutineDic.Clear();
+            m_CoroutineDic.Clear();
             base.OnDispose();
         }
         
         
         /// <summary>
-        /// 添加并立即调用
+        /// 执行协程并添加到Map中
         /// </summary>
         /// <param name="co"></param>
         /// <returns></returns>
-        public long AddCoroutine(IEnumerator co)
+        public long ExecuteCoroutine(IEnumerator co)
         {
             if (!this.gameObject.activeSelf) return -1;
             var task = new CoroutineTask(_taskCounter++);
-            _coroutineDic.Add(task.Id, task);
+            m_CoroutineDic.Add(task.Id, task);
             StartCoroutine(task.CoroutineWrapper(co));
             return task.Id;
 
@@ -97,10 +97,10 @@ namespace Nsn
         public void RemoveCoroutine(long id)
         {
             var key = id;
-            _coroutineDic.TryGetValue(key, out var task);
+            m_CoroutineDic.TryGetValue(key, out var task);
             if (task == null) return;
             task.Running = false;
-            _coroutineDic.Remove(key);
+            m_CoroutineDic.Remove(key);
         }
 
         /// <summary>
@@ -110,7 +110,7 @@ namespace Nsn
         public void PauseCoroutine(long id)
         {
             var key = id.ToString();
-            _coroutineDic.TryGetValue(id, out var task);
+            m_CoroutineDic.TryGetValue(id, out var task);
             if (task != null)
             {
                 task.Paused = true;
@@ -128,7 +128,7 @@ namespace Nsn
         public void ResumeCoroutine(long id)
         {
             var key = id;
-            _coroutineDic.TryGetValue(key, out var task);
+            m_CoroutineDic.TryGetValue(key, out var task);
             if (task != null)
             {
                 task.Paused = false;
@@ -147,7 +147,8 @@ namespace Nsn
         /// <returns></returns>
         public long DelayedCall(float delayedTime, System.Action callback)
         {
-            return AddCoroutine(DelayedCallImpl(delayedTime, callback));
+            // 本质上也是直接启动协程，但是等待delayedTime 后才真正执行内容
+            return ExecuteCoroutine(DelayedCallImpl(delayedTime, callback));
         }
 
         private IEnumerator DelayedCallImpl(float delayedTime, System.Action callback)

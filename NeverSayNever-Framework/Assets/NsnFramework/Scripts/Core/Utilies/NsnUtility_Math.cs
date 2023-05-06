@@ -1,10 +1,12 @@
-﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-
 namespace Nsn
 {
-    public static class NsnMath
+    using System.Collections.Generic;
+    using UnityEngine;
+    
+    /*
+     * Math 相关
+     */
+    public static partial class NsnUtility
     {
         // 用于判断浮点数是否为0
         public const float Precision = 0.000001f;

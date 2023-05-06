@@ -8,9 +8,8 @@ namespace Nsn
         Debug = 0,
         Hint = 1,
         Warning = 2,
-        Errlor = 3,
+        Error = 3,
     }
-
 
 
     public static class NsnLog

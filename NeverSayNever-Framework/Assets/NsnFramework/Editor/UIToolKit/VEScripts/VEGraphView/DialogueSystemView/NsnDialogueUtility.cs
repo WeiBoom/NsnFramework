@@ -138,6 +138,7 @@ namespace Nsn.EditorToolKit
                 Name = node.DialogueName,
                 Choices = choices,
                 Text = node.TextContent,
+                Audio = node.DialogueAudio,
                 GroupID = node.Group?.ID,
                 DialogueType = node.DialogueNodeType,
                 Position = node.GetPosition().position

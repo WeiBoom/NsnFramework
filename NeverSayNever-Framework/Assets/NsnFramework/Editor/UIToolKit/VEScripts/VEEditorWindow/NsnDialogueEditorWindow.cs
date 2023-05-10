@@ -102,7 +102,7 @@ namespace Nsn.EditorToolKit
 
         private void Clear()
         {
-            m_DialogueGraphView.Clear();
+            m_DialogueGraphView.ClearGraph();
         }
 
         private void ResetGraph()

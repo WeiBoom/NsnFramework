@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
+using UnityEditor.Experimental.GraphView;
 using UnityEditor.PackageManager.UI;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -21,6 +22,8 @@ namespace Nsn.EditorToolKit
         private NsnFlowGraphView m_FlowGraphView;
         private NsnFlowInspectorView m_FlowInspectorView;
 
+        private NsnFlowBlackboard m_FlowBlackBoard;
+        
         protected override void OnCreateGUI()
         {
             AddWindowVEAssetToRoot();
@@ -35,7 +38,27 @@ namespace Nsn.EditorToolKit
             m_Content = m_Root.Q<VisualElement>("Content");
             m_FlowGraphView = m_Root.Q<NsnFlowGraphView>("FlowGraphView");
             m_FlowInspectorView = m_Root.Q<NsnFlowInspectorView>("InspectorView");
+
+            InitBlackboard();
         }
+
+        private void InitBlackboard()
+        {
+            m_FlowBlackBoard = new NsnFlowBlackboard(m_FlowGraphView);
+            m_FlowBlackBoard.addItemRequested = blackboard =>
+            {
+                // todo
+            };
+            
+            m_FlowBlackBoard.editTextRequested = (blackboard, element, arg3) =>
+            {
+             // todo   
+            };
+            
+            m_FlowBlackBoard.SetPosition(new Rect(10,30,200,300));
+            m_FlowGraphView.Add(m_FlowBlackBoard);
+        }
+        
     }
 }
 

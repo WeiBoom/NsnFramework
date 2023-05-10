@@ -27,6 +27,8 @@ namespace Nsn.EditorToolKit
 
         public string TextContent { get; set; }
 
+        public AudioClip DialogueAudio { get; set; }
+        
         public DialogueNodeType DialogueNodeType { get; set; }
 
         public NsnDialogueGroup Group { get; set; }

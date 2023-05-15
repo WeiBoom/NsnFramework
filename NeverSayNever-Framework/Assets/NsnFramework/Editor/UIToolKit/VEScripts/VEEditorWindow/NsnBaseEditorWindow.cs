@@ -11,6 +11,33 @@ namespace Nsn.EditorToolKit
 {
     public class NsnBaseEditorWindow : EditorWindow
     {
+
+        protected string m_BindAssetName = string.Empty;
+
+        protected string m_BindAssetFolderPath = string.Empty;
+
+        protected string BindAssetName
+        {
+            get
+            {
+                if (m_BindAssetName == string.Empty)
+                    m_BindAssetName = this.GetType().Name;
+                return m_BindAssetName;
+            }
+        }
+
+        protected string BindAssetFolderPath
+        {
+            get
+            {
+                if (m_BindAssetFolderPath == string.Empty)
+                    m_BindAssetFolderPath = NEditorConst.NsnToolKitAssetRootPath;
+                return m_BindAssetFolderPath;
+            }
+        }
+
+
+
         public static void ForceClose<T>(ref T window) where T : NsnBaseEditorWindow
         {
             if (window != null)

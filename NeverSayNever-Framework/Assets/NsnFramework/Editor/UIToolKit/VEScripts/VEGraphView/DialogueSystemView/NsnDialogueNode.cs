@@ -48,7 +48,7 @@ namespace Nsn.EditorToolKit
             ID = Guid.NewGuid().ToString();
 
             DialogueName = nodeName;
-            TextContent = "Dialogue Content";
+            TextContent = "Input Content ...";
             Choices = new List<NsnDialogueChoiceSaveData>();
 
             m_DialogueGraphView = graphView;
@@ -120,14 +120,16 @@ namespace Nsn.EditorToolKit
         {
             VisualElement customDataContainer = new VisualElement();
             customDataContainer.AddToClassList("ds-node__custom-data-container");
-
-            Foldout contentTestFoldout = new Foldout() { text = title };
+            // todo : this button add proterty of node, eg : audio , test, timeline asset
+            Button addCompBtn = VEToolKit.CreateButton("Test Btn", () =>{ Debug.Log("Add Property .. "); });
+            Foldout contentTestFoldout = new Foldout() { text = "Dialogue Content Info" };
 
             TextField contentTextField = new TextField() { value = TextContent };
             contentTextField.RegisterValueChangedCallback(ce => { TextContent = ce.newValue; });
             contentTextField.AddToClassList("ds-node__text-field");
             contentTextField.AddToClassList("ds-node__quote-text-field");
 
+            contentTestFoldout.Add(addCompBtn);
             contentTestFoldout.Add(contentTextField);
 
             customDataContainer.Add(contentTestFoldout);

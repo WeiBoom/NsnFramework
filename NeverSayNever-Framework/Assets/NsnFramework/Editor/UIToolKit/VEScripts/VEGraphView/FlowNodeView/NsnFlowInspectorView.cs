@@ -9,6 +9,15 @@ namespace Nsn.EditorToolKit
     {
         public new class UxmlFactory : UxmlFactory<NsnFlowInspectorView, UxmlTraits> { }
 
+        /// <summary>
+        /// 加载指定类型的Inspector界面
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        public void ShowInspector<T>() where T : NsnBaseEditorWidget
+        {
+            
+        }
+
     }
 }
 

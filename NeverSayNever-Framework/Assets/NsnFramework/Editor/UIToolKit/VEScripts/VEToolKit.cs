@@ -21,6 +21,17 @@ namespace Nsn.EditorToolKit
 
         #region Load VisualElement Asset
 
+        public static T LoadVEAssetVirualTree<T>(string folderPath, string assetName, VEAssetType assetType)
+            where T : ScriptableObject
+        {
+            string path = $"{folderPath}/{assetName}.{assetType}";
+            T asset = AssetDatabase.LoadAssetAtPath<T>(path);
+            if (asset == null)
+                Debug.LogError($"[Nsn] load editor asset failed . path : {path}");
+
+            return asset;
+        }
+
         public static string GetVEAssetPath(VEAssetType assetType, string assetName)
         {
             string path = $"{NEditorConst.NsnToolKitAssetRootPath}/{assetType}/{assetName}.{assetType}";

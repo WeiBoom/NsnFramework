@@ -92,12 +92,13 @@ namespace Nsn.EditorToolKit
 
         private void Load()
         {
-            //string filePath = EditorUtility.OpenFilePanel("Dialogue Graphs", "Assets/Editor/DialogueSystem/Graphs", "asset");
+            string filePath = EditorUtility.OpenFilePanel("Dialogue Graphs", "Assets/Editor/DialogueSystem/Graphs", "asset");
 
-            //if (string.IsNullOrEmpty(filePath))
-                //return;
-            // todo
-            // Clear();
+            if (string.IsNullOrEmpty(filePath))
+                return;
+            
+            Clear();
+            NsnDialogueUtility.LoadDialogue(m_DialogueGraphView,m_FileNameTextField.text);
         }
 
         private void Clear()

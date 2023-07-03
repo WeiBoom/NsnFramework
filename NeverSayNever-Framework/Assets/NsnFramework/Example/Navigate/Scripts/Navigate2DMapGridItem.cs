@@ -31,7 +31,7 @@ namespace  Nsn.Example
         public GameObject arrow;
 
         private RectTransform m_RectTrans;
-        public RectTransform RectTransform => m_RectTrans;
+        public RectTransform rectTransform => m_RectTrans;
 
         private Int2 m_Pos;
         private Int2 Position => m_Pos;

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Nsn
 {
@@ -9,6 +10,42 @@ namespace Nsn
         UnityEngine.Vector2 Pos { get; set; }
     }
 
+    public class AStarNodeCoord : IAStarNodeCoord
+    {
+        public AStartHeuristicWay Way;
+        
+        public Vector2 Pos { get; set; }
+        
+        public float GetDistance(IAStarNodeCoord other)
+        {
+            switch (Way)
+            {
+                case AStartHeuristicWay.Manhattan:
+                    return AStarHeuristic.ManhattanDist(Pos, other.Pos);
+                case AStartHeuristicWay.Chebyshev:
+                    return AStarHeuristic.ChebyshevDist(Pos, other.Pos);
+                case AStartHeuristicWay.Octile:
+                    return AStarHeuristic.OctileDist(Pos, other.Pos);
+                case AStartHeuristicWay.Euclidean:
+                    return AStarHeuristic.EuclideanDist(Pos, other.Pos);
+            }
+            return AStarHeuristic.EuclideanDist(Pos, other.Pos);
+        }
+
+    }
+
+    public enum AStartHeuristicWay
+    {
+        // 适用于上下左右
+        Manhattan,
+        // 适用于八方向，各方向距离相同
+        Chebyshev,
+        // 欧式距离
+        Octile,
+        // 直接计算两点之间的距离
+        Euclidean,
+    }
+    
     public class AStarNode
     {
         public enum AStarNodeStatus

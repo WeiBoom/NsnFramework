@@ -18,6 +18,11 @@ namespace Nsn.Example
         private Int2 m_MapSize;
         private Int2 m_StartPos;
         private Int2 m_TargetPos;
-        
+
+
+        public IEnumerator StartProcess()
+        {
+            yield return null;
+        }
     }
 }

@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Nsn
 {
-    public class UIBaseView : UIBase
+    public class UIBaseView : UIBehaviour
     {
         protected UIObjectLinker mLinker;
 
-        protected override void OnAwake()
+        protected override void Awake()
         {
-            base.OnAwake();
             mLinker = GetComponent<UIObjectLinker>();
         }
 

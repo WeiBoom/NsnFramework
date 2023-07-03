@@ -172,6 +172,7 @@ namespace Nsn
         {
             m_UIViewStack.Push(viewItem);
         }
+
     }
 
 }

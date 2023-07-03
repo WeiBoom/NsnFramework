@@ -4,7 +4,6 @@ using UnityEngine;
 
 namespace Nsn
 {
-
     public class UIBase : MonoBehaviour
     {
         private void Awake() => OnAwake();
@@ -21,7 +20,7 @@ namespace Nsn
 
         private void OnDisable() => OnUIHide();
 
-        private void OnDestroy() => OnUIDestory();
+        private void OnDestroy() => OnUIDestroy();
 
         protected virtual void OnAwake() { }
 
@@ -37,6 +36,6 @@ namespace Nsn
 
         protected virtual void OnUIHide() { }
 
-        protected virtual void OnUIDestory() { }
+        protected virtual void OnUIDestroy() { }
     }
 }

@@ -1,17 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Nsn
 {
-    public class UIView : UIBase
+    public class UIView : UIBehaviour
     {
         public UIViewAttribute ViewInfo { get; set; }
 
-        protected override void OnAwake()
+        protected override void Awake()
         {
-            base.OnAwake();
+            base.Awake();
         }
     }
 

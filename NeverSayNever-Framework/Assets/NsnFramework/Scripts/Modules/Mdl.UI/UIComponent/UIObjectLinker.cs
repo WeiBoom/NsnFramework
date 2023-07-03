@@ -2,16 +2,17 @@
 using System.Collections.Generic;
 using System.Runtime.Remoting.Messaging;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace Nsn
 {
     [RequireComponent(typeof(UIBaseView))]
-    public class UIObjectLinker : UIBase
+    public class UIObjectLinker : UIBehaviour
     {
         public enum LinkedObjectType
         {
             GameObj,
-            Transfrom,
+            Transform,
             Button,
             Image,
             Texture,

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Nsn;
 
@@ -20,9 +21,5 @@ namespace Nsn.Example
         private Int2 m_TargetPos;
 
 
-        public IEnumerator StartProcess()
-        {
-            yield return null;
-        }
     }
 }

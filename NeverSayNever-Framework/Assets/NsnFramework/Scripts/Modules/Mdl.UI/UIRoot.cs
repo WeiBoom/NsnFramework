@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Nsn
 {
-    public class UIRoot : UIBase
+    public class UIRoot : UIBehaviour
     {
         private static bool m_Initialized = false;
 
@@ -25,9 +26,9 @@ namespace Nsn
             // TODO
         }
 
-        protected override void OnAwake()
+        protected override void Awake()
         {
-            base.OnAwake();
+            base.Awake();
             DontDestroyOnLoad(this.gameObject);
 
             Initialize();

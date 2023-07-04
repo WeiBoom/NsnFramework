@@ -77,6 +77,7 @@ namespace Nsn.Example
             Parent = parent;
         }
 
+        public override string ToString() => FullPath;
 
         public void AddListener(System.Action<int> callback) => m_ValueChangeCallback += callback;
 
@@ -147,7 +148,33 @@ namespace Nsn.Example
             RedDotMgr.Inst.NotifyNodeNumChanged();
             return child;
         }
-        
-        
+
+        public bool RemoveChild(RDString key)
+        {
+            if (m_Children == null || m_Children.Count == 0)
+                return false;
+
+            var child = GetChild(key);
+            if (child != null)
+            {
+                RedDotMgr.Inst.MarkDirtyNode(this);
+                m_Children.Remove(key);
+                RedDotMgr.Inst.NotifyNodeNumChanged();
+                return true;
+            }
+    
+            return false;
+        }
+
+        public void RemoveAllChild()
+        {
+            if (m_Children == null || m_Children.Count == 0)
+                return;
+            
+            m_Children.Clear();
+            RedDotMgr.Inst.MarkDirtyNode(this);
+            RedDotMgr.Inst.NotifyNodeNumChanged();
+        }
+
     }
 }

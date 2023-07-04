@@ -25,7 +25,12 @@ namespace Nsn
             _instance = default;
         }
 
+        public virtual void OnInitialize() { }
+
+        public virtual void OnUpdate() { }
+
         public virtual void OnDispose(){}
+
     }
 
     public class SingletonSafe<T> where T : class, new()

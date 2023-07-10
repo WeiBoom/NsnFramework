@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Nsn
+namespace Nsn.MVVM
 {
     public interface IView
     {

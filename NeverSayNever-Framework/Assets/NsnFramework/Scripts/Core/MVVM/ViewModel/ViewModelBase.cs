@@ -2,7 +2,7 @@ using System;
 using System.ComponentModel;
 using System.Linq.Expressions;
 
-namespace Nsn
+namespace Nsn.MVVM
 {
     public class ViewModelBase : ObservableObject, IViewModel
     {

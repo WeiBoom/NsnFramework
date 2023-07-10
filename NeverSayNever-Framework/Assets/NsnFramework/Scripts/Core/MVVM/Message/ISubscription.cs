@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Nsn
+namespace Nsn.MVVM
 {
     public interface ISubscription<T> : IDisposable
     {

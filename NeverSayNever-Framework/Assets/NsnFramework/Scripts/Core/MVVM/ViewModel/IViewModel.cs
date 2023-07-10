@@ -1,7 +1,7 @@
 using System;
 using System.Linq.Expressions;
 
-namespace Nsn
+namespace Nsn.MVVM
 {
     public interface IViewModel : System.IDisposable
     {

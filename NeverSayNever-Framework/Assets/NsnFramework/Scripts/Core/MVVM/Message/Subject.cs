@@ -2,7 +2,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Threading;
 
-namespace Nsn
+namespace Nsn.MVVM
 {
     public class Subject<T> : SubjectBase
     {

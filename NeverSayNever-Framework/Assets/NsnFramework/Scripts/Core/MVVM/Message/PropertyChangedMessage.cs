@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Nsn
+namespace Nsn.MVVM
 {
     public class PropertyChangedMessage<T> :MessageBase
     {

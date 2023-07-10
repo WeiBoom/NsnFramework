@@ -1,4 +1,4 @@
-namespace Nsn
+namespace Nsn.MVVM
 {
     public interface IObservableProperty
     {

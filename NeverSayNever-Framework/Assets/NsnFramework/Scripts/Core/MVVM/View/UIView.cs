@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Nsn
+namespace Nsn.MVVM
 {
     [RequireComponent(typeof(RectTransform), typeof(CanvasGroup))]
     public class UIView : UIBehaviour

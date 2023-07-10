@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 
-namespace Nsn
+namespace Nsn.MVVM
 {
     [System.Serializable]
     public abstract class ObservableObject : INotifyPropertyChanged

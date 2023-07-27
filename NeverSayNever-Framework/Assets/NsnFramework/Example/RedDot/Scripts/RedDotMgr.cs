@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Text;
-using UnityEngine;
 
 namespace Nsn.Example
 {
@@ -27,11 +26,11 @@ namespace Nsn.Example
         private System.Action<RDTreeNode,int> m_NodeValueChangedCallback;
         
         // 所有的红点集合
-        private Dictionary<string, RDTreeNode> m_AllRDNodes = new Dictionary<string, RDTreeNode>();
+        private Dictionary<string, RDTreeNode> m_AllRDNodes;
         // 标记为脏的红点的集合
-        private HashSet<RDTreeNode> m_DirtyNodes = new HashSet<RDTreeNode>();
+        private HashSet<RDTreeNode> m_DirtyNodes;
         // 临时的脏红点的集合
-        private List<RDTreeNode> m_TempDirtyNodes = new List<RDTreeNode>();
+        private List<RDTreeNode> m_TempDirtyNodes;
 
         public RedDotMgr()
         {
@@ -57,7 +56,7 @@ namespace Nsn.Example
             foreach (var node in m_TempDirtyNodes)
                 node.ChangeValue();
         }
-        
+
         public void MarkDirtyNode(RDTreeNode node)
         {
             if (node == null || node.Name == Root.Name)

@@ -17,13 +17,13 @@ namespace Nsn.Example
         public int GridMapSize;
 
         private Navigate2DMapGridItem[,] m_Map;
-        private Int2 m_MapSize;
+        private NavigateInt2 m_MapSize;
         private NavigateGridItemState m_SettingState;
 
-        private Navigate2DMapGridItem m_StartGridItem;
-        private Navigate2DMapGridItem m_TargetGridItem;
+        private Navigate2DMapGridItem m_CurrentItem;
+        private Navigate2DMapGridItem m_DestinationItem;
 
-        private Dictionary<Int2, Navigate2DMapGridItem> m_ObstacleDic = new Dictionary<Int2, Navigate2DMapGridItem>();
+        private Dictionary<NavigateInt2, Navigate2DMapGridItem> m_ObstacleDic = new Dictionary<NavigateInt2, Navigate2DMapGridItem>();
 
         private IEnumerator m_AStarProcess;
 
@@ -40,12 +40,17 @@ namespace Nsn.Example
             InitMap();
         }
 
+        private void OnDestroy()
+        {
+            ClearMap();
+        }
+
         private void InitMap()
         {
             if (m_Map != null) return;
             
-            Int2 offset = new Int2(50 + GridMapSize / 2, 50 + GridMapSize / 2);
-            m_MapSize = new Int2((Screen.width - 100) / GridMapSize, (Screen.height - 100) / GridMapSize);
+            NavigateInt2 offset = new NavigateInt2(50 + GridMapSize / 2, 50 + GridMapSize / 2);
+            m_MapSize = new NavigateInt2((Screen.width - 100) / GridMapSize, (Screen.height - 100) / GridMapSize);
 
             m_Map = new Navigate2DMapGridItem[m_MapSize.x, m_MapSize.y];
             Vector2 itemSize = new Vector2(GridMapSize, GridMapSize);
@@ -58,10 +63,42 @@ namespace Nsn.Example
                     item.rectTransform.anchoredPosition = new Vector2(GridMapSize * i + offset.x, GridMapSize * j + offset.y);
                     item.rectTransform.localScale = Vector3.one;
                     item.gameObject.SetActive(true);
-                    item.Init(new Int2(i, j), IsShowGridHint, OnMapItemClicked);
+                    item.Init(new NavigateInt2(i, j), IsShowGridHint, OnMapItemClicked);
                     m_Map[i, j] = item;
                 }
             }
+        }
+
+        private void ResetMap()
+        {
+            if(AStar.Initialized) {
+                AStar.Clear();
+                return;
+            }
+
+            if(m_CurrentItem != null)
+                m_CurrentItem.ItemState = NavigateGridItemState.Default;//  = GridState.Default;
+            m_CurrentItem = null;
+
+            if(m_DestinationItem != null)
+                m_DestinationItem.ItemState = NavigateGridItemState.Default;
+            m_DestinationItem = null;
+
+            foreach(var grid in m_ObstacleDic.Values)
+                grid.ItemState = NavigateGridItemState.Default;
+            m_ObstacleDic.Clear();
+        }
+        
+        private void ClearMap()
+        {
+            if (m_Map == null) return;
+            for(int i = 0; i < m_MapSize.x; i++) {
+                for(int j = 0; j < m_MapSize.y; j++) {
+                    m_Map[i, j].Clear();
+                    m_Map[i, j] = null;
+                }
+            }
+            m_Map = null;
         }
 
         void OnMapItemClicked(Navigate2DMapGridItem item)

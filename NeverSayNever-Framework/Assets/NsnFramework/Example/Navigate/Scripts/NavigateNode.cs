@@ -2,8 +2,8 @@ namespace Nsn.Example
 {
     public class NavigateNode
     {
-        private Int2 m_Position;
-        public Int2 Position => m_Position;
+        private NavigateInt2 m_Position;
+        public NavigateInt2 Position => m_Position;
 
         public NavigateNode Parent;
 
@@ -33,7 +33,7 @@ namespace Nsn.Example
 
         public int F => m_F;
 
-        public NavigateNode(Int2 pos, NavigateNode parent, int g, int h)
+        public NavigateNode(NavigateInt2 pos, NavigateNode parent, int g, int h)
         {
             m_Position = pos;
             Parent = parent;

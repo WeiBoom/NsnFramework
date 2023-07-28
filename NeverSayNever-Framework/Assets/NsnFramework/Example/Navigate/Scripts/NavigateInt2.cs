@@ -1,11 +1,11 @@
 namespace Nsn.Example
 {
-    public class Int2
+    public class NavigateInt2
     {
         public int x;
         public int y;
 
-        public Int2(int x, int y)
+        public NavigateInt2(int x, int y)
         {
             this.x = x;
             this.y = y;
@@ -27,17 +27,17 @@ namespace Nsn.Example
          */
         public override int GetHashCode() => x ^ (y * 256);
 
-        public static bool operator ==(Int2 a, Int2 b) => a != null && a.Equals(b);
-        public static bool operator !=(Int2 a, Int2 b) => a != null && !a.Equals(b);
+        public static bool operator ==(NavigateInt2 a, NavigateInt2 b) => a != null && a.Equals(b);
+        public static bool operator !=(NavigateInt2 a, NavigateInt2 b) => a != null && !a.Equals(b);
         
         public override bool Equals(object obj)
         {
             if (obj == null)
                 return false;
-            if (obj.GetType() != typeof(Int2))
+            if (obj.GetType() != typeof(NavigateInt2))
                 return false;
-            Int2 int2 = (Int2)obj;
-            return x == int2.x && y == int2.y;
+            NavigateInt2 navigateInt2 = (NavigateInt2)obj;
+            return x == navigateInt2.x && y == navigateInt2.y;
         }
     }
     

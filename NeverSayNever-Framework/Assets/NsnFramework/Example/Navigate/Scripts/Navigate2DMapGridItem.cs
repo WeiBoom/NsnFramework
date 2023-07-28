@@ -6,11 +6,29 @@ namespace  Nsn.Example
 {
     public enum NavigateGridItemState {
         Default,
+        /// <summary>
+        /// 玩家所在位置(当前位置)
+        /// </summary>
         Player,
+        /// <summary>
+        /// 障碍
+        /// </summary>
         Obstacle,
+        /// <summary>
+        /// 目标点
+        /// </summary>
         Destination,
+        /// <summary>
+        /// 路过
+        /// </summary>
         Path,
+        /// <summary>
+        /// 在open列中 
+        /// </summary>
         InOpen,
+        /// <summary>
+        /// 在close列中
+        /// </summary>
         InClose
     }
     
@@ -33,8 +51,8 @@ namespace  Nsn.Example
         private RectTransform m_RectTrans;
         public RectTransform rectTransform => m_RectTrans;
 
-        private Int2 m_Pos;
-        private Int2 Position => m_Pos;
+        private NavigateInt2 m_Pos;
+        private NavigateInt2 Position => m_Pos;
 
         private Action<Navigate2DMapGridItem> m_OnClickCallback;
         private bool m_IsCanShowHint;
@@ -56,7 +74,7 @@ namespace  Nsn.Example
         }
 
         // 初始化Item，设置Pos，是否显示AStar信息等
-        public void Init(Int2 pos, bool isShowHint, Action<Navigate2DMapGridItem> callback)
+        public void Init(NavigateInt2 pos, bool isShowHint, Action<Navigate2DMapGridItem> callback)
         {
             m_Pos = pos;
             m_IsCanShowHint = isShowHint;

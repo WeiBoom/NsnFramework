@@ -28,8 +28,10 @@ namespace Nsn.MVVM
             Dispose(true);
             GC.SuppressFinalize(this);
         }
-        
-        protected virtual void Dispose(bool disposing){}
+
+        protected virtual void Dispose(bool disposing)
+        {
+        }
 
         public void NotifyPropertyChanged(string propertyName)
         {
@@ -52,7 +54,7 @@ namespace Nsn.MVVM
             }
             catch(Exception e)
             {
-                // todo
+                NsnLog.Error($"Set Property {propertyValue} , broadcast message failed! exception : {e}");
             }
         }
 

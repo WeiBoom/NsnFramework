@@ -10,17 +10,17 @@ namespace Nsn
     {
         public UIViewAttribute ViewInfo { get; set; }
 
-        protected UIObjectLinker m_Linker;
+        protected UIObjectCollector m_Collector;
         
         protected override void Awake()
         {
             base.Awake();
-            m_Linker = GetComponent<UIObjectLinker>();
+            m_Collector = GetComponent<UIObjectCollector>();
         }
 
         public T Get<T>(string key) where T : Component
         {
-            var comp = m_Linker.GetNodeComponent(key);
+            var comp = m_Collector.GetNodeComponent(key);
             return (T)comp;
         }
     }

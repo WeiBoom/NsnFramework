@@ -73,10 +73,9 @@ namespace Nsn.MVVM
             }
         }
         
+        // 并发字典，缓存订阅信息
         private readonly ConcurrentDictionary<string, WeakReference<Subscription>> subscriptions =
             new ConcurrentDictionary<string, WeakReference<Subscription>>();
-
-        
         
         public override void Publish(object message)
         {
@@ -95,6 +94,11 @@ namespace Nsn.MVVM
                 else
                     subscriptions.TryRemove(VARIABLE.Key, out _);
             }
+        }
+
+        public ISubscription<T> Subscribe(System.Action<T> action)
+        {
+            return new Subscription(this, action);
         }
 
         public void Add(Subscription subscription)

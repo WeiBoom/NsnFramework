@@ -7,8 +7,11 @@ using UnityEngine.UI;
 
 namespace Nsn
 {
+    /// <summary>
+    /// UI 节点容器,根据规则收集UI下所有的控件节点
+    /// </summary>
     [RequireComponent(typeof(UIBaseView))]
-    public class UIObjectLinker : UIBehaviour
+    public class UIObjectCollector : UIBehaviour
     {
         public enum LinkedObjectType
         {

@@ -1,3 +1,6 @@
+# MY BLOG
+[Boom's Notebook](https://boomwei.notion.site/Boom-8cc2422356584c4fad6c74abf9713699?pvs=4)
+
 # NsnFramework For Unity
 **Framework is Refactoring ! Something will be changed in feature.**  
 **To be continue ...**

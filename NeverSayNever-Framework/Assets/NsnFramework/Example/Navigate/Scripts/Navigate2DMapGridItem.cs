@@ -49,10 +49,13 @@ namespace  Nsn.Example
         public GameObject arrow;
 
         private RectTransform m_RectTrans;
-        public RectTransform rectTransform => m_RectTrans;
+        public RectTransform rectTransform
+        {
+            get => m_RectTrans != null ? m_RectTrans : (m_RectTrans = GetComponent<RectTransform>());
+        }
 
         private NavigateInt2 m_Pos;
-        private NavigateInt2 Position => m_Pos;
+        public NavigateInt2 Position => m_Pos;
 
         private Action<Navigate2DMapGridItem> m_OnClickCallback;
         private bool m_IsCanShowHint;
@@ -67,7 +70,7 @@ namespace  Nsn.Example
                 image.color = GRID_ITEM_COLORS[(int)_mItemItemState];
             }
         }
-            
+
         private void Awake()
         {
             m_RectTrans = GetComponent<RectTransform>();

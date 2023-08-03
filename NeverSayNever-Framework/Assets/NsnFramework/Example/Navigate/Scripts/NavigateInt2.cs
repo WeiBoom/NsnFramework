@@ -27,8 +27,8 @@ namespace Nsn.Example
          */
         public override int GetHashCode() => x ^ (y * 256);
 
-        public static bool operator ==(NavigateInt2 a, NavigateInt2 b) => a != null && a.Equals(b);
-        public static bool operator !=(NavigateInt2 a, NavigateInt2 b) => a != null && !a.Equals(b);
+        public static bool operator ==(NavigateInt2 a, NavigateInt2 b) => a.Equals(b);
+        public static bool operator !=(NavigateInt2 a, NavigateInt2 b) => !a.Equals(b);
         
         public override bool Equals(object obj)
         {

@@ -56,7 +56,7 @@ namespace Nsn
         private void LoadAssetInternal<T>(string location, Action<T> callback, bool isAsync) where T : UObject
         {
             AssetOperationHandle operation = null;
-            if (isAsync)
+            if (!isAsync)
                 operation = YooAssets.LoadAssetSync<T>(location);
             else
                 operation = YooAssets.LoadAssetAsync<T>(location);
@@ -70,7 +70,7 @@ namespace Nsn
         private void LoadAssetInternal(System.Type type, string location, Action<UObject> callback, bool isAsync)
         {
             AssetOperationHandle operation = null;
-            if (isAsync)
+            if (!isAsync)
                 operation = YooAssets.LoadAssetSync(location, type);
             else
                 operation = YooAssets.LoadAssetAsync(location, type);

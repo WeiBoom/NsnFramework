@@ -1,11 +1,9 @@
+using System;
+using System.Collections.Generic;
+using System.Collections.Concurrent;
+
 namespace Nsn
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Collections.Concurrent;
-
-
-
     public class ObjectPoolMgr : IObjectPoolMgr
     {
         private Dictionary<System.Type, IObjectPool> m_ObjectPoolDic;
@@ -39,8 +37,8 @@ namespace Nsn
             var pool = GetCachedPool<T>() as IObjectPool<T>;
             if (pool != null)
             {
-                // todo 这里需要释放池，并释放池中所有未被使用的对象
-                //pool.Release();
+                // 需要释放池，并释放池中所有未被使用的对象
+                //pool.Clear();
             }
         }
 
@@ -64,63 +62,5 @@ namespace Nsn
             m_ObjectPoolDic.TryGetValue(type, out var pool);
             return (T)pool;
         }
-    }
-    
-    internal class ObjectPool<T> :IObjectPool<T> where T : new()
-    {
-        private readonly ConcurrentStack<T> m_Stack;
-        private readonly System.Action<T> m_ActionOnGet;
-        private readonly System.Action<T> m_ActionOnRelease;
-        
-        public int CountAll { get; private set; }
-        public int CountActive => CountAll - CountInactive;
-        public int CountInactive => m_Stack.Count;
-        
-        public ObjectPool(){}
-        
-        public ObjectPool(System.Action<T> actionOnGet, System.Action<T> actionOnRelease)
-        {
-            m_Stack = new ConcurrentStack<T>();
-            m_ActionOnGet = actionOnGet;
-            m_ActionOnRelease = actionOnRelease;
-        }
-        
-        public ObjectPool(int capacity, System.Action<T> actionOnGet, System.Action<T> actionOnRelease)
-        {
-            m_Stack = new ConcurrentStack<T>();
-            m_ActionOnGet = actionOnGet;
-            m_ActionOnRelease = actionOnRelease;
-        }
-        
-        public T Get(Func<T> func = null)
-        {
-            T element;
-            if (!m_Stack.TryPop(out element))
-            {
-                if (func == null)
-                    element = new T();
-                else
-                    element = func();
-                CountAll++;
-            }
-            
-            m_ActionOnGet?.Invoke(element);
-            return element;
-        }
-
-        public void Release(T element)
-        {
-            if (m_Stack.TryPeek(out var temp))
-            {
-                if (ReferenceEquals(temp, element))
-                {
-                    NsnLog.Error("目标对象池已经被释放!");
-                    return;
-                }
-            }
-            m_ActionOnRelease?.Invoke(element);
-            m_Stack.Push(element);
-        }
-        
     }
 }

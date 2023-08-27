@@ -57,6 +57,7 @@ namespace Nsn
 
         private static string GetEditorBuildPlatform()
         {
+#if UNITY_EDITOR
             switch (UnityEditor.EditorUserBuildSettings.activeBuildTarget)
             {
                 case UnityEditor.BuildTarget.Android:
@@ -71,6 +72,8 @@ namespace Nsn
                 default:
                     return "Standalone";
             }
+#endif
+            return "Standalone";
         }
 
         private static string GetRuntimePlatform()

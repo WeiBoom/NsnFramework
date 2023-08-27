@@ -11,6 +11,7 @@ namespace Nsn
     {
         T Get(System.Func<T> func = null);
         void Release(T element);
+        void Clear();
     }
     
     public interface IObjectPoolMgr : IManager

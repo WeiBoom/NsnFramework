@@ -6,11 +6,15 @@ namespace Nsn
 {
     public interface IUIMgr : IManager
     {
-        void Open(string view, params object[] args);
+        Camera UICamera2D { get; }
+        
+        Vector2 DesignResolution { get; }
+        
+        void Open(string viewName, params object[] args);
 
-        void Close(string view);
+        void Close(string viewName);
 
-        bool IsOpened(string view);
+        bool IsOpened(string viewName);
     }
 }
 

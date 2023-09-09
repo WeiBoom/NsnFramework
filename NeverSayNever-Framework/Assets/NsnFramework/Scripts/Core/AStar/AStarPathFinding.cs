@@ -7,8 +7,19 @@ using System.Threading.Tasks;
 namespace Nsn
 {
     using AStarNodeStatus = AStarNode.AStarNodeStatus;
+
+
+    public interface MYInterface
+    {
+        void Test();
+    }
+
     public static class AStarPathFinding
     {
+        public delegate bool weituo(bool param);
+
+        public static weituo Weituo { get; set; }
+
         public static List<AStarNode> FindPath(AStarNode startNode, AStarNode targetNode)
         {
             // 搜索列表

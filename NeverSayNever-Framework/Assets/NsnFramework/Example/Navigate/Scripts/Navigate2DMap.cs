@@ -133,11 +133,10 @@ namespace Nsn.Example
                 case NavigateGridItemState.Player:
                 {
                     //SetTargetItemState(m_PlayerItem, item, NavigateGridItemState.Player);
+                    item.ItemState = NavigateGridItemState.Player;
                     if (m_PlayerItem != null)
                         m_PlayerItem.ItemState = NavigateGridItemState.Default;
                     m_PlayerItem = item;
-                    item.ItemState = NavigateGridItemState.Player;
-
                     SetHintInfo();
                     m_SettingState = NavigateGridItemState.Default;
                     break;
@@ -145,11 +144,10 @@ namespace Nsn.Example
                 case NavigateGridItemState.Destination:
                 {
                    // SetTargetItemState(m_DestinationItem, item, NavigateGridItemState.Destination);
+                    item.ItemState = NavigateGridItemState.Destination;
                     if (m_DestinationItem != null)
                         m_DestinationItem.ItemState = NavigateGridItemState.Default;
                     m_DestinationItem = item;
-                    item.ItemState = NavigateGridItemState.Destination;
-
                     SetHintInfo();
                     m_SettingState = NavigateGridItemState.Default;
                     break;

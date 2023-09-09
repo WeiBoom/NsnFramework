@@ -37,7 +37,7 @@ namespace Nsn
         private Dictionary<string, UIViewInfo> m_UIViewInfoDic;
 
         private UIViewTask mCurTask;
-
+        
         public void OnInitialized(params object[] args)
         {
             m_UIViewInfoDic = new Dictionary<string, UIViewInfo>();
@@ -73,30 +73,33 @@ namespace Nsn
             }
         }
 
-        public void Open(string view, params object[] userData)
+        public Camera UICamera2D { get; }
+        public Vector2 DesignResolution { get; }
+
+        public void Open(string viewName, params object[] userData)
         {
-            UIViewTask task = m_UIViewTaskQueue.Get(view);
+            UIViewTask task = m_UIViewTaskQueue.Get(viewName);
             // Situation 1 当前存在加载任务
             if (!task.IsEmpty())
             {
                 // Situation 1.1 task正在执行关闭操作,则停止,并移除队列中
                 if (task.TaskType == UIViewTaskType.Close)
                 {
-                    NsnLog.Warning($"[NsnFramework], UIMgr.Open , {view} is closing but try open it");
+                    NsnLog.Warning($"[NsnFramework], UIMgr.Open , {viewName} is closing but try open it");
                     task.Stop();
                     m_UIViewTaskQueue.Remove(task.ViewName);
                 }
                 else
                 {
                     // Situation 1.2 更新task数据, 不做其他任何处理
-                    NsnLog.Warning($"[NsnFramework], UIMgr.Open , {view} is opening, just update userdata");
+                    NsnLog.Warning($"[NsnFramework], UIMgr.Open , {viewName} is opening, just update userdata");
                     task.Params = userData;
                     return;
                 }
             }
             
             // Situation 2 . 已经存在UI Item
-            UIViewItem viewItem = m_UIViewStack.Get(view);
+            UIViewItem viewItem = m_UIViewStack.Get(viewName);
             if(viewItem.IsPrepared())
             {
                 m_UIViewStack.Pop(viewItem);
@@ -106,7 +109,7 @@ namespace Nsn
             }
 
             // Situation 3 . 不存在UI，重新创建加载task
-            task = AddTaskToQueue(view);
+            task = AddTaskToQueue(viewName);
             if (task.IsEmpty())
                 return;
 

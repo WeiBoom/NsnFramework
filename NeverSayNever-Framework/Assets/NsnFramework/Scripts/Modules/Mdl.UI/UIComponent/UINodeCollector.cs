@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.Remoting.Messaging;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+
+using Sirenix.OdinInspector;
 
 namespace Nsn
 {
     /// <summary>
     /// UI 节点容器,根据规则收集UI下所有的控件节点
     /// </summary>
-    [RequireComponent(typeof(UIViewBase))]
-    public class UIObjectCollector : UIBehaviour
+    [RequireComponent(typeof(UIViewBehaviour))]
+    public class UINodeCollector : UIBehaviour
     {
         public enum LinkedObjectType
         {
@@ -20,7 +21,8 @@ namespace Nsn
             Button,
             Image,
             Texture,
-            Label,
+            Text,
+            TextMeshPro,
             InputField,
             Grid,
             Scroll,
@@ -30,8 +32,9 @@ namespace Nsn
         [Serializable]
         public class LinkedNode
         {
-            public string name;
+            [HorizontalGroup("LinkedNodeAttribute",Width =100),LabelWidth(30)]
             public LinkedObjectType type;
+            [HorizontalGroup("LinkedNodeAttribute"), LabelWidth(35)]
             public Component node;
 
             public T GetNode<T>() where T : Component
@@ -50,6 +53,12 @@ namespace Nsn
         [SerializeField]
         protected SerializableDictionary<string, LinkedNode> m_DynamicLinkedNodesDic = new SerializableDictionary<string, LinkedNode>();
 
+
+#if UNITY_EDITOR
+        public SerializableDictionary<string, LinkedNode> FixedLinkedNodesDic => m_FixedLinkedNodesDic;
+
+        public SerializableDictionary<string, LinkedNode> DynamicLinkedNodesDic => m_DynamicLinkedNodesDic;
+#endif
 
         public Component GetDynamicNodeComponent(string key)
         {
@@ -75,12 +84,11 @@ namespace Nsn
         /// <summary>
         /// 收集指定的组件
         /// </summary>
+        [Button("Collect Dynamic Nodes")]
         [System.Diagnostics.Conditional("UNITY_EDITOR")]
-        private void CollectControl()
+        public void CollectNodes()
         {
-            // 清理动态控件
             m_DynamicLinkedNodesDic.Clear();
-            // 通过搜索队列的方式，不用递归，减少函数栈
             Queue<Transform> checkQueue = new Queue<Transform>();
             checkQueue.Enqueue(this.transform);
 
@@ -103,7 +111,7 @@ namespace Nsn
         /// </summary>
         /// <param name="parent"></param>
         [System.Diagnostics.Conditional("UNITY_EDITOR")]
-        private void CollectControl(Transform parent)
+        public void CollectNodes(Transform parent)
         {
             if (parent == null) return;
             int childCount = parent.childCount;
@@ -111,7 +119,7 @@ namespace Nsn
             {
                 Transform child = parent.GetChild(i);
                 TryAddTargetToDynamicObjectDic(child);
-                CollectControl(child);
+                CollectNodes(child);
             }
         }
 
@@ -129,7 +137,7 @@ namespace Nsn
                 else
                 {
                     m_DynamicLinkedNodesDic.Add(node.name,
-                        new LinkedNode() { name = node.name, type = nodeType, node = node });
+                        new LinkedNode() { type = nodeType, node = node });
                 }
             }
         }
@@ -137,24 +145,27 @@ namespace Nsn
         private LinkedObjectType GetNodeTypeByName(Transform node)
         {
             string nodeName = node.transform.name;
-            if(name.StartsWith("Trans_"))
+            if(nodeName.StartsWith("Node"))
                 return LinkedObjectType.Transform;
-            else if(name.StartsWith("Btn_"))
+            else if(nodeName.EndsWith("Btn"))
                 return LinkedObjectType.Button;
-            else if(name.StartsWith("Img_"))
+            else if(nodeName.EndsWith("Img"))
                 return LinkedObjectType.Image;
-            else if(name.StartsWith("Tex_"))
+            else if(nodeName.EndsWith("Tex"))
                 return LinkedObjectType.Texture;
-            else if(name.StartsWith("Txt_"))
-                return LinkedObjectType.Label;
-            else if(name.StartsWith("Input_"))
+            else if(nodeName.EndsWith("Txt"))
+                return LinkedObjectType.Text;
+            else if (nodeName.EndsWith("TMP"))
+                return LinkedObjectType.TextMeshPro;
+            else if(nodeName.EndsWith("Input"))
                 return LinkedObjectType.InputField;
-            else if(name.StartsWith("Grid_"))
+            else if(nodeName.EndsWith("Grid"))
                 return LinkedObjectType.Grid;
-            else if(name.StartsWith("Scroll_"))
+            else if(nodeName.EndsWith("Scroll"))
                 return LinkedObjectType.Scroll;
-            else if(name.StartsWith("Slider_"))
+            else if(nodeName.EndsWith("Slider"))
                 return LinkedObjectType.Slider;
+
             return LinkedObjectType.None;
         }
 
@@ -171,8 +182,10 @@ namespace Nsn
                 return linkedNode.GetNode<Image>();
             else if (nodeType == LinkedObjectType.Texture)
                 return linkedNode.GetNode<RawImage>();
-            else if (nodeType == LinkedObjectType.Label)
+            else if (nodeType == LinkedObjectType.Text)
                 return linkedNode.GetNode<Text>();
+            else if (nodeType == LinkedObjectType.TextMeshPro)
+                return linkedNode.GetNode<TMPro.TextMeshProUGUI>();
             else if (nodeType == LinkedObjectType.InputField)
                 return linkedNode.GetNode<InputField>();
             else if (nodeType == LinkedObjectType.Grid)

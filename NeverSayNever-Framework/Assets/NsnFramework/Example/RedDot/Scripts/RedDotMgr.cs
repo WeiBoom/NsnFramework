@@ -3,7 +3,7 @@ using System.Text;
 
 namespace Nsn.Example
 {
-    public class RedDotMgr : SingletonSafe<RedDotMgr>
+    public class RedDotMgr : SingletonLazy<RedDotMgr>
     {
         public const char SplitChar = '/';
         /// <summary>

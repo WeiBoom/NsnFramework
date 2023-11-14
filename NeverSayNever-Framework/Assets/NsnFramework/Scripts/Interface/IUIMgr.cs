@@ -9,7 +9,9 @@ namespace Nsn
         Camera UICamera2D { get; }
         
         Vector2 DesignResolution { get; }
-        
+
+        void Register(int viewID);
+
         void Open(string viewName, params object[] args);
 
         void Close(string viewName);

@@ -37,7 +37,12 @@ namespace Nsn
         private Dictionary<string, UIViewInfo> m_UIViewInfoDic;
 
         private UIViewTask mCurTask;
-        
+
+
+        public Camera UICamera2D { get; }
+        public Vector2 DesignResolution { get; }
+
+
         public void OnInitialized(params object[] args)
         {
             m_UIViewInfoDic = new Dictionary<string, UIViewInfo>();
@@ -72,9 +77,6 @@ namespace Nsn
                 mCurTask.Tick();
             }
         }
-
-        public Camera UICamera2D { get; }
-        public Vector2 DesignResolution { get; }
 
         public void Open(string viewName, params object[] userData)
         {
@@ -176,6 +178,9 @@ namespace Nsn
             m_UIViewStack.Push(viewItem);
         }
 
+        public void Register(int viewID)
+        {
+        }
     }
 
 }

@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -6,23 +6,19 @@ using UnityEngine.UI;
 
 namespace Nsn
 {
-    public class UIView : UIBehaviour
+    [RequireComponent(typeof(UINodeCollector))]
+    public class UIViewBehaviour : UIBehaviour
     {
-        public UIViewAttribute ViewInfo { get; set; }
-
         protected UINodeCollector m_Collector;
-        
+
         protected override void Awake()
         {
-            base.Awake();
             m_Collector = GetComponent<UINodeCollector>();
         }
 
-        public T Get<T>(string key) where T : Component
+        public UnityEngine.Object Get(UINodeCollector.LinkedObjectType type)
         {
-            var comp = m_Collector.GetNodeComponent(key);
-            return (T)comp;
+            return null;
         }
     }
-
 }

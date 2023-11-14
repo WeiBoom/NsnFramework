@@ -39,6 +39,13 @@ namespace Nsn.MVC
         {
         }
 
+
+        public void Register(int viewID)
+        {
+            // todo
+        }
+
+
         public void Open(string viewName, params object[] args)
         {
             if (m_UIViewStack.Count > 60)
@@ -85,5 +92,6 @@ namespace Nsn.MVC
         {
             
         }
+
     }
 }

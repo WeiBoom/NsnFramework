@@ -4,86 +4,69 @@ using UnityEngine;
 
 namespace Nsn
 {
-    public class SingletonMono<T> : MonoBehaviour where T : MonoBehaviour
+    public abstract class SingletonMono<T> : MonoBehaviour where T : SingletonMono<T>
     {
-        private static T _instance;
-        private static readonly object Lock = new object();
+        private static T s_instance;
 
-        private bool _bInitialized;
-        private static bool _bClearMode;
-        private static bool _bApplicationQuitting;
-
-        // 是否初始化的标记
+        private static bool m_bInitialized = false;
 
         public static T Instance
         {
             get
             {
-                if (_instance == null)
+                if (s_instance == null)
                 {
-                    lock (Lock)
+                    s_instance = (T)FindObjectOfType(typeof(T));
+                    if (s_instance == null)
                     {
-                        if (_bApplicationQuitting) return null;
-                        CreateInstance();
-                        return _instance;
+                        var singleton = new GameObject($"[{typeof(T)}]");
+                        s_instance = singleton.AddComponent<T>();
+                    }
+                    if(!m_bInitialized)
+                    {
+                        m_bInitialized = true;
+                        s_instance.OnInitialize();
                     }
                 }
-                return _instance;
+
+                return s_instance;
             }
         }
 
-        // 创建实例
-        private static void CreateInstance()
-        {
-            if (_instance == null)
-            {
-                _instance = (T)FindObjectOfType(typeof(T));
-                if (_instance == null)
-                {
-                    var singleton = new GameObject($"[{typeof(T)}]");
-                    var inst = singleton.AddComponent<T>() as SingletonMono<T>;
-                    inst.OnInitialize();
-                }
-            }
-        }
-
-        // 销毁实例
-        public static void DestroyInstance()
-        {
-            lock (Lock)
-            {
-                if (_instance == null) return;
-                _bClearMode = true;
-                Destroy(_instance.gameObject);
-                _instance = null;
-            }
-        }
 
         private void Awake()
         {
-            OnInitialize();
+            if(s_instance == null)
+            {
+                s_instance = this as T;
+                DontDestroyOnLoad(this.gameObject);
+            }
+            else
+            {
+                Destroy(this.gameObject);
+            }
         }
 
-        // 初始化
+        private void OnDestroy()
+        {
+            OnDispose();
+        }
+
+        private void OnApplicationQuit()
+        {
+            s_instance = null;
+        }
+
         public virtual void OnInitialize()
         {
-            if (_bInitialized) return;
-            GameObject o;
-            _instance = (o = gameObject).GetComponent<T>();
-            _bInitialized = true;
-            DontDestroyOnLoad(o);
+
         }
 
         public virtual void OnDispose()
         {
-            _instance = null;
+            s_instance = null;
+            Destroy(this.gameObject);
         }
 
-        protected virtual void OnApplicationQuit()
-        {
-            if (_bClearMode == false)
-                _bApplicationQuitting = true;
-            _bClearMode = false;
-        }
     }
 }

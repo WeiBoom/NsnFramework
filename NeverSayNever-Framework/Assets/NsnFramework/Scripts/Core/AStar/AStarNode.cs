@@ -36,13 +36,13 @@ namespace Nsn
 
     public enum AStartHeuristicWay
     {
-        // ÊÊÓÃÓÚÉÏÏÂ×óÓÒ
+        // é€‚ç”¨äºä¸Šä¸‹å·¦å³
         Manhattan,
-        // ÊÊÓÃÓÚ°Ë·½Ïò£¬¸÷·½Ïò¾àÀëÏàÍ¬
+        // é€‚ç”¨äºå…«æ–¹å‘ï¼Œå„æ–¹å‘è·ç¦»ç›¸åŒ
         Chebyshev,
-        // Å·Ê½¾àÀë
+        // æ¬§å¼è·ç¦»
         Octile,
-        // Ö±½Ó¼ÆËãÁ½µãÖ®¼äµÄ¾àÀë
+        // ç›´æ¥è®¡ç®—ä¸¤ç‚¹ä¹‹é—´çš„è·ç¦»
         Euclidean,
     }
     
@@ -57,40 +57,40 @@ namespace Nsn
         }
 
         /// <summary>
-        /// ÏàÁÚµÄ½Úµã
+        /// ç›¸é‚»çš„èŠ‚ç‚¹
         /// </summary>
         public AStarNode Connection { get; private set; }
         /// <summary>
-        /// ´ÓÆğµãÒÆ¶¯µ½¸Ã½ÚµãµÄ´ú¼Û
+        /// ä»èµ·ç‚¹ç§»åŠ¨åˆ°è¯¥èŠ‚ç‚¹çš„ä»£ä»·
         /// </summary>
         public float G { get; private set; }
         /// <summary>
-        /// ´Ó¸Ã½ÚµãÒÆ¶¯µ½ÖÕµãµÄ´ú¼Û
+        /// ä»è¯¥èŠ‚ç‚¹ç§»åŠ¨åˆ°ç»ˆç‚¹çš„ä»£ä»·
         /// </summary>
         public float H { get; private set; }
         /// <summary>
-        /// ×ÜµÄ´ú¼ÛÖµ
+        /// æ€»çš„ä»£ä»·å€¼
         /// </summary>
         public float F => G + H;
         /// <summary>
-        /// ÊÇ·ñ¿ÉÍ¨ĞĞ
+        /// æ˜¯å¦å¯é€šè¡Œ
         /// </summary>
         public bool Walkable { get; private set; }
         /// <summary>
-        /// ÏàÁÚµÄ½Úµã
+        /// ç›¸é‚»çš„èŠ‚ç‚¹
         /// </summary>
         public List<AStarNode> Neighbors { get; protected set; }
         /// <summary>
-        /// µ±Ç°½ÚµãµÄ×´Ì¬
+        /// å½“å‰èŠ‚ç‚¹çš„çŠ¶æ€
         /// </summary>
         public AStarNodeStatus Status { get; protected set; }
         /// <summary>
-        /// ½ÚµãËù¶ÔÓ¦µÄ×ø±ê
+        /// èŠ‚ç‚¹æ‰€å¯¹åº”çš„åæ ‡
         /// </summary>
         public IAStarNodeCoord Coord { get; protected set; }
 
         /// <summary>
-        /// ½Úµã×´Ì¬¸Ä±äÊ±µÄ»Øµ÷
+        /// èŠ‚ç‚¹çŠ¶æ€æ”¹å˜æ—¶çš„å›è°ƒ
         /// </summary>
         public event System.Action<AStarNodeStatus> OnStatusChangedFunc;
 

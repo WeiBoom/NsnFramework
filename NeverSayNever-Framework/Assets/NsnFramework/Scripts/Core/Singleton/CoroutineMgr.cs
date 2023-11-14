@@ -52,15 +52,9 @@ namespace Nsn
 
         private static Dictionary<long, CoroutineTask> m_CoroutineDic;
 
-        private long _taskCounter;
+        private long m_TtaskCounter;
 
-        public override void OnInitialize()
-        {
-            m_CoroutineDic = new Dictionary<long, CoroutineTask>();
-        }
 
-        private void OnDestroy() => OnDispose();
-        
         public override void OnDispose()
         {
             if (m_CoroutineDic == null)
@@ -83,7 +77,7 @@ namespace Nsn
         public long ExecuteCoroutine(IEnumerator co)
         {
             if (!this.gameObject.activeSelf) return -1;
-            var task = new CoroutineTask(_taskCounter++);
+            var task = new CoroutineTask(m_TtaskCounter++);
             m_CoroutineDic.Add(task.Id, task);
             StartCoroutine(task.CoroutineWrapper(co));
             return task.Id;
@@ -157,7 +151,6 @@ namespace Nsn
                 yield return new WaitForSeconds(delayedTime);
             callback();
         }
-
 
     }
 }

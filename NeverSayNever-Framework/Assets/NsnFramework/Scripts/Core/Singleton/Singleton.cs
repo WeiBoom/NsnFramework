@@ -33,7 +33,7 @@ namespace Nsn
 
     }
 
-    public class SingletonSafe<T> where T : class, new()
+    public class SingletonLazy<T> where T : class, new()
     {
         private static readonly Lazy<T> lazy = new Lazy<T>(() => new T());
 

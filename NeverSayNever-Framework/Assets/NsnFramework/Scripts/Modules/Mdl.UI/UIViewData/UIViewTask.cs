@@ -18,7 +18,7 @@ namespace Nsn
         End,
     }
 
-    public struct UIViewTask
+    public class UIViewTask
     {
         public UIViewTaskType TaskType;
         public string ViewName;
@@ -28,7 +28,7 @@ namespace Nsn
         private UIViewTaskStatus m_Status;
         public UIViewTaskStatus Status => m_Status;
 
-        private System.Action<UIViewItem> m_TaskCompleteCallback;
+        private static System.Action<UIView> m_TaskCompleteCallback;
 
         public static UIViewTask Empty => default;
 
@@ -68,7 +68,6 @@ namespace Nsn
             
             if (m_Status == UIViewTaskStatus.Running)
             {
-
             }
 
             if (m_Status == UIViewTaskStatus.Complete)
@@ -79,12 +78,12 @@ namespace Nsn
 
         private void OnComplete(object obj)
         {     
-            m_Status = UIViewTaskStatus.Complete;       
-
+            m_Status = UIViewTaskStatus.Complete;
+            
             UIViewItem viewItem = new UIViewItem(this.ViewName, this.ViewID);
             viewItem.OnCreate((GameObject)obj);
             viewItem.OnRefresh(this.Params);
-            m_TaskCompleteCallback?.Invoke(viewItem);
+            m_TaskCompleteCallback?.Invoke(view);
         }
 
         public void Stop()
@@ -93,9 +92,9 @@ namespace Nsn
             m_Status = UIViewTaskStatus.End;
         }
 
-        public void RegisterCompleteCallback(System.Action<UIViewItem> callback) => m_TaskCompleteCallback = callback;
+        public static void RegisterCompleteCallback(System.Action<UIViewItem> callback) => m_TaskCompleteCallback = callback;
 
-        public void UnRegisterCompleteCallback() => m_TaskCompleteCallback = null;
+        public static void UnRegisterCompleteCallback() => m_TaskCompleteCallback = null;
 
     }
 

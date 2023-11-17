@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace Nsn
 {
+    [System.Obsolete("UIBaseBehaviour is obsolete, try use 'UnityEngine.EventSystems.UIBehaviour'")]
     public class UIBaseBehaviour : MonoBehaviour
     {
         private void Awake() => OnAwake();

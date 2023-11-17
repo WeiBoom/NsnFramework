@@ -18,15 +18,5 @@ namespace Nsn
         GM = 20000,
     }
 
-    [System.Serializable]
-    public struct UIViewAttribute 
-    {
-        public UIViewType ViewType;
-        public int PanelOrder;
-        public bool IsFullScreen;
-        public bool IsFocusable;
-        public bool MaskVisible;
-        public string ViewName;
-    }
 
 }

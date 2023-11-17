@@ -11,7 +11,6 @@ namespace Nsn
     /// <summary>
     /// UI 节点容器,根据规则收集UI下所有的控件节点
     /// </summary>
-    [RequireComponent(typeof(UIViewBehaviour))]
     public class UINodeCollector : UIBehaviour
     {
         public enum LinkedObjectType

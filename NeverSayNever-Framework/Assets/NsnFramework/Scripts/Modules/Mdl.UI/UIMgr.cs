@@ -1,43 +1,51 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEditor;
 using UnityEngine;
 
 namespace Nsn
 {
     [System.Serializable]
-    public class UIViewConfig
+    public class UIViewAttribute
     {
-        public int ID;
-        public string Name;
-        public int LayerID;
+        public UIViewType ViewType;
+        public int PanelOrder;
+        public bool IsFullScreen;
+        public bool IsFocusable;
+        public bool MaskVisible;
+        public string ViewName;
     }
 
     [System.Serializable]
     public class UIViewInfo
     {
         private UIViewAttribute attribute;
-        private UIViewConfig config;
 
-        public int ID => config.ID;
-        public string Name => config.Name;
+        private int m_ID;
+        private string m_Name;
 
-        public UIViewInfo(UIViewConfig config)
+        public int ID => m_ID;
+        public string Name => m_Name;
+
+        public UIViewInfo(int id ,string name)
         {
-            this.config = config;
+            m_ID = id;
+            m_Name = name;
         }
     }
 
     public class UIMgr : IUIMgr
     {
         private UIRoot m_UIRoot;
+        // UI的配置
+        private Dictionary<int, UIViewInfo> m_UIRegisterInfo;
+        // UI缓存的栈
         private UIViewStack m_UIViewStack;
+        // UI操作队列
         private UIViewTaskQueue m_UIViewTaskQueue;
 
-        private Dictionary<string, UIViewInfo> m_UIViewInfoDic;
-
         private UIViewTask mCurTask;
-
 
         public Camera UICamera2D { get; }
         public Vector2 DesignResolution { get; }
@@ -45,19 +53,21 @@ namespace Nsn
 
         public void OnInitialized(params object[] args)
         {
-            m_UIViewInfoDic = new Dictionary<string, UIViewInfo>();
+            m_UIRegisterInfo = new Dictionary<int, UIViewInfo>();
             m_UIViewStack = new UIViewStack();
             m_UIViewTaskQueue = new UIViewTaskQueue();
 
+            
+            UIViewTask.RegisterCompleteCallback(OnTaskComplete);
             // todo 
-            // 1、UI模块初始化后，需要加载UIViewInfo，初始化各项配置的UI信息
+            // 1、UI模块初始化后，需要注册UI
             // 2、配合UIMgr，需要先在工具库新增UI配置相关的工具
         }
 
         public void OnDisposed()
         {
-            m_UIViewInfoDic.Clear();
-            m_UIViewInfoDic = null;
+            m_UIRegisterInfo.Clear();
+            m_UIRegisterInfo = null;
             
             m_UIViewStack.Clear();
             m_UIViewStack = null;
@@ -76,6 +86,18 @@ namespace Nsn
             {
                 mCurTask.Tick();
             }
+        }
+        
+        
+        public void Register(int viewID)
+        {
+            m_UIRegisterInfo.TryGetValue(viewID, out var viewInfo);
+            if(viewInfo != null) {
+                Debug.LogError($"[UIMgr] ViewID [{viewID}] has been registed!");
+                return;
+            }
+            string viewName = string.Empty;
+            m_UIRegisterInfo.Add(viewID, new UIViewInfo(viewID, viewName));
         }
 
         public void Open(string viewName, params object[] userData)
@@ -111,7 +133,7 @@ namespace Nsn
             }
 
             // Situation 3 . 不存在UI，重新创建加载task
-            task = AddTaskToQueue(viewName);
+            task = AddOpenTaskToQueue(viewName);
             if (task.IsEmpty())
                 return;
 
@@ -122,9 +144,9 @@ namespace Nsn
                 ExecuteTask(task);
         }
 
-        public void Close(string view)
+        public void Close(string viewName)
         {
-            UIViewItem viewItem = m_UIViewStack.Get(view);
+            UIViewItem viewItem = m_UIViewStack.Get(viewName);
             if (!viewItem.IsPrepared())
                 return;
 
@@ -133,17 +155,17 @@ namespace Nsn
             
         }
 
-        public bool IsOpened(string view)
+        public bool IsOpened(string viewName)
         {
-            if(m_UIViewStack.Contains(view))
+            if(m_UIViewStack.Contains(viewName))
                 return true;
             return false;
         }
 
 
-        private UIViewTask AddTaskToQueue(string view)
+        private UIViewTask AddOpenTaskToQueue(string view)
         {
-            m_UIViewInfoDic.TryGetValue(view, out UIViewInfo viewInfo);
+            m_UIRegisterInfo.TryGetValue(view, out var viewInfo);
             if (viewInfo != null)
             {
                 UIViewTask task = new UIViewTask()
@@ -152,7 +174,6 @@ namespace Nsn
                     ViewName = viewInfo.Name,
                     ViewID = viewInfo.ID,
                 };
-                task.RegisterCompleteCallback(OnTaskComplete);
                 m_UIViewTaskQueue.Enqueue(task);
                 return task;
             }
@@ -178,9 +199,6 @@ namespace Nsn
             m_UIViewStack.Push(viewItem);
         }
 
-        public void Register(int viewID)
-        {
-        }
     }
 
 }

@@ -22,8 +22,6 @@ namespace Nsn
             if(m_Initialized)
                 return;
             m_Initialized = true;
-
-            // TODO
         }
 
         protected override void Awake()
@@ -38,12 +36,6 @@ namespace Nsn
         {
             m_Camera = UIUtility.Search<Camera>(transform,"UICamera");
             m_Canvas = UIUtility.Search<Canvas>(transform,"UICanvas");
-        }
-
-
-        private void ApplyFixScreen()
-        {
-
         }
     }
 }

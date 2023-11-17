@@ -1,3 +1,4 @@
+using UnityEditor;
 using UnityEngine;
 
 namespace Nsn
@@ -23,8 +24,8 @@ namespace Nsn
         
         public UIViewItem(string name, int id)
         {
-            m_ViewName = name;
             m_ViewID = id;
+            m_ViewName = name;
             m_ViewLayer = 0;
         }
 
@@ -36,17 +37,15 @@ namespace Nsn
         public void OnRefresh(object[] userData)
         {
             m_UserData = userData;
-
         }
 
         public void OnClose()
         {
-            
         }
 
         public void OnDestroy()
         {
-            
+            UnityEngine.Object.Destroy(m_ViewObj);
         }
     }
 }

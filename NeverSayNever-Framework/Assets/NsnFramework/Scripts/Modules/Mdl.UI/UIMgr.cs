@@ -100,30 +100,31 @@ namespace Nsn
             m_UIRegisterInfo.Add(viewID, new UIViewInfo(viewID, viewName));
         }
 
-        public void Open(string viewName, params object[] userData)
+        public void Open(int viewID, params object[] userData)
         {
-            UIViewTask task = m_UIViewTaskQueue.Get(viewName);
+            
+            UIViewTask task = m_UIViewTaskQueue.Get(viewID);
             // Situation 1 当前存在加载任务
             if (!task.IsEmpty())
             {
                 // Situation 1.1 task正在执行关闭操作,则停止,并移除队列中
                 if (task.TaskType == UIViewTaskType.Close)
                 {
-                    NsnLog.Warning($"[NsnFramework], UIMgr.Open , {viewName} is closing but try open it");
+                    NsnLog.Warning($"[NsnFramework], UIMgr.Open , ViewID[{viewID}] is closing but try open it");
                     task.Stop();
                     m_UIViewTaskQueue.Remove(task.ViewName);
                 }
                 else
                 {
                     // Situation 1.2 更新task数据, 不做其他任何处理
-                    NsnLog.Warning($"[NsnFramework], UIMgr.Open , {viewName} is opening, just update userdata");
+                    NsnLog.Warning($"[NsnFramework], UIMgr.Open , ViewID[{viewID}] is opening, just update userdata");
                     task.Params = userData;
                     return;
                 }
             }
             
             // Situation 2 . 已经存在UI Item
-            UIViewItem viewItem = m_UIViewStack.Get(viewName);
+            UIViewItem viewItem = m_UIViewStack.Get(viewID);
             if(viewItem.IsPrepared())
             {
                 m_UIViewStack.Pop(viewItem);
@@ -133,7 +134,7 @@ namespace Nsn
             }
 
             // Situation 3 . 不存在UI，重新创建加载task
-            task = AddOpenTaskToQueue(viewName);
+            task = AddOpenTaskToQueue(viewID);
             if (task.IsEmpty())
                 return;
 
@@ -144,9 +145,9 @@ namespace Nsn
                 ExecuteTask(task);
         }
 
-        public void Close(string viewName)
+        public void Close(int viewID)
         {
-            UIViewItem viewItem = m_UIViewStack.Get(viewName);
+            UIViewItem viewItem = m_UIViewStack.Get(viewID);
             if (!viewItem.IsPrepared())
                 return;
 
@@ -155,17 +156,17 @@ namespace Nsn
             
         }
 
-        public bool IsOpened(string viewName)
+        public bool IsOpened(int viewID)
         {
-            if(m_UIViewStack.Contains(viewName))
+            if(m_UIViewStack.Contains(viewID))
                 return true;
             return false;
         }
 
 
-        private UIViewTask AddOpenTaskToQueue(string view)
+        private UIViewTask AddOpenTaskToQueue(int viewID)
         {
-            m_UIRegisterInfo.TryGetValue(view, out var viewInfo);
+            m_UIRegisterInfo.TryGetValue(viewID, out var viewInfo);
             if (viewInfo != null)
             {
                 UIViewTask task = new UIViewTask()
@@ -179,7 +180,7 @@ namespace Nsn
             }
             else
             {
-                NsnLog.Error($"[NsnFramework], UIMdl.Open , {view} doesn't exist in ViewInfo Dictionary");
+                NsnLog.Error($"[NsnFramework], UIMdl.Open , ViewID[{viewID}] doesn't exist in ViewInfo Dictionary");
             }
             return UIViewTask.Empty;
         }

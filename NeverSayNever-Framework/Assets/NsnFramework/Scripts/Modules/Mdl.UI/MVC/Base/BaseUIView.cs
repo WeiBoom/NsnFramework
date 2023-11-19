@@ -4,11 +4,11 @@ using UnityEngine;
 
 namespace Nsn.MVC
 {
-    public class UIBaseView : UIBaseComp
+    public class BaseUIView : BaseUIComp
     {
-        protected UIBaseModel m_Model;
-        protected UIBaseCtrl m_Ctrl;
-        protected UIBaseLayer m_Holder;
+        protected BaseUIModel m_Model;
+        protected BaseUICtrl m_Ctrl;
+        protected BaseUILayer m_Holder;
 
         protected int m_BaseOrder = 0;
         [SerializeField]
@@ -26,13 +26,13 @@ namespace Nsn.MVC
             OnCreate();
         }
 
-        public void Register(UIBaseLayer holder, UIBaseModel model, UIBaseCtrl ctrl, object[] args)
+        public void Register(BaseUILayer holder, BaseUIModel model, BaseUICtrl ctrl, object[] args)
         {
             m_Holder = holder;
             m_Model = model;
             m_Ctrl = ctrl;
             m_UIArgs = args;
-            m_EventDic = new Dictionary<Action, string>();
+            m_InternalEventDic = new Dictionary<int, EventDelegate>();
         }
 
         private void OnCreate()
@@ -47,7 +47,8 @@ namespace Nsn.MVC
 
         protected void SetOrder(int relativeOrder)
         {
-            
+            m_RelativeOrder = relativeOrder;
+            m_Canvas.sortingOrder = m_BaseOrder + relativeOrder;
         }
         
     }

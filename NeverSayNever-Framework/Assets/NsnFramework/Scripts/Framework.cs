@@ -76,11 +76,11 @@ namespace Nsn
             string target = string.IsNullOrEmpty(targetNamespace) ? targetName : $"{targetNamespace}.{targetName}";
             if (!mManagerDic.ContainsKey(target))
             {
-                object inst = RuntimeAssembly.CreateInstance(assembly, target);
+                object inst = RuntimeAssembly.CreateInstance(assembly, target, args);
                 T script = (T)inst;
                 if (script != null)
                 {
-                    script.OnInitialized(args);
+                    //script.OnInitialized(args);
                     mManagerDic.Add(target, script);
                 }
             }

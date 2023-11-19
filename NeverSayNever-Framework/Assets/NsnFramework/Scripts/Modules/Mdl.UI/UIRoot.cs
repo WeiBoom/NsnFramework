@@ -17,6 +17,9 @@ namespace Nsn
         public Camera UICamera => m_Camera;
         public Canvas UICanvas => m_Canvas;
 
+        // 默认16：9的设计分辨率
+        public Vector2 UIDesignResolution = new Vector2(1366, 768);
+
         public static void Create()
         {
             if(m_Initialized)

@@ -31,22 +31,22 @@ namespace Nsn.MVC
         /// <summary>
         /// 界面层级
         /// </summary>
-        public int Layer;
+        public UILayerData Layer;
 
         /// <summary>
         /// Model 实例
         /// </summary>
-        public UIBaseModel Model;
+        public BaseUIModel Model;
 
         /// <summary>
         /// View 实例
         /// </summary>
-        public UIBaseView View;
+        public BaseUIView View;
 
         /// <summary>
         /// Control 实例
         /// </summary>
-        public UIBaseCtrl Ctrl;
+        public BaseUICtrl Ctrl;
     }
 
     public class UIViewParam

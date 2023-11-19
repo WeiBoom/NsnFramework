@@ -32,20 +32,30 @@ namespace Nsn
             m_ViewList.Add(viewItem);
         }
 
-
-        public void Remove(string viewName)
-        {
-            if (!string.IsNullOrEmpty(viewName))
-                Pop(viewName);
-        }
-        
         public void Remove(UIViewItem view)
         {
             if (view != null)
-                Remove(view.ViewName);
+                Remove(view.ViewID);
         }
 
-        private int GetViewStackIndex(string viewName)
+        public void Remove(int viewID)
+        {
+            Pop(viewID);
+        }
+
+        private int GetViewStackIndexByID(int viewID)
+        {
+            for (int i = m_ViewList.Count - 1; i >= 0; i--)
+            {
+                if (m_ViewList[i].ViewID == viewID)
+                {
+                    return i;
+                }
+            }
+            return -1;
+        }
+
+        private int GetViewStackIndexByName(string viewName)
         {
             for (int i = m_ViewList.Count - 1; i >= 0; i--)
             {
@@ -59,7 +69,14 @@ namespace Nsn
         
         public UIViewItem Get(string viewName)
         {
-            int viewIndex = GetViewStackIndex(viewName);
+            int viewIndex = GetViewStackIndexByName(viewName);
+            UIViewItem viewItem = viewIndex < 0 ? UIViewItem.Empty : m_ViewList[viewIndex];
+            return viewItem;
+        }
+
+        public UIViewItem Get(int viewID)
+        {
+            int viewIndex = GetViewStackIndexByID(viewID);
             UIViewItem viewItem = viewIndex < 0 ? UIViewItem.Empty : m_ViewList[viewIndex];
             return viewItem;
         }
@@ -68,12 +85,12 @@ namespace Nsn
         {
             if (viewItem.IsPrepared())
                 return UIViewItem.Empty;
-            return Pop(viewItem.ViewName);
+            return Pop(viewItem.ViewID);
         }
         
-        private UIViewItem Pop(string viewName)
+        private UIViewItem Pop(int viewID)
         {
-            int viewIndex = GetViewStackIndex(viewName);
+            int viewIndex = GetViewStackIndexByID(viewID);
             if (viewIndex > 0)
             {
                 UIViewItem viewItem = m_ViewList[viewIndex];

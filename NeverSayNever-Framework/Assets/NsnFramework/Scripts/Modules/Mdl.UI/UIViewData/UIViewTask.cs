@@ -28,7 +28,7 @@ namespace Nsn
         private UIViewTaskStatus m_Status;
         public UIViewTaskStatus Status => m_Status;
 
-        private static System.Action<UIView> m_TaskCompleteCallback;
+        private static System.Action<UIViewItem> m_TaskCompleteCallback;
 
         public static UIViewTask Empty => default;
 
@@ -83,7 +83,7 @@ namespace Nsn
             UIViewItem viewItem = new UIViewItem(this.ViewName, this.ViewID);
             viewItem.OnCreate((GameObject)obj);
             viewItem.OnRefresh(this.Params);
-            m_TaskCompleteCallback?.Invoke(view);
+            m_TaskCompleteCallback?.Invoke(viewItem);
         }
 
         public void Stop()

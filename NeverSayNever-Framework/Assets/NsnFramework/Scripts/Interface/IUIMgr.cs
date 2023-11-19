@@ -12,11 +12,11 @@ namespace Nsn
 
         void Register(int viewID);
 
-        void Open(string viewName, params object[] args);
+        void Open(int viewID, params object[] args);
 
-        void Close(string viewName);
+        void Close(int viewID);
 
-        bool IsOpened(string viewName);
+        bool IsOpened(int viewID);
     }
 }
 

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -22,35 +23,71 @@ namespace Nsn.MVC
         public const string UI = "UI";
     }
 
-    public static class UILayers
+    public enum UILayerType
     {
         /// <summary>
         /// 场景UI
         /// </summary>
-        public static readonly UILayerData SceneLayer = new UILayerData("Scene", 1000, 0);
+        SceneLayer = 0,
         /// <summary>
         /// 背景UI
         /// </summary>
-        public static readonly UILayerData BackgroundLayer = new UILayerData("Background", 900, 1000);
+        BackgroundLayer,
         /// <summary>
         /// 普通UI
         /// </summary>
-        public static readonly UILayerData NormalLayer = new UILayerData("Normal", 800, 2000);
+        NormalLayer,
         /// <summary>
         /// 信息UI（跑马灯，广播等）
         /// </summary>
-        public static readonly UILayerData InfoLayer = new UILayerData("Info", 700, 3000);
+        InfoLayer,
         /// <summary>
         /// 提示UI （网络连接，错误探窗等）
         /// </summary>
-        public static readonly UILayerData TipLayer = new UILayerData("Tip", 600, 4000);
+        TipLayer,
         /// <summary>
         /// 顶层UI（Loading场景等）
         /// </summary>
-        public static readonly UILayerData TopLayer = new UILayerData("Scene", 500, 5000);
+        TopLayer,
+        /// <summary>
+        /// 计数用，在layer中无意义
+        /// </summary>
+        Max,
     }
-    
-    public class UIBaseLayer : UIBaseComp
+
+    public class UILayers
+    {
+        private Dictionary<UILayerType, UILayerData> m_LayerDatas;
+
+        public void SetUp(UIRoot uiRoot)
+        {
+            m_LayerDatas = new Dictionary<UILayerType, UILayerData>((int)UILayerType.Max);
+            m_LayerDatas.Add(UILayerType.SceneLayer, new UILayerData("Scene", 1000, 0));
+            m_LayerDatas.Add(UILayerType.SceneLayer, new UILayerData("Background", 900, 1000));
+            m_LayerDatas.Add(UILayerType.SceneLayer, new UILayerData("Normal", 800, 2000));
+            m_LayerDatas.Add(UILayerType.SceneLayer, new UILayerData("Info", 700, 3000));
+            m_LayerDatas.Add(UILayerType.SceneLayer, new UILayerData("Tip", 600, 4000));
+            m_LayerDatas.Add(UILayerType.SceneLayer, new UILayerData("Top", 500, 5000));
+        }
+
+        private void CreateLayerObjects(UIRoot uiRoot)
+        {
+            foreach (var pair in m_LayerDatas)
+            {
+                GameObject layerObj = new GameObject($"{pair.Value.Name}");
+                Transform layerTrans = layerObj.transform;
+                layerTrans.SetParent(uiRoot.UICanvas.transform);
+            }
+        }
+
+        public UILayerData GetLayer(UILayerType layerType)
+        {
+            m_LayerDatas.TryGetValue(layerType, out var data);
+            return data;
+        }
+    }
+
+    public class BaseUILayer : BaseUIComp
     {
         private int topViewOrder;
         private int minViewOrder;

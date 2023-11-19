@@ -78,7 +78,7 @@ namespace Nsn
                 comp = GetFixedNodeComponent(key);
             return comp;
         }
-        
+
         
         /// <summary>
         /// 收集指定的组件
@@ -87,7 +87,7 @@ namespace Nsn
         [System.Diagnostics.Conditional("UNITY_EDITOR")]
         public void CollectNodes()
         {
-            m_DynamicLinkedNodesDic.Clear();
+            ClearDynamicNodes();
             Queue<Transform> checkQueue = new Queue<Transform>();
             checkQueue.Enqueue(this.transform);
 
@@ -103,6 +103,26 @@ namespace Nsn
                         checkQueue.Enqueue(child);
                 }
             }
+        }
+        
+        [HorizontalGroup("ClearButtonGroup")]
+        [Button("清空Fixed节点"),GUIColor(1.0f, 0.2f, 0) ] 
+        [System.Diagnostics.Conditional("UNITY_EDITOR")]
+        private void ClearFixedNodes()
+        {
+#if UNITY_EDITOR
+            if (UnityEditor.EditorUtility.DisplayDialog("NsnFramework.UIMdl", "确定要清理掉Fixed收集的节点吗？", "确定", "取消"))
+            {
+                m_FixedLinkedNodesDic.Clear();
+            }
+#endif
+        }
+        
+        [HorizontalGroup("ClearButtonGroup")]
+        [Button("清空Dynamic节点"),GUIColor(0.0f, 0.6f, 0) ]
+        public void ClearDynamicNodes()
+        {
+            m_DynamicLinkedNodesDic.Clear();
         }
 
         /// <summary>

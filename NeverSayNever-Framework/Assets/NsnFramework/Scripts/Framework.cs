@@ -76,7 +76,7 @@ namespace Nsn
             string target = string.IsNullOrEmpty(targetNamespace) ? targetName : $"{targetNamespace}.{targetName}";
             if (!mManagerDic.ContainsKey(target))
             {
-                object inst = RuntimeAssembly.CreateInstance(assembly, target, args);
+                object inst = AssemblyUtility.CreateInstance(assembly, target, args);
                 T script = (T)inst;
                 if (script != null)
                 {
@@ -107,52 +107,6 @@ namespace Nsn
         public static void SetAudioSourceRoot(AudioSource audioRoot)
         {
             AudioSource = audioRoot;
-        }
-
-        public class TreeNode
-        {
-            public int val;
-            public TreeNode left;
-            public TreeNode right;
-
-            public TreeNode(int val = 0, TreeNode left = null, TreeNode right = null)
-            {
-            }
-        }
-
-        public IList<IList<int>> ZigzagLevelOrder(TreeNode root) {
-        
-            List<IList<int>> ret = new List<IList<int>>();
-            if(root == null) return ret;
-            LinkedList<TreeNode> l = new LinkedList<TreeNode>();
-            bool oriLeft = false;
-            l.AddFirst(root);
-            while(l.Count > 0)
-            {
-                int length = l.Count;
-                List<int> list = new List<int>();
-                for(int i = 0; i< length;i++)
-                {
-                    var node = l.First.Value;
-                    list.Add(node.val);
-                    l.RemoveFirst();
-                    if(oriLeft)
-                    {
-                        list.Add(node.val);
-                        l.ToList();
-                        if(node.left != null) l.AddLast(node.left);
-                        if(node.right != null) l.AddLast(node.right);
-                    }
-                    else{
-                        if(node.left != null) l.AddFirst(node.left);
-                        if(node.right != null) l.AddFirst(node.right);
-                    }
-                }
-                oriLeft = !oriLeft;
-                ret.Add(list);
-            }
-
-            return ret;
         }
     }
 }
